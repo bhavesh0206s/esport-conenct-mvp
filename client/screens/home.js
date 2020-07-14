@@ -1,28 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { View, Button, FlatList, RefreshControl, ScrollView } from 'react-native';
+import {
+  View,
+  Button,
+  FlatList,
+  RefreshControl,
+  ScrollView,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../shared/loading';
 import { fetchallEvents } from '../Redux/actions/event';
 import EventCard from './EventHandling/eventCard';
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const dispatch = useDispatch();
-  const {allEvents, userProfile} = useSelector((state) => ({
+  const { allEvents, userProfile } = useSelector((state) => ({
     allEvents: state.event.allEvents,
     userProfile: state.profile.userProfile,
   }));
-  
+
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
     dispatch(fetchallEvents());
     setRefreshing(false);
-  }
+  };
 
   useEffect(() => {
     console.log('Home Page refreshed');
-    setTimeout(() => dispatch(fetchallEvents()), 100)
+    setTimeout(() => dispatch(fetchallEvents()), 100);
   }, []);
 
   if (allEvents.length === 0 || !userProfile) {
@@ -40,7 +46,9 @@ const Home = () => {
           onEndReachedThreshold={0.5}
           initialNumToRender={6}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => <EventCard item={[item]} />}
+          renderItem={({ item }) => (
+            <EventCard item={[item]} navigation={navigation} />
+          )}
         />
       </View>
     );

@@ -18,13 +18,13 @@ const Header = ({ navigation, title, type }) => {
   const textInput = useRef();
 
   const focusTextInput = () => textInput.current.focus();
-  
+
   if (type === 'Search') {
     return (
       <View style={styles.header}>
         <Feather name="menu" size={29} onPress={openMenu} style={styles.icon} />
-        <SearchBar focusTextInput={focusTextInput} textInput={textInput}/>
-      </View>  
+        <SearchBar focusTextInput={focusTextInput} textInput={textInput} />
+      </View>
     );
   }
 
@@ -38,9 +38,19 @@ const Header = ({ navigation, title, type }) => {
     );
   }
 
+  if (type === 'EventDetailsCard') {
+    return (
+      <View style={styles.header}>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={styles.headerText}>{title}</Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.header}>
-      <Feather name="menu" size={29} onPress={openMenu}  />
+      <Feather name="menu" size={29} onPress={openMenu} />
       <View style={{ flexDirection: 'row' }}>
         <Text style={styles.headerText}>{title}</Text>
       </View>
@@ -69,7 +79,6 @@ const styles = StyleSheet.create({
     height: 26,
     marginHorizontal: 10,
   },
-
 });
 
 export default Header;
