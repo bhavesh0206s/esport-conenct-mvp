@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
+import moment from 'moment';
 import * as yup from 'yup';
-import { View, Platform } from 'react-native';
+import { View, Platform, Text } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { AddMyEvent} from '../../Redux/actions/event';
@@ -11,39 +12,18 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const eventSchema = yup.object({
   description: yup.string(),
   game: yup.string(),
-  time: yup.date(),
+  time: yup.string(),
   contact: yup.string(),
   title: yup.string(),
-  prizepool: yup.number() /*.min(1)*/,
-  entryFee: yup.number() /*.min(1)*/,
+  prizepool: yup.number(),
+  entryFee: yup.number(),
 });
 
 const AddEvent = ({setModalOpen, setOpenPopUp}) => {
 
   const dispatch = useDispatch();
   
-  const [dateTime, setDateTime] = useState(new Date()) 
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
   const [typeTourn, setTypeTourn] = useState('');
-
-  const showDatepicker = () =>{
-    setShow(true);
-    setMode('date');
-  }
-
-  const showTimepicker = () =>{
-    setMode('time')
-    setShow(true);
-  }
-
-  const onTimeChange = (event, selectedDate) => {
-    const currentDate = selectedDate || dateTime;
-    setShow(Platform.OS === 'ios');
-    setDateTime(currentDate);
-    console.log(currentDate)
-    // showTimepicker()
-  };
 
   return (
     <View
@@ -55,7 +35,7 @@ const AddEvent = ({setModalOpen, setOpenPopUp}) => {
         initialValues={{
           description: '',
           game: '',
-          time: new Date(),
+          time: '',
           entryFee: '',
           prizepool: '',
           teamsize: '',
@@ -64,14 +44,16 @@ const AddEvent = ({setModalOpen, setOpenPopUp}) => {
         }}
         validationSchema={eventSchema}
         onSubmit={(values, actions) => {
-          values.time = dateTime
+          let currentDatetime = moment(values.time, "DD-MM-YYYY hh:mm:ss");
+          values.time = currentDatetime.toString();
           if(!values.entryFee){
             values.entryFee = 'FREE';
           }
-          actions.resetForm();
+          console.log(values)
+          // actions.resetForm();
           // dispatch(AddMyEvent(values));
-          setModalOpen(false)
-          setOpenPopUp(true)
+          // setModalOpen(false)
+          // setOpenPopUp(true)
         }}
       >
         {(formikprops) => (
@@ -104,21 +86,13 @@ const AddEvent = ({setModalOpen, setOpenPopUp}) => {
               onBlur={formikprops.handleBlur('description')}
               errorMessage={formikprops.touched.description && formikprops.errors.description}
             />
-            <View>
-            <View style={{flexDirection: 'row'}}>
-              <Button onPress={showDatepicker} title="Select Date and Time" />
-              <Button onPress={showTimepicker} title="Select Date and Time" />
-            </View>
-              {show && (
-                <DateTimePicker
-                  value={dateTime}
-                  mode={mode}
-                  is24Hour={true}
-                  display="default"
-                  onChange={onTimeChange}
-                />
-              )}
-            </View>
+            <Input
+              placeholder={"Date Time: DD-MM-YYYY hh:mm"}
+              onChangeText={formikprops.handleChange('time')}
+              value={formikprops.values.time}
+              onBlur={formikprops.handleBlur('time')}
+              errorMessage={formikprops.touched.time && formikprops.errors.time}
+            />
             <RNPickerSelect
               onValueChange={(value) => setTypeTourn(value)}
               items={[
@@ -141,7 +115,7 @@ const AddEvent = ({setModalOpen, setOpenPopUp}) => {
               />
             ): null}    
             <Input
-              placeholder="Prizepool..."
+              placeholder='Prizepool..'
               onChangeText={formikprops.handleChange('prizepool')}
               value={`${formikprops.values.prizepool}`}
               onBlur={formikprops.handleBlur('prizepool')}
