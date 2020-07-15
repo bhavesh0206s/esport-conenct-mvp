@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { AddMyEvent} from '../../Redux/actions/event';
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useNavigation } from '@react-navigation/native';
 
 const eventSchema = yup.object({
   description: yup.string(),
@@ -19,12 +20,14 @@ const eventSchema = yup.object({
   entryFee: yup.number(),
 });
 
-const AddEvent = ({setModalOpen, setOpenPopUp}) => {
+const AddEvent = ({setModalOpen, setOpenPopUp, hostEvent}) => {
+
+  const navigation = useNavigation();
 
   const dispatch = useDispatch();
   
   const [typeTourn, setTypeTourn] = useState('');
-
+  
   return (
     <View
       style={{
@@ -49,10 +52,11 @@ const AddEvent = ({setModalOpen, setOpenPopUp}) => {
           if(!values.entryFee){
             values.entryFee = 'FREE';
           }
-          console.log(values)
+          navigation.navigate('Confirm Event', {info: values})
           // actions.resetForm();
           // dispatch(AddMyEvent(values));
-          // setModalOpen(false)
+          setModalOpen()
+          
           // setOpenPopUp(true)
         }}
       >

@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import TabStack from './tabStack';
+import MainStack from './mainStack';
 import AboutStack from './otherStack/aboutStack';
 import { Button, Avatar } from 'react-native-elements';
 import { StyleSheet, View, Text, useWindowDimensions } from 'react-native';
@@ -106,7 +107,7 @@ export default function DrawerStack() {
       <Drawer.Navigator
         drawerContent={(props) => <LogoutContentComponent {...props} />}
       >
-        <Drawer.Screen name="Home" component={TabStack} />
+        <Drawer.Screen name="Home" component={MainStack} />
         <Drawer.Screen name="About" component={AboutStack} />
       </Drawer.Navigator>
     </NavigationContainer>

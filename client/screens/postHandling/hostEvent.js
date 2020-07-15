@@ -8,7 +8,7 @@ import AddEvent from '../EventHandling/addEvent';
 import VerifyModel from '../EventHandling/verifyModel';
 
 const HostEventModal = ({ toggleHostEventModal, hostEvent }) => {
-  const [visible, setVisible] = useState(true);
+
   const [openPopUp, setOpenPopUp] = useState(false);
 
   return (
@@ -39,7 +39,7 @@ const HostEventModal = ({ toggleHostEventModal, hostEvent }) => {
 
         <ScrollView>
           <View style={styles.content}>
-            <AddEvent setModalOpen={toggleHostEventModal} setOpenPopUp={setOpenPopUp}/>
+            <AddEvent hostEvent={hostEvent} setModalOpen={toggleHostEventModal} setOpenPopUp={setOpenPopUp}/>
           </View>
         </ScrollView>
       </Modal>

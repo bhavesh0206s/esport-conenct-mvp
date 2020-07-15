@@ -8,8 +8,7 @@ import EventStack from './otherStack/eventStack';
 import ProfileStack from './otherStack/profileStack';
 import HomeStack from './otherStack/homeStack';
 import SearchStack from './otherStack/searchStack';
-import UploadStack from './otherStack/uploadStack';
-import UploadPost from '../screens/postHandling/uploadPost';
+import UploadPostModal from '../screens/postHandling/uploadPost';
 
 const Tab = createBottomTabNavigator();
 
@@ -67,7 +66,7 @@ export default function TabStack() {
       <Tab.Screen 
         name="Upload" 
         options={({ navigation, route }) => ({
-          tabBarIcon: () => (<UploadPost navigation={navigation} />)
+          tabBarIcon: () => (<UploadPostModal navigation={navigation} />)
         })}
 
         component={UploadPostComponent} />

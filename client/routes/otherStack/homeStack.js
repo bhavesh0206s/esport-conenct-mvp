@@ -23,7 +23,7 @@ const HomeStack = () => {
           headerTitle: () => (
             <Header
               navigation={navigation}
-              title="EventDetailsCard"
+              title="Event Details"
               type="EventDetailsCard"
             />
           ),
