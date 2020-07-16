@@ -9,7 +9,6 @@ import VerifyModel from '../EventHandling/verifyModel';
 
 const HostEventModal = ({ toggleHostEventModal, hostEvent }) => {
 
-  const [openPopUp, setOpenPopUp] = useState(false);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -39,11 +38,11 @@ const HostEventModal = ({ toggleHostEventModal, hostEvent }) => {
 
         <ScrollView>
           <View style={styles.content}>
-            <AddEvent hostEvent={hostEvent} setModalOpen={toggleHostEventModal} setOpenPopUp={setOpenPopUp}/>
+            <AddEvent hostEvent={hostEvent} setModalOpen={toggleHostEventModal}/>
           </View>
         </ScrollView>
       </Modal>
-      <VerifyModel openPopUp={openPopUp} setOpenPopUp={setOpenPopUp}/>
+      
       </TouchableWithoutFeedback>
   );
 };

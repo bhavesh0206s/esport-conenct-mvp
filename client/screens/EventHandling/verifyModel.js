@@ -5,20 +5,24 @@ import Modal from 'react-native-modal';
 import { TouchableWithoutFeedback, ScrollView} from 'react-native-gesture-handler';
 
 
-const VerifyModel = ({openPopUp, setOpenPopUp}) => {
+const VerifyModel = ({openPopUp, setOpenPopUp, navigation}) => {
+
+  const handleSubmit  = () =>{
+    setOpenPopUp(false);
+    navigation.goBack()
+  }
 
   return (
     <Modal
-      onSwipeComplete={() => setOpenPopUp(false)}
       swipeDirection={['left', 'right', 'down']}
       isVisible={openPopUp}
-      onBackButtonPress={() => setOpenPopUp(false)}
+      onBackButtonPress={handleSubmit}
       style={styles.overLay}
-      onBackdropPress={() => setOpenPopUp(false)}
       style={styles.contentView}
     >
       <View style={styles.content}>
-        <Text>Your Event will be hosted after Verification</Text>
+        <Text style={styles.contentTitle}>Your Event will be hosted after Verification</Text>
+        <Button buttonStyle={styles.buttonStyle} onPress={handleSubmit} title='OK'/>
       </View>
     </Modal>
  
@@ -27,14 +31,14 @@ const VerifyModel = ({openPopUp, setOpenPopUp}) => {
 const styles = StyleSheet.create({
   content: {
     backgroundColor: 'white',
-    padding: 22,
+    padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderTopRightRadius: 17,
     borderTopLeftRadius: 17,
   },
   contentTitle: {
-    fontSize: 20,
+    fontSize: 17,
     marginBottom: 12,
   },
   contentView: {
@@ -42,9 +46,8 @@ const styles = StyleSheet.create({
     margin: 0,
   },
 	buttonStyle: {
-    height: 60,
-    width: 60,
-    backgroundColor: '#4ecca3',
+    height: 50,
+    width: 50,
     borderRadius: 100
   },
   contentBtn:{
