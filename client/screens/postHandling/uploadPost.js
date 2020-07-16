@@ -4,24 +4,28 @@ import { Button, Text } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { AntDesign } from '@expo/vector-icons';
 import HostEventModal from './hostEvent';
+import { useDispatch, useSelector } from 'react-redux';
+import { modal } from '../../Redux/actions/modal';
 
 export default UploadPostModal = ({navigation}) => {
   const [visible, setVisible] = useState(false);
-  const [hostEvent, setHostEvent] = useState(false);
+  const dispatch = useDispatch();
+  const visibleHost = useSelector(state => state.modal);
 
   const toggleHostEventModal = () =>{
-    setHostEvent(!hostEvent);
+    dispatch(modal(!visibleHost))
     setVisible(false);
   }
 
   const toggleModal = () =>{
+    
     setVisible(!visible);
   }
   
   return (
     <>
-      {hostEvent ? (
-        <HostEventModal toggleHostEventModal={toggleHostEventModal} hostEvent={hostEvent} />
+      {visibleHost ? (
+        <HostEventModal toggleHostEventModal={toggleHostEventModal} hostEvent={visibleHost} />
       ) : (
         <View>
           <Button onPress={() => setVisible(true)}

@@ -5,12 +5,7 @@ import { Text, Card, Button, Icon } from 'react-native-elements';
 const EventCard = ({ item, navigation }) => {
   return (
     <TouchableOpacity
-      onPress={() => {
-        console.log(item[0]);
-        navigation.navigate('EventDetailsCard', {
-          eventdetails: item[0],
-        });
-      }}
+      
     >
       <Card
         title={item[0].title}
@@ -24,6 +19,12 @@ const EventCard = ({ item, navigation }) => {
             marginLeft: 0,
             marginRight: 0,
             marginBottom: 0,
+          }}
+          onPress={() => {
+            console.log(item[0]);
+            navigation.navigate('EventDetailsCard', {
+              eventdetails: item[0],
+            });
           }}
           title="DETAILS"
         />

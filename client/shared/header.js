@@ -48,6 +48,14 @@ const Header = ({ navigation, title, type }) => {
     );
   }
 
+  if(type === 'confirmEvent'){
+    return (
+        <View>
+          <Text style={styles.headerText}>{title}</Text>
+        </View>
+    );
+  }
+
   return (
     <View style={styles.header}>
       <Feather name="menu" size={29} onPress={openMenu} />

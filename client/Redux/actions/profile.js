@@ -24,7 +24,7 @@ export const getCurrentProfile = () => async (dispatch) => {
       type: GET_MYPROFILE,
       payload: res.data,
     });
-    console.log('profile added........');
+    console.log('profile added.....');
   } catch (err) {
     dispatch({
       type: CLEAR_MYPROFILE,
