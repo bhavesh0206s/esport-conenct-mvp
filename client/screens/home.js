@@ -11,11 +11,13 @@ import Loading from '../shared/loading';
 import { fetchallEvents } from '../Redux/actions/event';
 import EventCard from './EventHandling/eventCard';
 
+
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { allEvents, userProfile } = useSelector((state) => ({
+  const { allEvents, userProfile, loading } = useSelector((state) => ({
     allEvents: state.event.allEvents,
     userProfile: state.profile.userProfile,
+    loading: state.loading
   }));
 
   const [refreshing, setRefreshing] = useState(false);
@@ -31,7 +33,7 @@ const Home = ({ navigation }) => {
     setTimeout(() => dispatch(fetchallEvents()), 100);
   }, []);
 
-  if (allEvents.length === 0 || !userProfile) {
+  if (loading) {
     return <Loading />;
   } else {
     return (

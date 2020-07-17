@@ -1,9 +1,8 @@
 import { LOADING } from "./types";
 
-export const loading = (loading) => (dispatch) => {
-  const id = Math.random().toString();
-  dispatch({
+export const loading = (loading) => {
+  return {
     type: LOADING,
     payload: loading,
-  });
+  };
 };

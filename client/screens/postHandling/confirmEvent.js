@@ -17,7 +17,7 @@ const ConfirmEvent = ({route}) => {
 
   const handleSubmit = () =>{
     setOpenPopUp(true)
-    // dispatch(AddMyEvent(info))
+    dispatch(AddMyEvent(info))
     console.log('event Added..........')
   }
 
@@ -55,7 +55,7 @@ const ConfirmEvent = ({route}) => {
       </View>
       <View>
         <Text style={styles.title}>Date and Time:</Text>
-        <Text style={styles.field}>{time}</Text>
+        <Text style={styles.field}>{time.toString()}</Text>
       </View>
       <View>
         <Text style={styles.title}>Entry Fee:</Text>
