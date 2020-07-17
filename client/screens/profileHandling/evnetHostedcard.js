@@ -2,7 +2,7 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Text, Card, Button, Icon } from "react-native-elements";
 
-const AchivementCard = () => {
+const EventHostedCard = () => {
   return (
     <TouchableOpacity>
       <Card
@@ -19,4 +19,4 @@ const AchivementCard = () => {
   );
 };
 
-export default AchivementCard;
+export default EventHostedCard;

@@ -14,6 +14,24 @@ import { ScrollView } from "react-native-gesture-handler";
 import Loading from "../../shared/loading";
 import { getCurrentProfile } from "../../Redux/actions/profile";
 import AchivementCard from "./achivementCard";
+import { TabView, SceneMap } from "react-native-tab-view";
+import EventHostedCard from "./evnetHostedcard";
+
+const achivements = () => (
+  <View>
+    <AchivementCard />
+    <AchivementCard />
+    <AchivementCard />
+    <AchivementCard />
+  </View>
+);
+
+const hostedEvents = () => (
+  <View>
+    <EventHostedCard />
+    <EventHostedCard />
+  </View>
+);
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -26,6 +44,17 @@ const Profile = ({ navigation }) => {
     myevents,
   } = userProfileInfo.userProfile;
 
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", title: "Achivements" },
+    { key: "second", title: "Hosted Events" },
+  ]);
+
+  const renderScene = SceneMap({
+    first: achivements,
+    second: hostedEvents,
+  });
+
   // Setting the visibility of Modal
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -34,43 +63,32 @@ const Profile = ({ navigation }) => {
     return <Loading />;
   } else {
     return (
-      <View
-        style={{
-          padding: 10,
-          borderColor: "coral",
-          borderWidth: 2,
-          height: "100%",
-        }}
-      >
-        <Modal
-          style={styles.overlay}
-          isVisible={modalOpen}
-          backdropColor="#3e3f42"
-          animationIn="fadeInUp"
-          animationOut="fadeOutDown"
-          animationInTiming={200}
-          animationOutTiming={200}
-          backdropTransitionInTiming={400}
-          backdropTransitionOutTiming={400}
-          onBackButtonPress={() => setModalOpen(false)}
-        >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always">
-              <EditProfile setModalOpen={setModalOpen} />
-            </ScrollView>
-          </TouchableWithoutFeedback>
-        </Modal>
-        <View
-          style={{
-            padding: 10,
-            borderColor: "coral",
-            borderWidth: 2,
-            height: "100%",
-          }}
-        >
+      <ScrollView>
+        <View style={{ flexDirection: "column" }}>
+          <Modal
+            style={styles.overlay}
+            isVisible={modalOpen}
+            backdropColor="#3e3f42"
+            animationIn="fadeInUp"
+            animationOut="fadeOutDown"
+            animationInTiming={200}
+            animationOutTiming={200}
+            backdropTransitionInTiming={400}
+            backdropTransitionOutTiming={400}
+            onBackButtonPress={() => setModalOpen(false)}
+          >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <ScrollView
+                style={{ flex: 1 }}
+                keyboardShouldPersistTaps="always"
+              >
+                <EditProfile setModalOpen={setModalOpen} />
+              </ScrollView>
+            </TouchableWithoutFeedback>
+          </Modal>
           <View
             style={{
-              height: "12%",
+              height: "6%",
               alignItems: "center",
               justifyContent: "center",
               backgroundColor: "gray",
@@ -85,14 +103,14 @@ const Profile = ({ navigation }) => {
             activeOpacity={1}
             containerStyle={{
               position: "absolute",
-              top: "6%",
+              top: "1%",
               left: "38%",
               // alignItems: 'center',
             }}
           />
-          <View style={{ position: "relative", top: "13%" }}>
+          <View style={{ position: "relative", top: "3%" }}>
             <View style={{ alignItems: "center" }}>
-              <Text style={{ fontSize: 20, color: "#4ecca3" }}>{name}</Text>
+              <Text style={{ fontSize: 20 }}>{name}</Text>
             </View>
 
             <View
@@ -111,48 +129,31 @@ const Profile = ({ navigation }) => {
                 </Text>
               </Text>
             </View>
-            <Text style={{ fontSize: 14, color: "#000000" }}>
+            <Text
+              style={{ fontSize: 14, color: "#000000", marginHorizontal: 10 }}
+            >
               About:{" "}
               <Text style={{ fontSize: 12, color: "#888888" }}>
                 {bio ? bio : "Please fill this pepole want to know about you"}
               </Text>
             </Text>
           </View>
-          <View
-            style={{
-              position: "relative",
-              top: "13%",
-              width: 80,
-              alignSelf: "center",
-              marginVertical:5,
-            }}
-          >
-            <Button
-              title="Edit"
-              onPress={() => setModalOpen(true)}
-              style={{}}
+          <View style={{ flexDirection: "column", top: "3%" }}>
+            <View
+              style={{ marginVertical: 5, width: "20%", alignSelf: "center" }}
+            >
+              <Button title="Edit" onPress={() => setModalOpen(true)} />
+            </View>
+
+            <TabView
+              navigationState={{ index, routes }}
+              renderScene={renderScene}
+              onIndexChange={setIndex}
+              style={{backdropColor:'#4ecca3'}}
             />
           </View>
-
-          <View
-            style={{
-              position: "relative",
-              top: "13%",
-              alignSelf: "center",
-            }}
-          >
-            <Text style={{ fontSize: 20, color: "#000000", alignSelf:"center" }}>Achivements</Text>
-            <View>
-              <ScrollView horizontal={true}>
-                <AchivementCard/>
-                <AchivementCard/>
-                <AchivementCard/>
-                <AchivementCard/>
-              </ScrollView>
-            </View>
-          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 };
