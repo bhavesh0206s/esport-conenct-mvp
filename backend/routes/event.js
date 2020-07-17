@@ -73,6 +73,7 @@ module.exports = (app) => {
       if (time) eventitems.time = time;
 
       try {
+        console.log(eventitems)
         let event = new Event(eventitems);
 
         let eventsuccess = await event.save();

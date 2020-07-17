@@ -11,20 +11,18 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 
 const eventSchema = yup.object({
-  description: yup.string(),
-  game: yup.string(),
-  time: yup.string(),
-  contact: yup.string(),
-  title: yup.string(),
-  prizepool: yup.number(),
-  entryFee: yup.number(),
+  description: yup.string().required(),
+  game: yup.string().required(),
+  time: yup.string().required(),
+  contact: yup.string().required(),
+  title: yup.string().required(),
+  prizepool: yup.number().required(),
+  entryFee: yup.number().required(),
 });
 
 const AddEvent = ({setModalOpen, setOpenPopUp, hostEvent}) => {
 
   const navigation = useNavigation();
-
-  const dispatch = useDispatch();
   
   const [typeTourn, setTypeTourn] = useState('');
   
@@ -48,7 +46,7 @@ const AddEvent = ({setModalOpen, setOpenPopUp, hostEvent}) => {
         validationSchema={eventSchema}
         onSubmit={(values, actions) => {
           let currentDatetime = moment(values.time, "DD-MM-YYYY hh:mm:ss");
-          values.time = currentDatetime.toString();
+          values.time = currentDatetime;
           if(!values.entryFee){
             values.entryFee = 'FREE';
           }

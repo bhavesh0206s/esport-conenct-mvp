@@ -19,15 +19,15 @@ const eventSchema = new Schema({
     contentType: String,
     // required: true,
   },
-  eventdate: {
-    from: Date,
-    to: Date,
-    hours: String,
+  time: {
+    type: Date
   },
+  entryFee: String,
   prizepool: Number,
   teamsize: Number,
   title: String,
   gamelink: String,
+  contact: Number,
   date: {
     type: Date,
     default: Date.now,

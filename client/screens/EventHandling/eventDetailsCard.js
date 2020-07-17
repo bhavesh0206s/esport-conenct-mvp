@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Text, Card, Button, Icon } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
@@ -6,6 +6,9 @@ import { FontDisplay } from "expo-font";
 
 const EventDetailsCard = ({ route }) => {
   const { eventdetails } = route.params;
+  useEffect(() =>{
+    console.log(eventdetails)
+  },[])
   const {
     title,
     description,
@@ -13,7 +16,7 @@ const EventDetailsCard = ({ route }) => {
     time,
     teamsize,
     prizepool,
-    entryfee,
+    entryFee,
     contact,
   } = eventdetails;
   return (
@@ -34,7 +37,7 @@ const EventDetailsCard = ({ route }) => {
               Teamsize: <Text>{teamsize}</Text>
             </Text>
             <Text>
-              Entryfee: <Text>{entryfee}</Text>
+              Entryfee: <Text>{entryFee}</Text>
             </Text>
             
           </View>
