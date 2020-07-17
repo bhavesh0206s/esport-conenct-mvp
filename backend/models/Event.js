@@ -20,7 +20,7 @@ const eventSchema = new Schema({
     // required: true,
   },
   time: {
-    type: Date
+    type: Date,
   },
   entryFee: String,
   prizepool: Number,
