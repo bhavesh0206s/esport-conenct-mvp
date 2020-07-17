@@ -22,7 +22,7 @@ module.exports = (app) => {
 
       res.json(profile);
     } catch (err) {
-      console.error('error from profile: ',err.message);
+      console.error('error from profile: ', err.message);
       res.status(500).send('Server Error');
     }
   });
@@ -83,7 +83,7 @@ module.exports = (app) => {
         { $set: profileFields },
         { new: true, upsert: true }
       );
-      console.log('updating new profile')
+      console.log('updating new profile');
       res.json(profile);
     } catch (err) {
       res.status(500).send('Server Error');
@@ -96,7 +96,7 @@ module.exports = (app) => {
   // access Public
   // This is not for specific user because it returns multiple users almost matching with same name
   // This will be helpfull when someone searches for another player or organization
-  app.get('/api/profile/user/:username', async (req, res) => {
+  app.get('/api/profile/userbyname/:username', async (req, res) => {
     try {
       const profiles = await Profile.find({
         name: { $regex: '^' + req.params.username, $options: 'i' },
@@ -105,7 +105,7 @@ module.exports = (app) => {
         .limit(10);
       // This {{followers: -1}} means that users with the highest followers will be shown first
       res.json(profiles);
-      console.log(profiles)
+      console.log(profiles);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -116,7 +116,7 @@ module.exports = (app) => {
   // @desc     Get profile by user ID
   // @access   Public
   // This is for specific user searched
-  app.get('/api/profile/user/:user_id', async (req, res) => {
+  app.get('/api/profile/userbyid/:user_id', async (req, res) => {
     try {
       const profile = await Profile.findOne({
         user: req.params.user_id,
