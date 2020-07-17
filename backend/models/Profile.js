@@ -87,23 +87,23 @@ const profileSchema = new Schema({
   gameinterest: {
     type: [String],
   },
-  social: {
-    // youtube: {
-    //   type: String,
-    // },
-    // twitter: {
-    //   type: String,
-    // },
-    // facebook: {
-    //   type: String,
-    // },
-    // linkedin: {
-    //   type: String,
-    // },
-    instagram: {
-      type: String,
-    },
-  },
+  // social: {
+  // youtube: {
+  //   type: String,
+  // },
+  // twitter: {
+  //   type: String,
+  // },
+  // facebook: {
+  //   type: String,
+  // },
+  // linkedin: {
+  //   type: String,
+  // },
+  //   instagram: {
+  //     type: String,
+  //   },
+  // },
   // Otherlinks like mineown website link or as origanization i have website to share here
   // platformname can be like mywebsite or other gaming platformnames and its link
   // otherlinks: [
