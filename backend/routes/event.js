@@ -3,6 +3,7 @@ const { check, validationResult } = require('express-validator');
 const Event = require('../models/Event');
 const Profile = require('../models/Profile');
 const verify = require('../verifytokenmw/verify_mv');
+const mongoose = require('mongoose');
 
 module.exports = (app) => {
   app.get('/api/event/allevents', verify, async (req, res) => {
@@ -24,7 +25,6 @@ module.exports = (app) => {
       // .limit(10);
       // This {{participants: -1}} means that event with the highest participants will be shown first
       res.json(events);
-     
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -58,7 +58,7 @@ module.exports = (app) => {
         title,
         teamsize,
         poolprize,
-        time,
+        // time,
       } = req.body;
       // build eventitems object
       let eventitems = {};
@@ -70,14 +70,12 @@ module.exports = (app) => {
       if (contact) eventitems.contact = contact;
       if (teamsize) eventitems.teamsize = teamsize;
       if (poolprize) eventitems.poolprize = poolprize;
-      if (time) eventitems.time = time;
+      // if (time) eventitems.time = time;
 
       try {
         let event = new Event(eventitems);
 
         let eventsuccess = await event.save();
-
-        console.log(eventsuccess);
 
         if (!eventsuccess) {
           return res.json({
@@ -106,4 +104,56 @@ module.exports = (app) => {
       }
     }
   );
+
+  // Register in event
+  // Array.isArray(v4)
+  app.post('/api/event/registerinevent', verify, async (req, res) => {
+    let { registerinfo, teamsize, eventId, eventdetails } = req.body;
+
+    try {
+      let event = await Event.findById(eventId);
+
+      if (teamsize <= 1) {
+        event.registeredplayerinfo.push(registerinfo);
+
+        await event.save();
+
+        let playerprofile = await Profile.findOne({
+          user: registerinfo.user,
+        });
+
+        playerprofile.myevents.push(eventdetails);
+
+        await playerprofile.save();
+
+        res.json({ playerevents: playerprofile.myevents, event });
+      } else {
+        event.registeredteaminfo.push({
+          teamname: registerinfo.teamname,
+          teammembersinfo: registerinfo.teammembersinfo,
+        });
+
+        await event.save();
+
+        registerinfo.teammembersinfo.forEach(async (useritem) => {
+          try {
+            let playerprofile = await Profile.findOne({
+              user: useritem.user,
+            });
+
+            playerprofile.myevents.push(eventdetails);
+
+            await playerprofile.save();
+          } catch (err) {
+            console.error(err.message);
+          }
+        });
+
+        res.json({ event });
+      }
+    } catch (err) {
+      res.status(500).send('Server Error');
+      console.error(err.message);
+    }
+  });
 };

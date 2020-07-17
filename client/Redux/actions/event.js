@@ -10,17 +10,22 @@ import axios from 'axios';
 import { ipAddress } from '../ipaddress';
 import { setAlert } from './alert';
 import { getCurrentProfile } from './profile';
+import {loading} from './loading'
 
 //  Fetch all events to show the users/players
 export const fetchallEvents = () => async (dispatch) => {
   try {
+    dispatch(loading(true))
     const res = await axios.get(`http://${ipAddress}:3000/api/event/allevents`);
     dispatch({
       type: FETCHEVENTS_SUCCESS,
       payload: res.data,
     });
+    console.log(res.data)
+    dispatch(loading(false))
   } catch (err) {
     console.log(`error from fetchallevents : ${err.message}`);
+    dispatch(loading(false))
   }
 };
 

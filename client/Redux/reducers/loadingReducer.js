@@ -1,6 +1,6 @@
-import { SET_ALERT, LOADING} from '../actions/types';
+import {LOADING} from '../actions/types';
 
-const initialState = false;
+const initialState = true;
 
 export default (state = initialState, action) => {
   const { type, payload } = action;
