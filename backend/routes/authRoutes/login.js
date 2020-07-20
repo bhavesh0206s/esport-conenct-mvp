@@ -52,6 +52,7 @@ module.exports = (app) => {
           user: {
             id: user._id,
             name: user.name,
+            email: user.email,
           },
         };
         // 25200 means 7 hours one user can be online with the given token

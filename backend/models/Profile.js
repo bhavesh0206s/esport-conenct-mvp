@@ -6,6 +6,7 @@ const profileSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
+  email: String,
   DOB: Date,
   myhostedevents: [
     {
@@ -190,6 +191,7 @@ const profileSchema = new Schema({
   //     },
   //   },
   // ],
+  contact: Number,
   date: {
     type: Date,
     default: Date.now,
