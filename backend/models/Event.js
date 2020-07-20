@@ -17,11 +17,12 @@ const eventSchema = new Schema({
   image: {
     data: Buffer,
     contentType: String,
-    // required: true,
+    //required: true,
   },
-  // time: {
-  //   type: Date,
-  // },
+  time: {
+    type: Date,
+    required: true,
+  },
   entryFee: String,
   prizepool: Number,
   teamsize: Number,

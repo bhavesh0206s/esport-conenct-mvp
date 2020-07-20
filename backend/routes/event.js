@@ -59,8 +59,8 @@ module.exports = (app) => {
         entryFee,
         title,
         teamsize,
-        poolprize,
-        // time,
+        prizepool,
+        time,
       } = req.body;
       // build eventitems object
       let eventitems = {};
@@ -71,8 +71,8 @@ module.exports = (app) => {
       if (entryFee) eventitems.entryFee = entryFee;
       if (contact) eventitems.contact = contact;
       if (teamsize) eventitems.teamsize = teamsize;
-      if (poolprize) eventitems.poolprize = poolprize;
-      // if (time) eventitems.time = time;
+      if (prizepool) eventitems.prizepool = prizepool;
+      if (time) eventitems.time = time;
 
       try {
         let event = new Event(eventitems);

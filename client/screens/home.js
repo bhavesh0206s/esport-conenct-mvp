@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
-  Button,
   FlatList,
   RefreshControl,
-  ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../shared/loading';

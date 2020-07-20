@@ -21,6 +21,7 @@ export const fetchallEvents = () => async (dispatch) => {
       type: FETCHEVENTS_SUCCESS,
       payload: res.data,
     });
+    console.log(res.data)
     dispatch(loading(false))
   } catch (err) {
     console.log(`error from fetchallevents : ${err.message}`);

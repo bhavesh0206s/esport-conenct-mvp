@@ -17,7 +17,7 @@ const eventSchema = yup.object({
   contact: yup.string().required(),
   title: yup.string().required(),
   prizepool: yup.number().required(),
-  entryFee: yup.number().required(),
+  entryFee: yup.number(),
 });
 
 const AddEvent = ({setModalOpen, setOpenPopUp, hostEvent}) => {
@@ -50,12 +50,11 @@ const AddEvent = ({setModalOpen, setOpenPopUp, hostEvent}) => {
           if(!values.entryFee){
             values.entryFee = 'FREE';
           }
+          console.log(values)
           navigation.navigate('Confirm Event', {info: values})
           // actions.resetForm();
-          // dispatch(AddMyEvent(values));
           setModalOpen()
           
-          // setOpenPopUp(true)
         }}
       >
         {(formikprops) => (
@@ -107,7 +106,7 @@ const AddEvent = ({setModalOpen, setOpenPopUp, hostEvent}) => {
                 color: '#bec2bf'
               }}
             />
-            {typeTourn === 'Paid' ? (
+            {typeTourn == 'Paid' ? (
               <Input
                 placeholder="Entry Fees..."
                 onChangeText={formikprops.handleChange('entryFee')}

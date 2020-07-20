@@ -1,19 +1,18 @@
 import React, { useEffect } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Text, Card, Button, Icon } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { FontDisplay } from "expo-font";
+import moment from 'moment';
+import { useState } from "react";
 
 const EventDetailsCard = ({ route }) => {
-  const { eventdetails } = route.params;
-  useEffect(() =>{
-    console.log(eventdetails)
-  },[])
+  const { eventdetails, imageUri } = route.params;
+  const [eventTime, setEventTime] = useState(moment(eventdetails.time).format("dddd, MMMM Do YYYY, h:mm:ss a"))
   const {
     title,
     description,
     game,
-    time,
     teamsize,
     prizepool,
     entryFee,
@@ -23,42 +22,26 @@ const EventDetailsCard = ({ route }) => {
     <ScrollView>
       <Card
         title={title}
-        image={require("../../assets/battlefield.jpg")}
+        image={imageUri}
         titleStyle={{ fontSize: 20 }}
+        containerStyle={{marginBottom: 20}}
       >
-        <View style={{ flexDirection: "row", justifyContent: "space-around", marginVertical:10 }}>
-          <View
-            style={{ flexDirection: "column", justifyContent: "space-between" }}
-          >
-            <Text>
-              Game: <Text>{game}</Text>
-            </Text>
-            <Text>
-              Teamsize: <Text>{teamsize}</Text>
-            </Text>
-            <Text>
-              Entryfee: <Text>{entryFee}</Text>
-            </Text>
-            
-          </View>
-          <View
-            style={{ flexDirection: "column", justifyContent: "space-between" }}
-          >
-            <Text>
-              Date&Time: <Text>{time}</Text>
-            </Text>
-            <Text>
-              Teamsize: <Text>{teamsize}</Text>
-            </Text>
-            <Text>
-              Contact: <Text>{contact}</Text>
-            </Text>
-          </View>
-        </View>
-        <Text style={{ fontSize: 20 }}>Description:-</Text>
-        <Text style={{ marginBottom: 10 }}>{description}</Text>
+        <Text style={styles.title}>Game: </Text>
+        <Text style={styles.field}>{game}</Text>
+        <Text style={styles.title}>Teamsize: </Text>
+        <Text style={styles.field}>{teamsize}</Text>
+        <Text style={styles.title}>Entryfee: </Text>
+        <Text style={styles.field}>{entryFee}</Text>
+        <Text style={styles.title}>Prize pool: </Text>
+        <Text style={styles.field}>{prizepool}</Text>
+        <Text style={styles.title}>Date&Time:</Text>
+        <Text style={styles.field}>{eventTime.toString()}</Text>
+        <Text style={styles.title}>Contact: </Text>
+        <Text style={styles.field}>{contact}</Text>
+        <Text style={styles.title}>Description:-</Text>
+        <Text style={styles.field}>{description}</Text>
         <Button
-          icon={<Icon name="code" color="#ffffff" />}
+          icon={<Icon name="form" type="antdesign" color="#ffffff" />}
           buttonStyle={{
             borderRadius: 0,
             marginLeft: 0,
@@ -74,5 +57,15 @@ const EventDetailsCard = ({ route }) => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {
+    color: 'grey'
+  },
+  field:{
+    fontSize: 18,
+    marginBottom: 10
+  },
+})
 
 export default EventDetailsCard;

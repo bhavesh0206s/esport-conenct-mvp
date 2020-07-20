@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { HeaderBackButton } from '@react-navigation/stack';
 import VerifyModel from '../EventHandling/verifyModel';
 import { AddMyEvent } from '../../Redux/actions/event';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const ConfirmEvent = ({route}) => {
   const { info } = route.params
@@ -40,7 +41,8 @@ const ConfirmEvent = ({route}) => {
   }, [navigation]);
 
   return(
-    <View style={styles.content}>
+    <ScrollView>
+<View style={styles.content}>
       <View>
         <Text style={styles.title}>Selected Game:</Text>
         <Text style={styles.field}>{game}</Text>
@@ -79,6 +81,8 @@ const ConfirmEvent = ({route}) => {
       </View>
       <VerifyModel openPopUp={openPopUp} navigation={navigation} setOpenPopUp={setOpenPopUp}/>
     </View>
+    </ScrollView>
+    
   )
 }
 
