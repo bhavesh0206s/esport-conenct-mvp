@@ -4,11 +4,31 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../../config/keys');
 const User = require('../../models/User');
+const Profile = require('../../models/Profile');
 
 // @route POST api/signup
 // desc   test route
 // access Public
 module.exports = (app) => {
+  app.post('/api/signup/:username', async (req ,res)=>{
+    try{
+      const username = req.params.username;
+      let user = await User.findOne({ username });
+      if(user){
+        return res
+        .status(404)
+        .json({ errors: [{ msg: 'Username already taken!' }] });
+      }else{
+        user.username = username;
+        await user.save() 
+        res.json(user)
+      }
+    }catch(e){
+      res.status(500).send('Server Error');
+      console.error('login error signup server: ', err.message);
+    }
+  });
+
   app.post(
     '/api/signup',
     [

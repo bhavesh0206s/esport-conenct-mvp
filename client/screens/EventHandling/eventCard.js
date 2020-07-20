@@ -23,6 +23,7 @@ const EventCard = ({ item, navigation }) => {
       <Card
         title={item[0].title}
         image={imageUri}
+        containerStyle={{marginBottom: 10}}
       >
         <Text style={{ marginBottom: 10 }}>{item[0].description}</Text>
         <Button

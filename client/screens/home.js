@@ -12,9 +12,8 @@ import EventCard from './EventHandling/eventCard';
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { allEvents, userProfile, loading } = useSelector((state) => ({
+  const { allEvents, loading } = useSelector((state) => ({
     allEvents: state.event.allEvents,
-    userProfile: state.profile.userProfile,
     loading: state.loading
   }));
 
@@ -29,9 +28,11 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     console.log('Home Page refreshed');
     setTimeout(() => dispatch(fetchallEvents()), 100);
+    
   }, []);
 
-  if (loading) {
+
+  if (allEvents.length === 0|| loading) {
     return <Loading />;
   } else {
     return (

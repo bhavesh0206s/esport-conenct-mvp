@@ -32,6 +32,7 @@ const MainComponent = () => {
       setTimeout(() => {
         setIsReady(true);
       }, 500);
+      // await AsyncStorage.removeItem('token');
     };
     userLoad();
     console.log('Maincomponent page refreshed');

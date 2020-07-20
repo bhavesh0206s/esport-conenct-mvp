@@ -7,7 +7,6 @@ import { Input, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { AddMyEvent} from '../../Redux/actions/event';
 import RNPickerSelect from 'react-native-picker-select';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 
 const eventSchema = yup.object({
@@ -20,7 +19,7 @@ const eventSchema = yup.object({
   entryFee: yup.number(),
 });
 
-const AddEvent = ({setModalOpen, setOpenPopUp, hostEvent}) => {
+const AddEvent = ({setModalOpen}) => {
 
   const navigation = useNavigation();
   

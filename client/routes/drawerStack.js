@@ -6,7 +6,6 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import TabStack from './tabStack';
 import MainStack from './mainStack';
 import AboutStack from './otherStack/aboutStack';
 import { Button, Avatar } from 'react-native-elements';
@@ -14,7 +13,6 @@ import { StyleSheet, View, Text, useWindowDimensions } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, loadUser } from '../Redux/actions/auth';
-import Profile from '../routes/otherStack/profileStack';
 import Loading from '../shared/loading';
 import { getCurrentProfile } from '../Redux/actions/profile';
 
@@ -23,7 +21,6 @@ const Drawer = createDrawerNavigator();
 const LogoutContentComponent = (props) => {
   const dispatch = useDispatch();
   const profileInfo = useSelector((state) => state.profile);
-  const profileLoading = profileInfo.loading;
 
   if (!profileInfo.userProfile) {
     console.log('DrawerStack loading is happening');

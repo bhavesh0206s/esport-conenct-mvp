@@ -9,7 +9,11 @@ import { useNavigation } from '@react-navigation/native';
 const Search = ({ navigation }) => {
   const dispatch = useDispatch();
   const searchedevents = useSelector((state) => state.event.searchedevents);
-
+  const { allEvents, loading } = useSelector((state) => ({
+    allEvents: state.event.allEvents,
+    loading: state.loading
+  }));
+  console.log(loading)
   return (
     <View>
       {!searchedevents? (

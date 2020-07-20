@@ -7,10 +7,9 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   GOOGLE_LOGIN,
+  CREATE_USERNAME,
   // ACCOUNT_DELETED,
 } from '../actions/types';
-
-import { AsyncStorage } from 'react-native';
 
 const initialState = {
   token: null,
@@ -26,7 +25,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        isAuthenticated: true,
+
       };
     case LOGIN_SUCCESS:
       console.log('LOGIN/REGISTER-SUCCESSFULL');
@@ -41,6 +40,13 @@ export default (state = initialState, action) => {
         isAuthenticated: true,
         loading: false,
       };
+    case CREATE_USERNAME:{
+      console.log('CREATE_USERNAME-SUCCESSFULL')
+      return{
+        isAuthenticated: true,
+        loading: false,
+      }
+    }
     case USER_LOADED:
       console.log('USERLOADING-SUCCESSFULL');
       return {

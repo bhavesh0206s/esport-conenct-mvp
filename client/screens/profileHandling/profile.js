@@ -13,25 +13,7 @@ import Modal from "react-native-modal";
 import { ScrollView } from "react-native-gesture-handler";
 import Loading from "../../shared/loading";
 import { getCurrentProfile } from "../../Redux/actions/profile";
-import AchivementCard from "./achivementCard";
-import { TabView, SceneMap } from "react-native-tab-view";
-import EventHostedCard from "./evnetHostedcard";
-
-const achivements = () => (
-  <View>
-    <AchivementCard />
-    <AchivementCard />
-    <AchivementCard />
-    <AchivementCard />
-  </View>
-);
-
-const hostedEvents = () => (
-  <View>
-    <EventHostedCard />
-    <EventHostedCard />
-  </View>
-);
+import ProfileTabView from "./tabView";
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -44,17 +26,6 @@ const Profile = ({ navigation }) => {
     myevents,
   } = userProfileInfo.userProfile;
 
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: "first", title: "Achivements" },
-    { key: "second", title: "Hosted Events" },
-  ]);
-
-  const renderScene = SceneMap({
-    first: achivements,
-    second: hostedEvents,
-  });
-
   // Setting the visibility of Modal
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -63,7 +34,7 @@ const Profile = ({ navigation }) => {
     return <Loading />;
   } else {
     return (
-      <ScrollView>
+      <>
         <View style={{ flexDirection: "column" }}>
           <Modal
             style={styles.overlay}
@@ -88,14 +59,14 @@ const Profile = ({ navigation }) => {
           </Modal>
           <View
             style={{
-              height: "6%",
+              height: 80,
               alignItems: "center",
               justifyContent: "center",
               backgroundColor: "gray",
             }}
           ></View>
           <Avatar
-            size={100}
+            size={80}
             rounded
             overlayContainerStyle={{ backgroundColor: "black" }}
             icon={{ name: "user", type: "font-awesome-5" }}
@@ -103,12 +74,11 @@ const Profile = ({ navigation }) => {
             activeOpacity={1}
             containerStyle={{
               position: "absolute",
-              top: "1%",
-              left: "38%",
-              // alignItems: 'center',
+              marginTop: 40,
+              marginHorizontal: 135,
             }}
           />
-          <View style={{ position: "relative", top: "3%" }}>
+          <View style={{ position: "relative", paddingTop:70 }}>
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontSize: 20 }}>{name}</Text>
             </View>
@@ -130,7 +100,7 @@ const Profile = ({ navigation }) => {
               </Text>
             </View>
             <Text
-              style={{ fontSize: 14, color: "#000000", marginHorizontal: 10 }}
+              style={{ fontSize: 14, color: "#000000", textAlign:'center' }}
             >
               About:{" "}
               <Text style={{ fontSize: 12, color: "#888888" }}>
@@ -142,18 +112,12 @@ const Profile = ({ navigation }) => {
             <View
               style={{ marginVertical: 5, width: "20%", alignSelf: "center" }}
             >
-              <Button title="Edit" onPress={() => setModalOpen(true)} />
+              <Button title="Edit" buttonStyle={{marginBottom: 10}} onPress={() => setModalOpen(true)} />
             </View>
-
-            <TabView
-              navigationState={{ index, routes }}
-              renderScene={renderScene}
-              onIndexChange={setIndex}
-              style={{backdropColor:'#4ecca3'}}
-            />
           </View>
         </View>
-      </ScrollView>
+      <ProfileTabView/>
+      </>
     );
   }
 };

@@ -118,6 +118,9 @@ const profileSchema = new Schema({
     type: String,
     default: '',
   },
+  username: {
+    type: String
+  },
   // numoffollowers:{type:Number},
   // numoffollowing:{type:Number},
   followers: [

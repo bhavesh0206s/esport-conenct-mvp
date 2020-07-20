@@ -47,16 +47,19 @@ module.exports = (app) => {
       // platformname,
       // link,
       name,
+      username,
       // tag,
     } = req.body;
-
+    console.log(req.body)
     // build profile object
     let profileFields = {};
     profileFields.user = req.user.id;
     if (name) profileFields.name = name;
+
     // profileFields.achievements = [];
     // profileFields.otherlinks = [];
     profileFields.bio = bio;
+    profileFields.username = username;
     profileFields.followers = followers;
     profileFields.following = following;
     // if (location) profileFields.location = location;
