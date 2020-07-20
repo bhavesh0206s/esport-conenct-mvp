@@ -38,6 +38,7 @@ module.exports = (app) => {
       DOB,
       followers,
       following,
+      contact,
       // eventname,
       // eventdescription,
       // location,
@@ -46,17 +47,18 @@ module.exports = (app) => {
       // facebook,
       // platformname,
       // link,
-      name,
       // tag,
     } = req.body;
 
     // build profile object
     let profileFields = {};
     profileFields.user = req.user.id;
-    if (name) profileFields.name = name;
+    profileFields.name = req.user.name;
+    profileFields.email = req.user.email;
     // profileFields.achievements = [];
     // profileFields.otherlinks = [];
     profileFields.bio = bio;
+    profileFields.contact = contact;
     profileFields.followers = followers;
     profileFields.following = following;
     // if (location) profileFields.location = location;

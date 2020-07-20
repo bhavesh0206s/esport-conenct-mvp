@@ -53,7 +53,8 @@ module.exports = (app) => {
         let payload = {
           user: {
             id: user._id,
-            name: name,
+            name,
+            email,
           },
         };
 
