@@ -24,6 +24,7 @@ const Profile = ({ navigation }) => {
     bio,
     name,
     myevents,
+    username,
   } = userProfileInfo.userProfile;
 
   // Setting the visibility of Modal
@@ -42,10 +43,6 @@ const Profile = ({ navigation }) => {
             backdropColor="#3e3f42"
             animationIn="fadeInUp"
             animationOut="fadeOutDown"
-            animationInTiming={200}
-            animationOutTiming={200}
-            backdropTransitionInTiming={400}
-            backdropTransitionOutTiming={400}
             onBackButtonPress={() => setModalOpen(false)}
           >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -80,10 +77,10 @@ const Profile = ({ navigation }) => {
           />
           <View style={{ position: "relative", paddingTop:70 }}>
             <View style={{ alignItems: "center" }}>
-              <Text style={{ fontSize: 20 }}>{name}</Text>
+              <Text style={{ fontSize: 20 }}>{name} {username ? username : ''}</Text>
             </View>
 
-            <View
+            {/* <View
               style={{ flexDirection: "row", justifyContent: "space-around" }}
             >
               <Text style={{ fontSize: 14, color: "#000000" }}>
@@ -98,7 +95,7 @@ const Profile = ({ navigation }) => {
                   {following ? following.length : 0}
                 </Text>
               </Text>
-            </View>
+            </View> */}
             <Text
               style={{ fontSize: 14, color: "#000000", textAlign:'center' }}
             >

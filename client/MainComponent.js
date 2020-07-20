@@ -8,7 +8,7 @@ import { globalStyles } from './styles/global';
 import { useSelector, useDispatch } from 'react-redux';
 import DrawerStack from './routes/drawerStack';
 import Alert from './shared/alert';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import setAuthToken from './Redux/setAuthToken';
 import { loadUser } from './Redux/actions/auth';
 import { getCurrentProfile } from './Redux/actions/profile';
@@ -19,6 +19,7 @@ const MainComponent = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const isAuthenticated = auth.isAuthenticated;
+  const isUserNameVerified = auth.isUserNameVerified;
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const MainComponent = () => {
       <ThemeProvider theme={theme}>
         <View style={globalStyles.container}>
           <Alert />
-          {!isAuthenticated ? <AuthStack /> : <DrawerStack />}
+          {!isAuthenticated && !isUserNameVerified ? <AuthStack /> : <DrawerStack />}
         </View>
       </ThemeProvider>
     );

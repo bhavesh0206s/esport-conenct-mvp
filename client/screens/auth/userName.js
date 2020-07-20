@@ -11,10 +11,10 @@ const userNameSchema = yup.object({
   bio: yup.string().required(),
 });
 
-const UserName = () => {
+const UserName = ({route}) => {
 
   const dispatch = useDispatch();
-
+  const {name} = route.params
   return (
     <View style={styles.container}>
       <Formik
@@ -24,7 +24,7 @@ const UserName = () => {
         }}
         validationSchema={userNameSchema}
         onSubmit={(values) => {
-          dispatch(username(values.userName, values.bio));
+          dispatch(username(values.userName, values.bio, name));
         }}
       >
         {(formikprops) => (

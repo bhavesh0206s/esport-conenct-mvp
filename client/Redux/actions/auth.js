@@ -15,7 +15,7 @@ import {
 } from './types';
 import axios from 'axios';
 import setAuthToken from '../setAuthToken';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { ipAddress } from '../ipaddress';
 import { createProfile, getCurrentProfile } from './profile';
 import { setAlert } from './alert';
@@ -45,20 +45,21 @@ export const loadUser = () => async (dispatch) => {
     });
   }
 };
-export const username = (username, bio) => async (dispatch) =>{
+export const username = (username, bio, name) => async (dispatch) =>{
 
   try {
     const res = await axios.post(
-      `http://${ipAddress}:3000/api/signup/${username}`
+      `http://${ipAddress}:3000/api/signup/${name}/${username}`
     );
 
     dispatch({
       type: CREATE_USERNAME,
       payload: res.data,
     });
-
+    let argu = {username,bio}
     console.log('username succes');
-    dispatch(createProfile({bio}));
+    dispatch(createProfile(argu));
+    dispatch(loadUser());
 
   } catch (err) {
     const errors = err.response.data.errors;
@@ -97,7 +98,7 @@ export const register = (name, email, password) => async (dispatch) => {
 
     console.log('register succes');
 
-    dispatch(loadUser());
+    
     dispatch(createProfile({name}))
   } catch (err) {
     const errors = err.response.data.errors;

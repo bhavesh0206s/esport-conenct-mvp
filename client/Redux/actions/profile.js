@@ -12,7 +12,7 @@ import {
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // Get current users profile
 // This will run when user will login, to save his data in store and use it

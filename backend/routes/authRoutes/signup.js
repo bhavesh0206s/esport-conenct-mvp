@@ -10,10 +10,18 @@ const Profile = require('../../models/Profile');
 // desc   test route
 // access Public
 module.exports = (app) => {
-  app.post('/api/signup/:username', async (req ,res)=>{
+  app.post('/api/signup/:name/:username', async (req ,res)=>{
     try{
       const username = req.params.username;
+      const name = req.params.name;
+      console.log(username)
       let user = await User.findOne({ username });
+      if(user === null){
+        user = await User.findOne({ name });
+        user.username = username;
+        await user.save() 
+        return res.json(user)
+      }
       if(user){
         return res
         .status(404)
@@ -21,11 +29,11 @@ module.exports = (app) => {
       }else{
         user.username = username;
         await user.save() 
-        res.json(user)
+        return res.json(user)
       }
     }catch(e){
       res.status(500).send('Server Error');
-      console.error('login error signup server: ', err.message);
+      console.error('login error signup server: ', e.message);
     }
   });
 
@@ -65,7 +73,7 @@ module.exports = (app) => {
         // Encrypt password
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
-
+        user.username = '';
         // Save data to atlas
         await user.save(); // In atlas data will be saved
 

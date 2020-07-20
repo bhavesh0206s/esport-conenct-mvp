@@ -53,7 +53,7 @@ const SignUp = ({ visible, setVisible, navigation }) => {
             validationSchema={signUpSchema}
             onSubmit={async ({ name, email, password }) => {
               dispatch(register(name, email.toLowerCase(), password));
-              navigation.navigate('UserName')
+              navigation.navigate('UserName', {name})
               setVisible(false)
             }}
           >

@@ -47,32 +47,21 @@ module.exports = (app) => {
       // facebook,
       // platformname,
       // link,
-<<<<<<< HEAD
       name,
       username,
-=======
->>>>>>> 1fedf54907c33efe0af6ba0c49dd706ec36b0bf0
       // tag,
     } = req.body;
-    console.log(req.body)
+
     // build profile object
     let profileFields = {};
+    profileFields.email = req.user.email;
     profileFields.user = req.user.id;
-<<<<<<< HEAD
     if (name) profileFields.name = name;
 
     // profileFields.achievements = [];
     // profileFields.otherlinks = [];
     profileFields.bio = bio;
     profileFields.username = username;
-=======
-    profileFields.name = req.user.name;
-    profileFields.email = req.user.email;
-    // profileFields.achievements = [];
-    // profileFields.otherlinks = [];
-    profileFields.bio = bio;
-    profileFields.contact = contact;
->>>>>>> 1fedf54907c33efe0af6ba0c49dd706ec36b0bf0
     profileFields.followers = followers;
     profileFields.following = following;
     // if (location) profileFields.location = location;

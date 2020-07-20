@@ -8,15 +8,15 @@ import AchivementCard from "./achivementCard";
 
 const achivementData = [
   {
-    id: 1,
+    id: 4561232,
     title: 'Pubg Winner'
   },
   {
-    id: 2,
+    id: 7894654,
     title: 'COD Winner'
   },
   {
-    id: 2,
+    id: 7989878,
     title: 'Clash Royale'
   }
 ]
@@ -46,13 +46,13 @@ const ProfileTabView = () => {
   const hostedEvents = () => {
     return (
       <View>
-        {myEvents && (
+        {myEvents !== null || !myEvents ? (
           <FlatList
             data={myEvents}
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => <EventCard item={[item]} />}
           />
-        )}
+        ) : null}
       </View>
     );
   }

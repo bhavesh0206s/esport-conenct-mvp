@@ -70,7 +70,7 @@ const AddEvent = ({setModalOpen}) => {
                 value: null,
                 color: '#bec2bf'
               }}
-            />         
+            />       
             <Input
               placeholder="Tournament Name"
               onChangeText={formikprops.handleChange('title')}
