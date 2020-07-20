@@ -7,7 +7,7 @@ const AchivementCard = () => {
     <TouchableOpacity>
       <Card
         title="Idhar achivement ka title ayega"
-        image={require("../../assets/battlefield.jpg")}
+        image={require("../../assets/pubg.jpg")}
         marginBottom={10}
         featuredTitle='1st position in xyz'
       >
