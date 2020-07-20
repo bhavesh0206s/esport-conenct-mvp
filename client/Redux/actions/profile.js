@@ -9,6 +9,7 @@ import {
   PARTICULARUSER_ERROR,
   GETPARTICULARUSER,
   CLEAR_MYPROFILE,
+  UPADTE_MYPROFILE
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
@@ -26,10 +27,7 @@ export const getCurrentProfile = () => async (dispatch) => {
     });
     console.log('profile added.....');
   } catch (err) {
-    dispatch({
-      type: CLEAR_MYPROFILE,
-      payload: { msg: 'Failed and error in getCurrentProfile' },
-    });
+    console.log('error from getCurrentProfile: ', err.message)
   }
 };
 
@@ -64,15 +62,39 @@ export const createProfile = (formData) => async (dispatch) => {
     console.log('profile created........');
   } catch (err) {
     // const errors = err.response.data.errors;
-    console.log(err.message);
-
-    dispatch({
-      type: CLEAR_MYPROFILE,
-      payload: { msg: 'Failed and error in createProfile' },
-    });
+    console.log('error from createProfile: ',err.message);
   }
 };
 
+export const upadteProfile = (formData) => async (dispatch) => {
+  console.log(formData)
+  try{
+    const token = await AsyncStorage.getItem('token');
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Auth-Token': token,
+      },
+    };
+    console.log('upadating profile.........');
+
+    const res = await axios.post(
+      `http://${ipAddress}:3000/api/profile/update/me`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: UPADTE_MYPROFILE,
+      payload: res.data,
+    });
+    console.log('profile Updated');
+  } catch (err) {
+    // const errors = err.response.data.errors;
+    console.log('error from upadteProfile: ',err.message);
+  }
+};
 // Get all profiles
 // will bring bunch of users searched in input
 export const getProfiles = (username) => async (dispatch) => {
@@ -86,10 +108,7 @@ export const getProfiles = (username) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    dispatch({
-      type: CLEAR_PROFILES,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
+    console.log('error from getProfiles : ',err.message);
   }
 };
 
@@ -106,10 +125,7 @@ export const getProfileById = (user_id) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    dispatch({
-      type: PARTICULARUSER_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
+    console.log('error from getProfileById : ',err.message);
   }
 };
 

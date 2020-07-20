@@ -73,9 +73,6 @@ export const getEvents = (eventname) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    dispatch({
-      type: CLEARSEARCHEDEVENTS,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
+    console.log('error from searchEvent: ',err.message)
   }
 };

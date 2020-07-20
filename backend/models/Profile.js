@@ -121,26 +121,27 @@ const profileSchema = new Schema({
   },
   username: {
     type: String,
-    unique : true
+    unique : true,
+    default: '',
   },
   // numoffollowers:{type:Number},
   // numoffollowing:{type:Number},
-  followers: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    },
-  ],
-  following: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    },
-  ],
+  // followers: [
+  //   {
+  //     user: {
+  //       type: Schema.Types.ObjectId,
+  //       ref: 'User',
+  //     },
+  //   },
+  // ],
+  // following: [
+  //   {
+  //     user: {
+  //       type: Schema.Types.ObjectId,
+  //       ref: 'User',
+  //     },
+  //   },
+  // ],
   // achievements: [
   //   {
   //     eventname: {

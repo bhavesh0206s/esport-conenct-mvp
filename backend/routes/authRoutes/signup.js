@@ -14,7 +14,6 @@ module.exports = (app) => {
     try{
       const username = req.params.username;
       const name = req.params.name;
-      console.log(username)
       let user = await User.findOne({ username });
       if(user === null){
         user = await User.findOne({ name });

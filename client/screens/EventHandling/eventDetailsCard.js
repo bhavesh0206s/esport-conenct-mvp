@@ -7,7 +7,9 @@ import moment from 'moment';
 import { useState } from "react";
 
 const EventDetailsCard = ({ route }) => {
+  const { name } = route;
   const { eventdetails, imageUri } = route.params;
+
   const [eventTime, setEventTime] = useState(moment(eventdetails.time).format("dddd, MMMM Do YYYY, h:mm:ss a"))
   const {
     title,
@@ -32,16 +34,17 @@ const EventDetailsCard = ({ route }) => {
         <Text style={styles.field}>{teamsize}</Text>
         <Text style={styles.title}>Entryfee: </Text>
         <Text style={styles.field}>{entryFee}</Text>
+        <Text style={styles.title}>Prize pool: </Text>
+        <Text style={styles.field}>{prizepool}</Text>
         <Text style={styles.title}>Date&Time:</Text>
         <Text style={styles.field}>{eventTime.toString()}</Text>
-        <Text style={styles.title}>Teamsize:</Text>
-        <Text style={styles.field}>{teamsize}</Text>
         <Text style={styles.title}>Contact: </Text>
         <Text style={styles.field}>{contact}</Text>
         <Text style={styles.title}>Description:-</Text>
         <Text style={styles.field}>{description}</Text>
-        <Button
-          icon={<Icon name="code" color="#ffffff" />}
+        {name !== 'EventDetailsProfile' ? (
+          <Button
+          icon={<Icon name="form" type="antdesign" color="#ffffff" />}
           buttonStyle={{
             borderRadius: 0,
             marginLeft: 0,
@@ -53,6 +56,7 @@ const EventDetailsCard = ({ route }) => {
           }}
           title="Registration"
         />
+        ): null}
       </Card>
     </ScrollView>
   );

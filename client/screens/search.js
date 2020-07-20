@@ -13,7 +13,7 @@ const Search = ({ navigation }) => {
     allEvents: state.event.allEvents,
     loading: state.loading
   }));
-  console.log(loading)
+  
   return (
     <View>
       {!searchedevents? (

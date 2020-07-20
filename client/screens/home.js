@@ -28,11 +28,10 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     console.log('Home Page refreshed');
     setTimeout(() => dispatch(fetchallEvents()), 100);
-    
   }, []);
 
 
-  if (allEvents.length === 0|| loading) {
+  if (loading) {
     return <Loading />;
   } else {
     return (

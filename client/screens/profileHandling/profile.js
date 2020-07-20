@@ -19,8 +19,6 @@ const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
   const userProfileInfo = useSelector((state) => state.profile);
   const {
-    followers,
-    following,
     bio,
     name,
     myevents,
@@ -59,7 +57,7 @@ const Profile = ({ navigation }) => {
               height: 80,
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: "gray",
+              backgroundColor: "#839690",
             }}
           ></View>
           <Avatar
@@ -72,35 +70,21 @@ const Profile = ({ navigation }) => {
             containerStyle={{
               position: "absolute",
               marginTop: 40,
-              marginHorizontal: 135,
+              marginHorizontal: 140,
             }}
           />
-          <View style={{ position: "relative", paddingTop:70 }}>
-            <View style={{ alignItems: "center" }}>
-              <Text style={{ fontSize: 20 }}>{name} {username ? username : ''}</Text>
+          <View style={{ position: "relative", paddingTop:40 }}>
+          <View style={{ alignItems: "center" }}>
+              <Text style={{ fontSize: 15, color: 'grey' }}>({' '}{username ? username : ''}{' '})</Text>
             </View>
-
-            {/* <View
-              style={{ flexDirection: "row", justifyContent: "space-around" }}
-            >
-              <Text style={{ fontSize: 14, color: "#000000" }}>
-                Followers:{" "}
-                <Text style={{ fontSize: 12, color: "#888888" }}>
-                  {followers ? followers.length : 0}
-                </Text>
-              </Text>
-              <Text style={{ fontSize: 14, color: "#000000" }}>
-                Following:{" "}
-                <Text style={{ fontSize: 12, color: "#888888" }}>
-                  {following ? following.length : 0}
-                </Text>
-              </Text>
-            </View> */}
+            <View style={{ alignItems: "center" }}>
+              <Text style={{ fontSize: 20 }}>{name}</Text>
+            </View>
             <Text
-              style={{ fontSize: 14, color: "#000000", textAlign:'center' }}
+              style={{ fontSize: 12, color: "#000000", textAlign:'center' }}
             >
               About:{" "}
-              <Text style={{ fontSize: 12, color: "#888888" }}>
+              <Text style={{ fontSize: 15, color: "#888888" }}>
                 {bio ? bio : "Please fill this pepole want to know about you"}
               </Text>
             </Text>

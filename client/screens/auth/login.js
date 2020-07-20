@@ -67,18 +67,11 @@ const Login = ({ navigation }) => {
               onBlur={props.handleBlur('password')}
               errorMessage={props.touched.password && props.errors.password}
             />
-            {!loading ? (
-              <Button
-                title="Sign In"
-                buttonStyle={styles.button}
-                onPress={props.handleSubmit}
-              />
-            ): (
-              <Button
-                loading
-                buttonStyle={styles.button}
-              />
-            )}
+            <Button
+              title="Sign In"
+              buttonStyle={styles.button}
+              onPress={props.handleSubmit}
+            />
           </View>
         )}
       </Formik>
