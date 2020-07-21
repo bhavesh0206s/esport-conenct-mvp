@@ -4,11 +4,38 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../../config/keys');
 const User = require('../../models/User');
+const Profile = require('../../models/Profile');
 
 // @route POST api/signup
 // desc   test route
 // access Public
 module.exports = (app) => {
+  app.post('/api/signup/:name/:username', async (req ,res)=>{
+    try{
+      const username = req.params.username;
+      const name = req.params.name;
+      let user = await User.findOne({ username });
+      if(user === null){
+        user = await User.findOne({ name });
+        user.username = username;
+        await user.save() 
+        return res.json(user)
+      }
+      if(user){
+        return res
+        .status(404)
+        .json({ errors: [{ msg: 'Username already taken!' }] });
+      }else{
+        user.username = username;
+        await user.save() 
+        return res.json(user)
+      }
+    }catch(e){
+      res.status(500).send('Server Error');
+      console.error('login error signup server: ', e.message);
+    }
+  });
+
   app.post(
     '/api/signup',
     [
@@ -45,7 +72,7 @@ module.exports = (app) => {
         // Encrypt password
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
-
+        user.username = '';
         // Save data to atlas
         await user.save(); // In atlas data will be saved
 

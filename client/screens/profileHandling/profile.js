@@ -13,47 +13,17 @@ import Modal from "react-native-modal";
 import { ScrollView } from "react-native-gesture-handler";
 import Loading from "../../shared/loading";
 import { getCurrentProfile } from "../../Redux/actions/profile";
-import AchivementCard from "./achivementCard";
-import { TabView, SceneMap } from "react-native-tab-view";
-import EventHostedCard from "./evnetHostedcard";
-
-const achivements = () => (
-  <View>
-    <AchivementCard />
-    <AchivementCard />
-    <AchivementCard />
-    <AchivementCard />
-  </View>
-);
-
-const hostedEvents = () => (
-  <View>
-    <EventHostedCard />
-    <EventHostedCard />
-  </View>
-);
+import ProfileTabView from "./tabView";
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
   const userProfileInfo = useSelector((state) => state.profile);
   const {
-    followers,
-    following,
     bio,
     name,
     myevents,
+    username,
   } = userProfileInfo.userProfile;
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: "first", title: "Achivements" },
-    { key: "second", title: "Hosted Events" },
-  ]);
-
-  const renderScene = SceneMap({
-    first: achivements,
-    second: hostedEvents,
-  });
 
   // Setting the visibility of Modal
   const [modalOpen, setModalOpen] = useState(false);
@@ -63,7 +33,7 @@ const Profile = ({ navigation }) => {
     return <Loading />;
   } else {
     return (
-      <ScrollView>
+      <>
         <View style={{ flexDirection: "column" }}>
           <Modal
             style={styles.overlay}
@@ -71,10 +41,6 @@ const Profile = ({ navigation }) => {
             backdropColor="#3e3f42"
             animationIn="fadeInUp"
             animationOut="fadeOutDown"
-            animationInTiming={200}
-            animationOutTiming={200}
-            backdropTransitionInTiming={400}
-            backdropTransitionOutTiming={400}
             onBackButtonPress={() => setModalOpen(false)}
           >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -88,14 +54,14 @@ const Profile = ({ navigation }) => {
           </Modal>
           <View
             style={{
-              height: "6%",
+              height: 80,
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: "gray",
+              backgroundColor: "#839690",
             }}
           ></View>
           <Avatar
-            size={100}
+            size={80}
             rounded
             overlayContainerStyle={{ backgroundColor: "black" }}
             icon={{ name: "user", type: "font-awesome-5" }}
@@ -103,37 +69,22 @@ const Profile = ({ navigation }) => {
             activeOpacity={1}
             containerStyle={{
               position: "absolute",
-              top: "1%",
-              left: "38%",
-              // alignItems: 'center',
+              marginTop: 40,
+              marginHorizontal: 140,
             }}
           />
-          <View style={{ position: "relative", top: "3%" }}>
+          <View style={{ position: "relative", paddingTop:40 }}>
+          <View style={{ alignItems: "center" }}>
+              <Text style={{ fontSize: 15, color: 'grey' }}>({' '}{username ? username : ''}{' '})</Text>
+            </View>
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontSize: 20 }}>{name}</Text>
             </View>
-
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-around" }}
-            >
-              <Text style={{ fontSize: 14, color: "#000000" }}>
-                Followers:{" "}
-                <Text style={{ fontSize: 12, color: "#888888" }}>
-                  {followers ? followers.length : 0}
-                </Text>
-              </Text>
-              <Text style={{ fontSize: 14, color: "#000000" }}>
-                Following:{" "}
-                <Text style={{ fontSize: 12, color: "#888888" }}>
-                  {following ? following.length : 0}
-                </Text>
-              </Text>
-            </View>
             <Text
-              style={{ fontSize: 14, color: "#000000", marginHorizontal: 10 }}
+              style={{ fontSize: 12, color: "#000000", textAlign:'center' }}
             >
               About:{" "}
-              <Text style={{ fontSize: 12, color: "#888888" }}>
+              <Text style={{ fontSize: 15, color: "#888888" }}>
                 {bio ? bio : "Please fill this pepole want to know about you"}
               </Text>
             </Text>
@@ -142,18 +93,12 @@ const Profile = ({ navigation }) => {
             <View
               style={{ marginVertical: 5, width: "20%", alignSelf: "center" }}
             >
-              <Button title="Edit" onPress={() => setModalOpen(true)} />
+              <Button title="Edit" buttonStyle={{marginBottom: 10}} onPress={() => setModalOpen(true)} />
             </View>
-
-            <TabView
-              navigationState={{ index, routes }}
-              renderScene={renderScene}
-              onIndexChange={setIndex}
-              style={{backdropColor:'#4ecca3'}}
-            />
           </View>
         </View>
-      </ScrollView>
+      <ProfileTabView/>
+      </>
     );
   }
 };

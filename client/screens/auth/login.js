@@ -18,7 +18,10 @@ const LoginSchema = yup.object({
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const { auth, loading } = useSelector((state) => ({
+    auth: state.auth,
+    loading: state.auth.loading
+  }));
   const isAuthenticated = auth.isAuthenticated;
   const [visible, setVisible] = useState(false);
 

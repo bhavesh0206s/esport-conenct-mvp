@@ -21,7 +21,6 @@ export const fetchallEvents = () => async (dispatch) => {
       type: FETCHEVENTS_SUCCESS,
       payload: res.data,
     });
-    console.log(res.data)
     dispatch(loading(false))
   } catch (err) {
     console.log(`error from fetchallevents : ${err.message}`);
@@ -74,9 +73,6 @@ export const getEvents = (eventname) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    dispatch({
-      type: CLEARSEARCHEDEVENTS,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
+    console.log('error from searchEvent: ',err.message)
   }
 };

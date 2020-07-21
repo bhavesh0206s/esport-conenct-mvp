@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-native";
 import { Text, Card, Button, Icon, Image } from "react-native-elements";
 import { gameImage } from "../../shared/gameImage";
 import moment from 'moment';
@@ -18,9 +18,9 @@ const EventCard = ({ item, navigation }) => {
   }, []);
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity  style={styles.container} >
       <Card title={item[0].title} image={imageUri}>
-      <View style={{ flexDirection: "row", justifyContent: "space-around", marginVertical:10 }}>
+      <View style={styles.content}>
           <View
             style={{ flexDirection: "column" }}
           >
@@ -55,7 +55,6 @@ const EventCard = ({ item, navigation }) => {
             marginBottom: 0,
           }}
           onPress={() => {
-            console.log(item[0]);
             navigation.navigate("EventDetailsCard", {
               eventdetails: item[0],
               imageUri,
@@ -67,5 +66,17 @@ const EventCard = ({ item, navigation }) => {
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 10
+  },
+  content :{
+    flexDirection: "row", 
+    justifyContent: "space-around", 
+    marginVertical:5,
+    marginHorizontal: 19 
+  }
+})
 
 export default EventCard;

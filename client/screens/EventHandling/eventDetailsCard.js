@@ -7,7 +7,9 @@ import moment from 'moment';
 import { useState } from "react";
 
 const EventDetailsCard = ({ route }) => {
+  const { name } = route;
   const { eventdetails, imageUri } = route.params;
+
   const [eventTime, setEventTime] = useState(moment(eventdetails.time).format("dddd, MMMM Do YYYY, h:mm:ss a"))
   const {
     title,
@@ -40,7 +42,8 @@ const EventDetailsCard = ({ route }) => {
         <Text style={styles.field}>{contact}</Text>
         <Text style={styles.title}>Description:-</Text>
         <Text style={styles.field}>{description}</Text>
-        <Button
+        {name !== 'EventDetailsProfile' ? (
+          <Button
           icon={<Icon name="form" type="antdesign" color="#ffffff" />}
           buttonStyle={{
             borderRadius: 0,
@@ -53,6 +56,7 @@ const EventDetailsCard = ({ route }) => {
           }}
           title="Registration"
         />
+        ): null}
       </Card>
     </ScrollView>
   );

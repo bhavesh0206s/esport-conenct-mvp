@@ -3,12 +3,17 @@ import { StyleSheet, View, Keyboard } from "react-native";
 import { Button, Text} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { TouchableWithoutFeedback, ScrollView} from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux';
+import { fetchallEvents } from '../../Redux/actions/event';
 
 
 const VerifyModel = ({openPopUp, setOpenPopUp, navigation}) => {
+  
+  const dispatch = useDispatch()
 
   const handleSubmit  = () =>{
     setOpenPopUp(false);
+    dispatch(fetchallEvents())
     navigation.goBack()
   }
 

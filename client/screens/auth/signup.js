@@ -9,11 +9,10 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import GoogleSignin from './GoogleSigin';
 import { ScrollView } from 'react-native-gesture-handler';
+import { createProfile } from '../../Redux/actions/profile';
 
 const SignUp = ({ visible, setVisible, navigation }) => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
-  const isAuthenticated = auth.isAuthenticated;
 
   const signUpSchema = yup.object({
     name: yup.string().required('Name is required.'),
@@ -54,13 +53,14 @@ const SignUp = ({ visible, setVisible, navigation }) => {
             validationSchema={signUpSchema}
             onSubmit={async ({ name, email, password }) => {
               dispatch(register(name, email.toLowerCase(), password));
-              // if (isAuthenticated) navigation.navigate('Home');
+              navigation.navigate('UserName', {name})
+              setVisible(false)
             }}
           >
             {(props) => (
               <View style={styles.content}>
                 <Input
-                  leftIcon={<Icon name="face" size={24} color="#4ecca3" />}
+                  leftIcon={<Icon name="portrait" size={24} color="#4ecca3" />}
                   placeholder="Name"
                   onChangeText={props.handleChange('name')}
                   value={props.values.name}

@@ -3,12 +3,10 @@ import { StyleSheet, View } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProfile, getCurrentProfile } from '../../Redux/actions/profile';
-import Loading from '../../shared/loading';
+import { createProfile, getCurrentProfile, upadteProfile } from '../../Redux/actions/profile';
 import { Button, Input } from 'react-native-elements';
 
 const profileSchema = yup.object({
-  name: yup.string().required().min(4),
   bio: yup.string(),
   gameinterest: yup.string(),
 });
@@ -16,31 +14,22 @@ const profileSchema = yup.object({
 const EditProfile = ({ setModalOpen }) => {
   const dispatch = useDispatch();
   const myprofileinfo = useSelector((state) => state.profile);
-  const { bio, name } = myprofileinfo.myprofile;
+  const { bio } = myprofileinfo.userProfile;
 
   return (
     <View style={styles.content}>
       <Formik
-        initialValues={{ name, bio }}
+        initialValues={{ bio }}
         validationSchema={profileSchema}
         onSubmit={(values) => {
-          dispatch(createProfile(values));
+          dispatch(upadteProfile(values))
+          dispatch(getCurrentProfile())
           // values here is an object containing form data
           setModalOpen(false);
         }}
       >
         {(formikprops) => (
           <View>
-            <Input
-              style={styles.input}
-              placeholder={name ? name : 'Username'}
-              onChangeText={formikprops.handleChange('name')}
-              value={formikprops.values.name}
-              onBlur={formikprops.handleBlur('name')}
-              errorMessage={
-                formikprops.touched.name && formikprops.errors.name
-              }
-            />
             <Input
               style={styles.input}
               multiline
@@ -50,7 +39,6 @@ const EditProfile = ({ setModalOpen }) => {
               onBlur={formikprops.handleBlur('bio')}
               errorMessage={formikprops.touched.bio && formikprops.errors.bio}
             />
-
             <Button onPress={formikprops.handleSubmit} title="Save" />
           </View>
         )}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Keyboard } from 'react-native';
+import { StyleSheet, View, Keyboard  } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -13,7 +13,8 @@ const HostEventModal = ({ toggleHostEventModal, hostEvent }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Modal
-        onSwipeComplete={toggleHostEventModal}
+        animationIn='bounce'
+        animationOut='bounceIn'
         isVisible={hostEvent}
         onBackButtonPress={toggleHostEventModal}
         style={styles.contentView}
