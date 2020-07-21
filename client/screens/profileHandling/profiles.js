@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text, Avatar } from 'react-native-elements';
+import ProfileTabView from './tabView';
 
 const Profiles = ({ item, navigation }) => {
   return (
@@ -22,7 +23,6 @@ const Profiles = ({ item, navigation }) => {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          // backgroundColor: 'coral',
         }}
       >
         <View style={{}}>
@@ -31,12 +31,8 @@ const Profiles = ({ item, navigation }) => {
             rounded
             overlayContainerStyle={{ backgroundColor: 'black' }}
             icon={{ name: 'user', type: 'font-awesome-5' }}
-            // onPress={() => console.log('Works!')}
             activeOpacity={1}
-            containerStyle={{
-              margin: 5,
-              // position: 'absolute',
-            }}
+            containerStyle={{margin: 5}}
           />
         </View>
         <View style={{ margin: 3 }}>

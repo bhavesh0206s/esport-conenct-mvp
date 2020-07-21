@@ -27,17 +27,38 @@ module.exports = (app) => {
     }
   });
 
-  // @route POST /api/profile/me
-  // desc   post personal profile
-  // access Private
+  app.post('/api/profile/update/me', verify, async (req, res) =>{
+    
+    let {
+      bio
+    } = req.body;
+  
+    let profileFields = {};
+    profileFields.bio = bio;
+    
+    try {
+      // Using upsert option (creates new doc if no match is found):
+      let profile = await Profile.findOneAndUpdate(
+        { user: req.user.id },
+        { $set: profileFields },
+        { new: true, upsert: true }
+      );
+      console.log('updating new profile....');
+      res.json(profile);
+    } catch (err) {
+      res.status(500).send('Server Error');
+      console.error('error from upadteProfile API: ',err.message);
+    }
+  });
+
   app.post('/api/profile/me', verify, async (req, res) => {
     let {
       bio,
       gameinterest,
       instagram,
       DOB,
-      followers,
-      following,
+      // followers,
+      // following,
       contact,
       // eventname,
       // eventdescription,
@@ -47,20 +68,23 @@ module.exports = (app) => {
       // facebook,
       // platformname,
       // link,
+      name,
+      username,
       // tag,
     } = req.body;
-
+    console.log(req.user)
     // build profile object
     let profileFields = {};
-    profileFields.user = req.user.id;
-    profileFields.name = req.user.name;
     profileFields.email = req.user.email;
+    profileFields.user = req.user.id;
+    if (name) profileFields.name = name;
+
     // profileFields.achievements = [];
     // profileFields.otherlinks = [];
     profileFields.bio = bio;
-    profileFields.contact = contact;
-    profileFields.followers = followers;
-    profileFields.following = following;
+    profileFields.username = username;
+    // profileFields.followers = followers;
+    // profileFields.following = following;
     // if (location) profileFields.location = location;
     // if (eventname || eventdescription)
     //   profileFields.achievements.push({ eventname, eventdescription });
@@ -85,7 +109,6 @@ module.exports = (app) => {
         { $set: profileFields },
         { new: true, upsert: true }
       );
-      console.log('updating new profile');
       res.json(profile);
     } catch (err) {
       res.status(500).send('Server Error');

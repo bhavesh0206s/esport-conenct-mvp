@@ -11,7 +11,7 @@ import Loading from '../../shared/loading';
 
 const Event = ({ navigation }) => {
   const profileInfo = useSelector((state) => state.profile);
-  const myEvents = profileInfo.userProfile.myevents;
+  const myEvents = profileInfo.userProfile.myhostedevents;
   const loading = profileInfo.loading;
 
   if (loading) {

@@ -11,6 +11,7 @@ import {
   CLEARPARTICULARUSER,
   PARTICULARUSER_ERROR,
   GETPARTICULARUSER,
+  UPADTE_MYPROFILE,
 } from '../actions/types';
 
 const initialState = {
@@ -35,6 +36,13 @@ export default (state = initialState, action) => {
       };
     case GET_PROFILES:
       console.log('GETPROFILES-SUCCESSFULL');
+      return {
+        ...state,
+        profiles: payload,
+        loading: false,
+      };
+    case UPADTE_MYPROFILE:
+      console.log('UPADTE_MYPROFILE-SUCCESSFULL');
       return {
         ...state,
         profiles: payload,

@@ -20,6 +20,12 @@ const EventDetailsCard = ({ route }) => {
   // Setting the visibility of Modal
   const [modalOpen, setModalOpen] = useState(false);
 
+  const { name } = route;
+  const { eventdetails, imageUri } = route.params;
+
+  const [eventTime, setEventTime] = useState(
+    moment(eventdetails.time).format('dddd, MMMM Do YYYY, h:mm:ss a')
+  );
   const {
     title,
     description,
@@ -52,35 +58,37 @@ const EventDetailsCard = ({ route }) => {
         <Text style={styles.field}>{contact}</Text>
         <Text style={styles.title}>Description:-</Text>
         <Text style={styles.field}>{description}</Text>
-        <Button
-          icon={<Icon name="form" type="antdesign" color="#ffffff" />}
-          buttonStyle={{
-            borderRadius: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-          }}
-          onPress={() => {
-            if (teamsize <= 1) {
-              dispatch(
-                eventRegistration({
-                  registerinfo: {
-                    email: userProfile.email,
-                    name: userProfile.name,
-                    contact: userProfile.contact,
-                  },
-                  eventdetails,
-                  eventId: _id,
-                  usereventId: userProfile.user,
-                  teamsize,
-                })
-              );
-            } else {
-              setModalOpen(true);
-            }
-          }}
-          title="Registration"
-        />
+        {name !== 'EventDetailsProfile' ? (
+          <Button
+            icon={<Icon name="form" type="antdesign" color="#ffffff" />}
+            buttonStyle={{
+              borderRadius: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              marginBottom: 0,
+            }}
+            onPress={() => {
+              if (teamsize <= 1) {
+                dispatch(
+                  eventRegistration({
+                    registerinfo: {
+                      email: userProfile.email,
+                      name: userProfile.name,
+                      contact: userProfile.contact,
+                    },
+                    eventdetails,
+                    eventId: _id,
+                    usereventId: userProfile.user,
+                    teamsize,
+                  })
+                );
+              } else {
+                setModalOpen(true);
+              }
+            }}
+            title="Registration"
+          />
+        ) : null}
       </Card>
       <Modal visible={modalOpen} animationType="slide">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
