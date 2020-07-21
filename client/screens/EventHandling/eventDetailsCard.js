@@ -1,5 +1,13 @@
 import React, { useEffect } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  TouchableWithoutFeedback,
+  Keyboard,
+  FlatList,
+} from 'react-native';
 import { Text, Card, Button, Icon } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FontDisplay } from 'expo-font';
@@ -8,6 +16,7 @@ import { useState } from 'react';
 import EventRegistration from './eventRegistration';
 import { useDispatch, useSelector } from 'react-redux';
 import { eventRegistration } from '../../Redux/actions/profile';
+import { AntDesign } from '@expo/vector-icons';
 
 const EventDetailsCard = ({ route }) => {
   const dispatch = useDispatch();
@@ -19,13 +28,12 @@ const EventDetailsCard = ({ route }) => {
 
   // Setting the visibility of Modal
   const [modalOpen, setModalOpen] = useState(false);
+  const modalHandling = () => {
+    setModalOpen(false);
+  };
 
   const { name } = route;
-  const { eventdetails, imageUri } = route.params;
 
-  const [eventTime, setEventTime] = useState(
-    moment(eventdetails.time).format('dddd, MMMM Do YYYY, h:mm:ss a')
-  );
   const {
     title,
     description,
@@ -58,44 +66,44 @@ const EventDetailsCard = ({ route }) => {
         <Text style={styles.field}>{contact}</Text>
         <Text style={styles.title}>Description:-</Text>
         <Text style={styles.field}>{description}</Text>
-        {name !== 'EventDetailsProfile' ? (
-          <Button
-            icon={<Icon name="form" type="antdesign" color="#ffffff" />}
-            buttonStyle={{
-              borderRadius: 0,
-              marginLeft: 0,
-              marginRight: 0,
-              marginBottom: 0,
-            }}
-            onPress={() => {
-              if (teamsize <= 1) {
-                dispatch(
-                  eventRegistration({
-                    registerinfo: {
-                      email: userProfile.email,
-                      name: userProfile.name,
-                      contact: userProfile.contact,
-                    },
-                    eventdetails,
-                    eventId: _id,
-                    usereventId: userProfile.user,
-                    teamsize,
-                  })
-                );
-              } else {
-                setModalOpen(true);
-              }
-            }}
-            title="Registration"
-          />
-        ) : null}
+        {/* {name !== 'EventDetailsProfile' ? ( */}
+        <Button
+          icon={<Icon name="form" type="antdesign" color="#ffffff" />}
+          buttonStyle={{
+            borderRadius: 0,
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 0,
+          }}
+          onPress={() => {
+            if (teamsize <= 1) {
+              dispatch(
+                eventRegistration({
+                  registerinfo: {
+                    email: userProfile.email,
+                    name: userProfile.name,
+                    contact: userProfile.contact,
+                  },
+                  eventdetails,
+                  eventId: _id,
+                  usereventId: userProfile.user,
+                  teamsize,
+                })
+              );
+            } else {
+              setModalOpen(true);
+            }
+          }}
+          title="Registration"
+        />
+        {/* ) : null} */}
       </Card>
       <Modal visible={modalOpen} animationType="slide">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <EventRegistration
             eventdetails={eventdetails}
             userProfile={userProfile}
-            setModalOpen={setModalOpen}
+            modalHandling={modalHandling}
           />
         </TouchableWithoutFeedback>
       </Modal>

@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Button } from 'react-native';
 import { Text, Avatar } from 'react-native-elements';
 import ProfileTabView from './tabView';
 
-const Profiles = ({ item, navigation }) => {
+const Profiles = ({ item, adding, handlingteammember }) => {
   return (
     <View
       style={{
@@ -32,12 +32,26 @@ const Profiles = ({ item, navigation }) => {
             overlayContainerStyle={{ backgroundColor: 'black' }}
             icon={{ name: 'user', type: 'font-awesome-5' }}
             activeOpacity={1}
-            containerStyle={{margin: 5}}
+            containerStyle={{ margin: 5 }}
           />
         </View>
         <View style={{ margin: 3 }}>
           <Text style={{ fontSize: 16 }}>{item[0].name}</Text>
         </View>
+        {adding && (
+          <TouchableOpacity
+            style={{
+              alignItems: 'center',
+              backgroundColor: '#DDDDDD',
+              padding: 2,
+            }}
+            onPress={() => {
+              handlingteammember(item[0]);
+            }}
+          >
+            <Text>Add</Text>
+          </TouchableOpacity>
+        )}
       </TouchableOpacity>
     </View>
   );

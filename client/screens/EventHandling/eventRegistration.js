@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
-import { StyleSheet, Button, TextInput, View, Text } from 'react-native';
+import {
+  StyleSheet,
+  Button,
+  TextInput,
+  View,
+  Text,
+  FlatList,
+  Icon,
+} from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import Profiles from '../profileHandling/profiles';
+import { getProfiles } from '../../Redux/actions/profile';
+import { CLEAR_PROFILES } from '../../Redux/actions/types';
+import { useDispatch, useSelector } from 'react-redux';
 
-const EventRegistration = ({ eventdetails, setModalOpen, userProfile }) => {
+const EventRegistration = ({ eventdetails, modalHandling, userProfile }) => {
   const dispatch = useDispatch();
   const usersprofiles = useSelector((state) => state.profile.profiles);
   const [inputsearch, setInputSearch] = useState('');
   const [showCancelBtn, setShowCancelBtn] = useState(false);
-  const [addmember, setAddmember] = useState([
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const [teammember, setTeamMember] = useState([
     {
       user: userProfile.user,
       email: userProfile.email,
@@ -16,53 +29,87 @@ const EventRegistration = ({ eventdetails, setModalOpen, userProfile }) => {
     },
   ]);
 
+  console.log(usersprofiles);
+
   const handleCancel = () => {
     setInputSearch('');
-    // dispatch({ type: CLEARSEARCHEDEVENTS });
+    // dispatch({ type: CLEAR_PROFILES });
     setShowCancelBtn(false);
+  };
+
+  const handlingteammember = (memberdetail) => {
+    let newteammemberlist = [...teammember, memberdetail];
+    setTeamMember(newteammemberlist);
   };
 
   return (
     <View>
-      <View style={styles.searchSection}>
-        <AntDesign
-          name="search1"
-          style={styles.searchIcon}
-          size={24}
-          color="black"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Search..."
-          onChangeText={(val) => {
-            setInputSearch(val);
-            dispatch(getEvents(val));
-            if (inputsearch.length > 0) {
-              setShowCancelBtn(true);
-            }
-          }}
-          value={inputsearch}
-        />
-        {showCancelBtn && (
-          <Icon
-            onPress={handleCancel}
-            name="clear"
-            style={styles.searchIcon}
-            size={24}
-            color="black"
-          />
-        )}
-      </View>
       <View>
         <Text>Your Team</Text>
+        <FlatList
+          data={teammember}
+          keyExtractor={(item) => item.user}
+          renderItem={({ item }) => <Profiles item={[item]} adding={false} />}
+        />
       </View>
-      <FlatList
-        data={usersprofiles}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <Profiles item={[item]} navigation={navigation} />
-        )}
-      />
+      {!showSearchBar ? (
+        <Button
+          title="Add other team members"
+          onPress={() => setShowSearchBar(true)}
+        />
+      ) : teammember.length === eventdetails.teamsize ? (
+        <Button
+          title="Register"
+          onPress={() => {
+            setShowSearchBar(true);
+            modalHandling();
+            console.log(teammember);
+          }}
+        />
+      ) : (
+        <View>
+          <View style={styles.searchSection}>
+            <AntDesign
+              name="search1"
+              style={styles.searchIcon}
+              size={24}
+              color="black"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Search players and build up your team"
+              onChangeText={(val) => {
+                setInputSearch(val);
+                dispatch(getProfiles(val));
+                if (inputsearch.length > 0) {
+                  setShowCancelBtn(true);
+                }
+              }}
+              value={inputsearch}
+            />
+            {showCancelBtn && (
+              <Icon
+                onPress={handleCancel}
+                name="clear"
+                style={styles.searchIcon}
+                size={24}
+                color="black"
+              />
+            )}
+          </View>
+          <FlatList
+            data={usersprofiles}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => (
+              <Profiles
+                item={[item]}
+                adding={true}
+                handlingteammember={handlingteammember}
+              />
+            )}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -73,7 +120,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 10,
+    marginTop: 30,
   },
   searchIcon: {
     marginRight: 5,

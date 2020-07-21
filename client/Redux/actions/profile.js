@@ -9,11 +9,7 @@ import {
   PARTICULARUSER_ERROR,
   GETPARTICULARUSER,
   CLEAR_MYPROFILE,
-<<<<<<< HEAD
   UPDATE_PROFILE,
-=======
-  UPADTE_MYPROFILE
->>>>>>> c45c63f02173bab45eb9e049fe920d01f7c819f2
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
@@ -31,7 +27,7 @@ export const getCurrentProfile = () => async (dispatch) => {
     });
     console.log('profile added.....');
   } catch (err) {
-    console.log('error from getCurrentProfile: ', err.message)
+    console.log('error from getCurrentProfile: ', err.message);
   }
 };
 
@@ -52,7 +48,7 @@ export const createProfile = (formData) => async (dispatch) => {
     console.log('creating profile.........');
 
     const body = JSON.stringify(formData);
-  
+
     const res = await axios.post(
       `http://${ipAddress}:3000/api/profile/me`,
       body,
@@ -66,13 +62,13 @@ export const createProfile = (formData) => async (dispatch) => {
     console.log('profile created........');
   } catch (err) {
     // const errors = err.response.data.errors;
-    console.log('error from createProfile: ',err.message);
+    console.log('error from createProfile: ', err.message);
   }
 };
 
 export const upadteProfile = (formData) => async (dispatch) => {
-  console.log(formData)
-  try{
+  console.log(formData);
+  try {
     const token = await AsyncStorage.getItem('token');
 
     const config = {
@@ -96,7 +92,7 @@ export const upadteProfile = (formData) => async (dispatch) => {
     console.log('profile Updated');
   } catch (err) {
     // const errors = err.response.data.errors;
-    console.log('error from upadteProfile: ',err.message);
+    console.log('error from upadteProfile: ', err.message);
   }
 };
 // Get all profiles
@@ -104,7 +100,7 @@ export const upadteProfile = (formData) => async (dispatch) => {
 export const getProfiles = (username) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `http://${ipAddress}:3000/api/profile/user/${username}`
+      `http://${ipAddress}:3000/api/profile/userbyname/${username}`
     );
 
     dispatch({
@@ -112,7 +108,7 @@ export const getProfiles = (username) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    console.log('error from getProfiles : ',err.message);
+    console.log('error from getProfiles : ', err.message);
   }
 };
 
@@ -121,7 +117,7 @@ export const getProfiles = (username) => async (dispatch) => {
 export const getProfileById = (user_id) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `http://${ipAddress}:3000/api/profile/user/${user_id}`
+      `http://${ipAddress}:3000/api/profile/userbyid/${user_id}`
     );
 
     dispatch({
@@ -129,7 +125,7 @@ export const getProfileById = (user_id) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    console.log('error from getProfileById : ',err.message);
+    console.log('error from getProfileById : ', err.message);
   }
 };
 
