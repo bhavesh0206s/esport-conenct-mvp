@@ -14,9 +14,10 @@ const Profiles = ({ item, navigation }) => {
     >
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('Userprofile', {
-            particularuser: item[0],
-          });
+          // navigation.navigate('Userprofile', {
+          //   particularuser: item[0],
+          // });
+          console.log("U can't see his profile i havent implemente that");
         }}
         style={{
           flexDirection: 'row',

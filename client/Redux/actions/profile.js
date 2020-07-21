@@ -9,6 +9,7 @@ import {
   PARTICULARUSER_ERROR,
   GETPARTICULARUSER,
   CLEAR_MYPROFILE,
+  UPDATE_PROFILE,
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
@@ -110,6 +111,42 @@ export const getProfileById = (user_id) => async (dispatch) => {
       type: PARTICULARUSER_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
+  }
+};
+
+// Register user/team in an event
+export const eventRegistration = ({
+  registerinfo,
+  teamsize,
+  eventId,
+  usereventId,
+  eventdetails,
+}) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const body = JSON.stringify({
+    registerinfo,
+    teamsize,
+    eventId,
+    usereventId,
+    eventdetails,
+  });
+
+  try {
+    await axios.post(
+      `http://${ipAddress}:3000/api/event/registerinevent`,
+      body,
+      config
+    );
+
+    dispatch(getCurrentProfile());
+    // This will update our profile after we register for the event
+  } catch (err) {
+    console.error(err.message);
   }
 };
 

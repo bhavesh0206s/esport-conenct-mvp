@@ -30,9 +30,6 @@ const eventSchema = new Schema({
   gamelink: String,
   registeredteaminfo: [
     {
-      teamname: {
-        type: String,
-      },
       teammembersinfo: [
         {
           user: {
@@ -44,8 +41,8 @@ const eventSchema = new Schema({
           name: {
             type: String,
           },
-          number: {
-            type: String,
+          contact: {
+            type: Number,
           },
         },
       ],
@@ -59,8 +56,8 @@ const eventSchema = new Schema({
       name: {
         type: String,
       },
-      number: {
-        type: String,
+      contact: {
+        type: Number,
       },
     },
   ],
