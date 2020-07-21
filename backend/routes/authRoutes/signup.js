@@ -10,10 +10,12 @@ const Profile = require('../../models/Profile');
 // desc   test route
 // access Public
 module.exports = (app) => {
+
   app.post('/api/signup/:name/:username', async (req ,res)=>{
     try{
       const username = req.params.username;
       const name = req.params.name;
+
       let user = await User.findOne({ username });
       if(user === null){
         user = await User.findOne({ name });
