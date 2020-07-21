@@ -72,8 +72,8 @@ module.exports = (app) => {
       username,
       // tag,
     } = req.body;
-    console.log(req.user)
     // build profile object
+  
     let profileFields = {};
     profileFields.email = req.user.email;
     profileFields.user = req.user.id;
@@ -104,11 +104,13 @@ module.exports = (app) => {
     if (instagram) profileFields.social.instagram = instagram;
     try {
       // Using upsert option (creates new doc if no match is found):
+      console.log(profileFields)
       let profile = await Profile.findOneAndUpdate(
         { user: req.user.id },
         { $set: profileFields },
         { new: true, upsert: true }
       );
+      
       res.json(profile);
     } catch (err) {
       res.status(500).send('Server Error');

@@ -1,14 +1,26 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import Search from '../../screens/search';
 import Header from '../../shared/header';
 import EventDetailsCard from '../../screens/EventHandling/eventDetailsCard';
+import { animationConfig } from '../../shared/routeAnimationConfig';
 
 const Stack = createStackNavigator();
 
 const SearchStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Search">
+    <Stack.Navigator
+      screenOptions={{
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
+        transitionSpec:{
+          open: animationConfig,
+          close: animationConfig
+        },
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+      }}
+      headerMode='screen'
+    >
       <Stack.Screen
         name="Search"
         options={({ navigation, route }) => ({
