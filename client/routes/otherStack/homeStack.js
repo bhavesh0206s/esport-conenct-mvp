@@ -5,6 +5,7 @@ import Header from '../../shared/header';
 import EventDetailsCard from '../../screens/EventHandling/eventDetailsCard';
 import { Easing } from 'react-native';
 import { animationConfig } from '../../shared/routeAnimationConfig';
+import EventRegistration from '../../screens/EventHandling/eventRegistration';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,19 @@ const HomeStack = () => {
           ),
         })}
         component={EventDetailsCard}
+      />
+      <Stack.Screen
+        name="Register"
+        options={({ navigation, route }) => ({
+          headerTitle: () => (
+            <Header
+              navigation={navigation}
+              title="Register"
+              type="register"
+            />
+          ),
+        })}
+        component={EventRegistration}
       />
     </Stack.Navigator>
   );

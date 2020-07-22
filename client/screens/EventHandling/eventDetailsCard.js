@@ -17,9 +17,11 @@ import EventRegistration from './eventRegistration';
 import { useDispatch, useSelector } from 'react-redux';
 import { eventRegistration } from '../../Redux/actions/profile';
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const EventDetailsCard = ({ route }) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const userProfile = useSelector((state) => state.profile.userProfile);
   const { eventdetails, imageUri } = route.params;
   const [eventTime, setEventTime] = useState(
@@ -83,6 +85,7 @@ const EventDetailsCard = ({ route }) => {
                     email: userProfile.email,
                     name: userProfile.name,
                     contact: userProfile.contact,
+                    username: userProfile.username,
                   },
                   eventdetails,
                   eventId: _id,
@@ -91,22 +94,17 @@ const EventDetailsCard = ({ route }) => {
                 })
               );
             } else {
-              setModalOpen(true);
+              navigation.navigate('Register', {
+                navigation,
+                eventdetails,
+                userProfile
+              })
             }
           }}
           title="Registration"
         />
         {/* ) : null} */}
       </Card>
-      <Modal visible={modalOpen} animationType="slide">
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <EventRegistration
-            eventdetails={eventdetails}
-            userProfile={userProfile}
-            modalHandling={modalHandling}
-          />
-        </TouchableWithoutFeedback>
-      </Modal>
     </ScrollView>
   );
 };

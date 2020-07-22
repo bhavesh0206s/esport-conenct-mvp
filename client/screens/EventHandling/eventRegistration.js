@@ -14,8 +14,9 @@ import { getProfiles } from '../../Redux/actions/profile';
 import { CLEAR_PROFILES } from '../../Redux/actions/types';
 import { useDispatch, useSelector } from 'react-redux';
 
-const EventRegistration = ({ eventdetails, modalHandling, userProfile }) => {
+const EventRegistration = ({ route }) => {
   const dispatch = useDispatch();
+  const { eventdetails, navigation, userProfile } = route.params
   const usersprofiles = useSelector((state) => state.profile.profiles);
   const [inputsearch, setInputSearch] = useState('');
   const [showCancelBtn, setShowCancelBtn] = useState(false);
@@ -25,6 +26,7 @@ const EventRegistration = ({ eventdetails, modalHandling, userProfile }) => {
       user: userProfile.user,
       email: userProfile.email,
       name: userProfile.name,
+      username: userProfile.username,
       contact: userProfile.contact,
     },
   ]);
@@ -38,8 +40,8 @@ const EventRegistration = ({ eventdetails, modalHandling, userProfile }) => {
   };
 
   const handlingteammember = (memberdetail) => {
-    let newteammemberlist = [...teammember, memberdetail];
-    setTeamMember(newteammemberlist);
+    let newTeamMemberList = [...teammember, memberdetail];
+    setTeamMember(newTeamMemberList);
   };
 
   return (
@@ -130,6 +132,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 4,
     borderBottomWidth: 0.7,
+    marginTop: 10
   },
 });
 

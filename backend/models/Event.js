@@ -41,6 +41,9 @@ const eventSchema = new Schema({
           name: {
             type: String,
           },
+          username:{
+            type: String,
+          },
           contact: {
             type: Number,
           },
@@ -58,6 +61,9 @@ const eventSchema = new Schema({
       },
       contact: {
         type: Number,
+      },
+      username:{
+        type: String,
       },
     },
   ],
