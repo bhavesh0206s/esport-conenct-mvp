@@ -37,9 +37,6 @@ const profileSchema = new Schema({
       gamelink: String,
       registeredteaminfo: [
         {
-          teamname: {
-            type: String,
-          },
           teammembersinfo: [
             {
               user: {
