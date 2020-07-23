@@ -2,10 +2,8 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import Profiles from '../screens/profileHandling/profiles';
 import EventCard from './EventHandling/eventCard';
-import { useNavigation } from '@react-navigation/native';
-import { fetchallEvents } from '../Redux/actions/event';
+
 
 const Search = ({ navigation }) => {
   const dispatch = useDispatch();

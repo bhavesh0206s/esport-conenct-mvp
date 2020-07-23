@@ -19,6 +19,7 @@ const HomeStack = () => {
           open: animationConfig,
           close: animationConfig
         },
+        
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
       }}
       headerMode='screen'
@@ -41,6 +42,9 @@ const HomeStack = () => {
               type="EventDetailsCard"
             />
           ),
+          headerTitleContainerStyle: {
+            left: 40,
+          },
         })}
         component={EventDetailsCard}
       />
@@ -54,6 +58,9 @@ const HomeStack = () => {
               type="register"
             />
           ),
+          headerTitleContainerStyle: {
+            left: 40,
+          },
         })}
         component={EventRegistration}
       />

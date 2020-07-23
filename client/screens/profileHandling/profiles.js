@@ -5,14 +5,7 @@ import ProfileTabView from './tabView';
 
 const Profiles = ({ item, adding, handlingteammember }) => {
   return (
-    <View
-      style={{
-        backgroundColor: 'rgb(255, 140, 140)',
-        flex: 1,
-        borderWidth: 1,
-        borderColor: 'yellow',
-      }}
-    >
+    <View>
       <TouchableOpacity
         onPress={() => {
           // navigation.navigate('Userprofile', {
@@ -36,7 +29,8 @@ const Profiles = ({ item, adding, handlingteammember }) => {
           />
         </View>
         <View style={{ margin: 3 }}>
-          <Text style={{ fontSize: 16 }}>{item[0].name}</Text>
+          <Text style={{ fontSize: 16 }}>{item[0].name}{" "}</Text>
+          <Text style={{color: 'grey'}}>{item[0].username}</Text>
         </View>
         {adding && (
           <TouchableOpacity

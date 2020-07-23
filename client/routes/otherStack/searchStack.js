@@ -40,6 +40,9 @@ const SearchStack = () => {
               type="EventDetailsCard"
             />
           ),
+          headerTitleContainerStyle: {
+            left: 40,
+          },
         })}
         component={EventDetailsCard}
       />
