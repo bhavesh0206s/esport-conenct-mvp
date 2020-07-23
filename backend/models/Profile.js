@@ -51,6 +51,9 @@ const profileSchema = new Schema({
               number: {
                 type: String,
               },
+              username:{
+                type: String,
+              }
             },
           ],
         },
@@ -64,7 +67,10 @@ const profileSchema = new Schema({
             type: String,
           },
           number: {
-            type: String,
+            type: Number,
+          },
+          username:{
+            type: String
           },
         },
       ],

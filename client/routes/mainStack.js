@@ -31,6 +31,9 @@ const MainStack = () => {
         name='Confirm Event'
         options={({ navigation, route }) => ({
           headerTitle: () => <Header navigation={navigation} type='confirmEvent' title='Confirm Event'/>,
+          headerTitleContainerStyle: {
+            left: 40,
+          },
         })}
       component={ConfirmEvent}
     />

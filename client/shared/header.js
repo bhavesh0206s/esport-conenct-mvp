@@ -19,7 +19,7 @@ const Header = ({ navigation, title, type }) => {
 
   const focusTextInput = () => textInput.current.focus();
 
-  if (type === 'Search') {
+  if (type === 'Search' ) {
     return (
       <View style={styles.header}>
         <Feather name="menu" size={29} onPress={openMenu} style={styles.icon} />
@@ -53,6 +53,13 @@ const Header = ({ navigation, title, type }) => {
         <View>
           <Text style={styles.headerText}>{title}</Text>
         </View>
+    );
+  }
+  if(type === 'register'){
+    return (
+      <View style={styles.header}>
+        <SearchBar type={type} focusTextInput={focusTextInput} textInput={textInput} />
+      </View>
     );
   }
 

@@ -4,16 +4,21 @@ import { StyleSheet, View, TextInput } from 'react-native';
 import { Input, Icon } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import { getEvents } from '../Redux/actions/event';
-import { CLEARSEARCHEDEVENTS } from '../Redux/actions/types';
+import { CLEARSEARCHEDEVENTS, CLEAR_PROFILES } from '../Redux/actions/types';
+import { getProfiles } from '../Redux/actions/profile';
 
-const SearchBar = ({ focusTextInput, textInput }) => {
+const SearchBar = ({ focusTextInput, textInput, type }) => {
   const dispatch = useDispatch();
   const [inputsearch, setInputSearch] = useState('');
   const [showCancelBtn, setShowCancelBtn] = useState(false);
 
   const handleCancel = () => {
     setInputSearch('');
-    dispatch({ type: CLEARSEARCHEDEVENTS });
+    if(type==='register'){
+      dispatch({ type: CLEAR_PROFILES });
+    }else{
+      dispatch({ type: CLEARSEARCHEDEVENTS });
+    }
     setShowCancelBtn(false);
   };
 
@@ -31,9 +36,20 @@ const SearchBar = ({ focusTextInput, textInput }) => {
         placeholder="Search..."
         onChangeText={(val) => {
           setInputSearch(val);
-          dispatch(getEvents(val));
+          if(type === 'register'){
+            dispatch(getProfiles(val));
+          }else{
+            dispatch(getEvents(val));
+          }
           if (inputsearch.length > 0) {
             setShowCancelBtn(true);
+          }else if(inputsearch.length === 0){
+            setShowCancelBtn(false)
+            if(type==='register'){
+              dispatch({ type: CLEAR_PROFILES });
+            }else{
+              dispatch({ type: CLEARSEARCHEDEVENTS });
+            }
           }
         }}
         value={inputsearch}
