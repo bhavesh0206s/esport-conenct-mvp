@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, TouchableOpacity, Button } from 'react-native';
-import { Text, Avatar } from 'react-native-elements';
+import { View, TouchableOpacity } from 'react-native';
+import { Text, Avatar, Button } from 'react-native-elements';
 import ProfileTabView from './tabView';
 
-const Profiles = ({ item, adding, handlingteammember }) => {
+const Profiles = ({ item, adding, handlingTeamMember, remove, teamLeader }) => {
   return (
-    <View>
+    <View style={{flexDirection: 'row'}}>
       <TouchableOpacity
         onPress={() => {
           // navigation.navigate('Userprofile', {
           //   particularuser: item[0],
           // });
-          console.log("U can't see his profile i havent implemente that");
+          console.log("U can't see his profile i havent implemented that");
         }}
         style={{
           flexDirection: 'row',
@@ -32,21 +32,27 @@ const Profiles = ({ item, adding, handlingteammember }) => {
           <Text style={{ fontSize: 16 }}>{item[0].name}{" "}</Text>
           <Text style={{color: 'grey'}}>{item[0].username}</Text>
         </View>
-        {adding && (
-          <TouchableOpacity
-            style={{
-              alignItems: 'center',
-              backgroundColor: '#DDDDDD',
-              padding: 2,
-            }}
-            onPress={() => {
-              handlingteammember(item[0]);
-            }}
-          >
-            <Text>Add</Text>
-          </TouchableOpacity>
-        )}
       </TouchableOpacity>
+        <View>
+          {adding && (
+            <Button
+              title='ADD' 
+              onPress={() => {
+                handlingTeamMember(item[0]);
+              }}
+            />
+          )}
+          {( (remove && (teamLeader !== item[0].username)) && (
+            <Button
+              title='Remove' 
+              onPress={() => {
+                console.log(teamLeader, item[0].username)
+                // removeTeamMember()
+                // handlingteammember(item[0]);
+              }}
+            />
+          ))}
+        </View>
     </View>
   );
 };

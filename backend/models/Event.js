@@ -28,6 +28,10 @@ const eventSchema = new Schema({
   teamsize: Number,
   title: String,
   gamelink: String,
+  hostedBy: {
+    type: String,
+    required: true
+  },
   registeredteaminfo: [
     {
       teammembersinfo: [
