@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Text, Avatar, Button } from 'react-native-elements';
+import { Text, Avatar, Button, Icon } from 'react-native-elements';
 import ProfileTabView from './tabView';
 
-const Profiles = ({ item, adding, handlingTeamMember, remove, teamLeader }) => {
+const Profiles = ({ item, adding, handlingTeamMember, remove, teamLeader , removeTeamMember}) => {
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 7, marginHorizontal: 10}}>
       <TouchableOpacity
         onPress={() => {
           // navigation.navigate('Userprofile', {
@@ -18,7 +18,7 @@ const Profiles = ({ item, adding, handlingTeamMember, remove, teamLeader }) => {
           alignItems: 'center',
         }}
       >
-        <View style={{}}>
+        <View>
           <Avatar
             size={35}
             rounded
@@ -36,7 +36,13 @@ const Profiles = ({ item, adding, handlingTeamMember, remove, teamLeader }) => {
         <View>
           {adding && (
             <Button
-              title='ADD' 
+              icon={
+                <Icon
+                  name="add"
+                  size={20}
+                  color="white"
+                />
+              }
               onPress={() => {
                 handlingTeamMember(item[0]);
               }}
@@ -44,11 +50,17 @@ const Profiles = ({ item, adding, handlingTeamMember, remove, teamLeader }) => {
           )}
           {( (remove && (teamLeader !== item[0].username)) && (
             <Button
-              title='Remove' 
+
+              icon={
+                <Icon
+                  name="remove"
+                  size={20}
+                  color="white"
+                />
+              }
+              buttonStyle={{backgroundColor: 'red'}}
               onPress={() => {
-                console.log(teamLeader, item[0].username)
-                // removeTeamMember()
-                // handlingteammember(item[0]);
+                removeTeamMember(item[0].username)
               }}
             />
           ))}

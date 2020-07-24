@@ -22,36 +22,35 @@ const SearchBar = ({ focusTextInput, textInput, type }) => {
     setShowCancelBtn(false);
   };
 
+  const handleTextChange = (val) => {
+    setInputSearch(val);
+    if(type === 'register'){
+      dispatch(getProfiles(val));
+    }else{
+      dispatch(getEvents(val));
+    }
+    if (val.length > 0) {
+      setShowCancelBtn(true);
+    }else{
+      handleCancel()
+    }
+  }
+
   return (
     <View style={styles.searchSection}>
-      <AntDesign
-        name="search1"
-        style={styles.searchIcon}
-        size={24}
-        color="black"
-      />
+      {!type && (
+        <AntDesign
+          name="search1"
+          style={styles.searchIcon}
+          size={24}
+          color="black"
+        />
+      )}
       <TextInput
         ref={textInput}
         style={styles.input}
         placeholder="Search..."
-        onChangeText={(val) => {
-          setInputSearch(val);
-          if(type === 'register'){
-            dispatch(getProfiles(val));
-          }else{
-            dispatch(getEvents(val));
-          }
-          if (inputsearch.length > 0) {
-            setShowCancelBtn(true);
-          }else if(inputsearch.length === 0){
-            setShowCancelBtn(false)
-            if(type==='register'){
-              dispatch({ type: CLEAR_PROFILES });
-            }else{
-              dispatch({ type: CLEARSEARCHEDEVENTS });
-            }
-          }
-        }}
+        onChangeText={handleTextChange}
         value={inputsearch}
       />
       {showCancelBtn && (

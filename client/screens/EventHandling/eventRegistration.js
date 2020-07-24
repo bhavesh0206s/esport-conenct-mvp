@@ -20,6 +20,15 @@ const EventRegistration = ({ route }) => {
       username: userProfile.username,
     },
   ]);
+  const arrayUnique = (arr, uniqueKey) =>{
+    const flagList = []
+    return arr.filter((item) => {
+      if (flagList.indexOf(item[uniqueKey]) === -1) {
+        flagList.push(item[uniqueKey])
+        return true
+      }
+    })
+  }
 
   const handlingTeamMember = (memberDetail) => {
     if(memberDetail.username === eventdetails.hostedBy){
@@ -32,10 +41,22 @@ const EventRegistration = ({ route }) => {
         username: memberDetail.username
       }
       let teamMemberList = [...teamMember, memberDetail];
-      console.log(teamMemberList)
+      
+      teamMemberList = arrayUnique(teamMemberList, 'username')
       setTeamMember(teamMemberList);
     }
   };
+
+  const removeTeamMember = (username) =>{
+    console.log('username:',username)
+    const teamMemberAfterRemove = teamMember.filter((item, i) => {
+      if(item.username !== username){
+        return true
+      }
+    })
+
+    setTeamMember(teamMemberAfterRemove)
+  }
 
   return (
     <View>
@@ -56,7 +77,14 @@ const EventRegistration = ({ route }) => {
         <FlatList
           data={teamMember}
           keyExtractor={(item) => item.user}
-          renderItem={({ item }) => <Profiles teamLeader={teamMember[0].username} item={[item]} remove={true}/>}
+          renderItem={({ item }) => (
+            <Profiles 
+              teamLeader={teamMember[0].username} 
+              item={[item]} 
+              remove={true}
+              removeTeamMember={removeTeamMember}
+            />
+          )}
         />
       </Card>
     </View>

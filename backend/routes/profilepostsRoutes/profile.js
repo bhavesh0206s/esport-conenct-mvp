@@ -104,7 +104,6 @@ module.exports = (app) => {
     if (instagram) profileFields.social.instagram = instagram;
     try {
       // Using upsert option (creates new doc if no match is found):
-      console.log(profileFields)
       let profile = await Profile.findOneAndUpdate(
         { user: req.user.id },
         { $set: profileFields },
@@ -132,7 +131,6 @@ module.exports = (app) => {
         .limit(10);
       // This {{followers: -1}} means that users with the highest followers will be shown first
       res.json(profiles);
-      console.log(profiles);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
