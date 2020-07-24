@@ -44,6 +44,7 @@ const EventDetailsCard = ({ route }) => {
     prizepool,
     entryFee,
     contact,
+    hostedBy,
     _id,
   } = eventdetails;
   return (
@@ -78,7 +79,10 @@ const EventDetailsCard = ({ route }) => {
             marginBottom: 0,
           }}
           onPress={() => {
-            if (teamsize <= 1) {
+            if(hostedBy === userProfile.username){
+              alert("You are the Host of the Event you can't register");
+            }
+            else if (teamsize <= 1) {
               dispatch(
                 eventRegistration({
                   registerinfo: {

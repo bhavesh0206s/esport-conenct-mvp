@@ -3,10 +3,11 @@ import { View, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-nat
 import { Text, Card, Button, Icon, Image } from "react-native-elements";
 import { gameImage } from "../../shared/gameImage";
 import moment from 'moment';
+import { useSelector } from "react-redux";
 
 const EventCard = ({ item, navigation }) => {
   const [imageUri, setImageUri] = useState("sd");
-
+  
   useEffect(() => {
     if (item[0].game === "PUBG") {
       setImageUri(gameImage.pubg.uri);
@@ -59,6 +60,7 @@ const EventCard = ({ item, navigation }) => {
               eventdetails: item[0],
               imageUri,
             });
+            console.log(item[0])
           }}
           title="DETAILS"
         />

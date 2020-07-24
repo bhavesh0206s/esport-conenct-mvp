@@ -65,6 +65,7 @@ module.exports = (app) => {
       // build eventitems object
       let eventitems = {};
       eventitems.user = req.user.id;
+      eventitems.hostedBy = req.user.username;
       if (game) eventitems.game = game;
       if (description) eventitems.description = description;
       if (title) eventitems.title = title;
