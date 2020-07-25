@@ -21,7 +21,7 @@ const eventSchema = new Schema({
   },
   time: {
     type: Date,
-    required: true,
+    // required: true,
   },
   entryFee: String,
   prizepool: Number,
@@ -30,7 +30,7 @@ const eventSchema = new Schema({
   gamelink: String,
   hostedBy: {
     type: String,
-    required: true
+    required: true,
   },
   registeredteaminfo: [
     {
@@ -45,7 +45,7 @@ const eventSchema = new Schema({
           name: {
             type: String,
           },
-          username:{
+          username: {
             type: String,
           },
           contact: {
@@ -66,7 +66,7 @@ const eventSchema = new Schema({
       contact: {
         type: Number,
       },
-      username:{
+      username: {
         type: String,
       },
     },

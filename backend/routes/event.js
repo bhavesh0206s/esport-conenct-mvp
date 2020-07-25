@@ -61,11 +61,12 @@ module.exports = (app) => {
         teamsize,
         prizepool,
         time,
+        username,
       } = req.body;
       // build eventitems object
       let eventitems = {};
       eventitems.user = req.user.id;
-      eventitems.hostedBy = req.user.username;
+      eventitems.hostedBy = username;
       if (game) eventitems.game = game;
       if (description) eventitems.description = description;
       if (title) eventitems.title = title;
