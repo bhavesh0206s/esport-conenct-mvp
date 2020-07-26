@@ -46,7 +46,11 @@ const EventDetailsCard = ({ route }) => {
     contact,
     hostedBy,
     _id,
+    user,
   } = eventdetails;
+
+  console.log(eventdetails, userProfile);
+
   return (
     <ScrollView>
       <Card
@@ -79,10 +83,9 @@ const EventDetailsCard = ({ route }) => {
             marginBottom: 0,
           }}
           onPress={() => {
-            if(hostedBy === userProfile.username){
+            if (hostedBy === userProfile.username) {
               alert("You are the Host of the Event you can't register");
-            }
-            else if (teamsize <= 1) {
+            } else if (teamsize <= 1) {
               dispatch(
                 eventRegistration({
                   registerinfo: {
@@ -90,10 +93,11 @@ const EventDetailsCard = ({ route }) => {
                     name: userProfile.name,
                     contact: userProfile.contact,
                     username: userProfile.username,
+                    user: userProfile.user,
                   },
                   eventdetails,
                   eventId: _id,
-                  usereventId: userProfile.user,
+                  usereventId: user,
                   teamsize,
                 })
               );
@@ -101,8 +105,8 @@ const EventDetailsCard = ({ route }) => {
               navigation.navigate('Register', {
                 navigation,
                 eventdetails,
-                userProfile
-              })
+                userProfile,
+              });
             }
           }}
           title="Registration"
