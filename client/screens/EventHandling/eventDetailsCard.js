@@ -18,24 +18,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { eventRegistration } from '../../Redux/actions/profile';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import Loading from '../../shared/loading';
 
 const EventDetailsCard = ({ route }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const userProfile = useSelector((state) => state.profile.userProfile);
+  const {userProfile, loading} = useSelector((state) => ({
+    userProfile: state.profile.userProfile,
+    loading: state.loading
+  }));
+  let eventId = userProfile.myevents.map(item => item._id);
   const { eventdetails, imageUri } = route.params;
   const [eventTime, setEventTime] = useState(
     moment(eventdetails.time).format('dddd, MMMM Do YYYY, h:mm:ss a')
   );
 
-  // Setting the visibility of Modal
-  const [modalOpen, setModalOpen] = useState(false);
-  const modalHandling = () => {
-    setModalOpen(false);
-  };
-
   const { name } = route;
-
+  
   const {
     title,
     description,
@@ -49,72 +48,80 @@ const EventDetailsCard = ({ route }) => {
     user,
   } = eventdetails;
 
-  console.log(eventdetails, userProfile);
+  const handleRegistration = () => {
+    if (hostedBy === userProfile.username) {
+      alert("You are the Host of the Event you can't register");
+    } else if (eventId.indexOf(_id) !== -1) {
+      alert("Already Registered!!");
+    }else if (teamsize === 1) {
+      dispatch(
+        eventRegistration({
+          registerinfo: {
+            email: userProfile.email,
+            name: userProfile.name,
+            contact: userProfile.contact,
+            username: userProfile.username,
+            user: userProfile.user,
+          },
+          eventdetails,
+          eventId: _id,
+          usereventId: user,
+          teamsize,
+        })
+      );
+    } else {
+      navigation.navigate('Register', {
+        navigation,
+        eventdetails,
+        userProfile,
+      });
+    }
+  }
 
-  return (
-    <ScrollView>
-      <Card
-        title={title}
-        image={imageUri}
-        titleStyle={{ fontSize: 20 }}
-        containerStyle={{ marginBottom: 20 }}
-      >
-        <Text style={styles.title}>Game: </Text>
-        <Text style={styles.field}>{game}</Text>
-        <Text style={styles.title}>Teamsize: </Text>
-        <Text style={styles.field}>{teamsize}</Text>
-        <Text style={styles.title}>Entryfee: </Text>
-        <Text style={styles.field}>{entryFee}</Text>
-        <Text style={styles.title}>Prize pool: </Text>
-        <Text style={styles.field}>{prizepool}</Text>
-        <Text style={styles.title}>Date&Time:</Text>
-        <Text style={styles.field}>{eventTime.toString()}</Text>
-        <Text style={styles.title}>Contact: </Text>
-        <Text style={styles.field}>{contact}</Text>
-        <Text style={styles.title}>Description:-</Text>
-        <Text style={styles.field}>{description}</Text>
-        {/* {name !== 'EventDetailsProfile' ? ( */}
-        <Button
-          icon={<Icon name="form" type="antdesign" color="#ffffff" />}
-          buttonStyle={{
-            borderRadius: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-          }}
-          onPress={() => {
-            if (hostedBy === userProfile.username) {
-              alert("You are the Host of the Event you can't register");
-            } else if (teamsize <= 1) {
-              dispatch(
-                eventRegistration({
-                  registerinfo: {
-                    email: userProfile.email,
-                    name: userProfile.name,
-                    contact: userProfile.contact,
-                    username: userProfile.username,
-                    user: userProfile.user,
-                  },
-                  eventdetails,
-                  eventId: _id,
-                  usereventId: user,
-                  teamsize,
-                })
-              );
-            } else {
-              navigation.navigate('Register', {
-                navigation,
-                eventdetails,
-                userProfile,
-              });
-            }
-          }}
-          title="Registration"
-        />
-        {/* ) : null} */}
-      </Card>
-    </ScrollView>
-  );
+  if(loading){
+    return(
+      <>
+        <Loading/>
+        <Text>Hold on..</Text>
+      </>
+    )
+  }else{
+    return (
+      <ScrollView>
+        <Card
+          title={title}
+          image={imageUri}
+          titleStyle={styles.mainTitle}
+          containerStyle={styles.container}
+          imageStyle={styles.cardImage}
+        >
+          {name !== 'EventDetailsProfile' ? (
+            <Button
+              icon={<Icon name="form" type="antdesign" color="#ffffff" />}
+              buttonStyle={styles.btnStyle}
+              onPress={handleRegistration}
+              title="Registration"
+            />
+          ) : null}
+          <Text style={styles.title}>Game: </Text>
+          <Text style={styles.field}>{game}</Text>
+          <Text style={styles.title}>Teamsize: </Text>
+          <Text style={styles.field}>{teamsize}</Text>
+          <Text style={styles.title}>Entryfee: </Text>
+          <Text style={styles.field}>{entryFee}</Text>
+          <Text style={styles.title}>Prize pool: </Text>
+          <Text style={styles.field}>{prizepool}</Text>
+          <Text style={styles.title}>Date&Time:</Text>
+          <Text style={styles.field}>{eventTime.toString()}</Text>
+          <Text style={styles.title}>Contact: </Text>
+          <Text style={styles.field}>{contact}</Text>
+          <Text style={styles.title}>Description:-</Text>
+          <Text style={styles.field}>{description}</Text>
+          
+        </Card>
+      </ScrollView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -125,6 +132,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 10,
   },
+  container: {
+    margin: 0, 
+    paddingBottom: 20, 
+    paddingHorizontal: 10 
+  },
+  mainTitle: {
+    fontSize: 25
+  },
+  cardImage:{
+    borderRadius: 20
+  },
+  btnStyle: {
+    borderRadius: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 10,
+  }
 });
 
 export default EventDetailsCard;

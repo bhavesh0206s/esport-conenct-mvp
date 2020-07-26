@@ -18,6 +18,7 @@ const EventRegistration = ({ route }) => {
       user: userProfile.user,
     },
   ]);
+  
   const arrayUnique = (arr, uniqueKey) => {
     const flagList = [];
     return arr.filter((item) => {
@@ -72,7 +73,7 @@ const EventRegistration = ({ route }) => {
           )}
         />
       </View>
-      <Card containerStyle={styles.card} title="TEAM MEMBERS">
+      <Card containerStyle={styles.card}  title="TEAM MEMBERS">
         <FlatList
           data={teamMember}
           keyExtractor={(item) => item.user}

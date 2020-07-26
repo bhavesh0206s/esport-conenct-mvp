@@ -18,6 +18,26 @@ module.exports = (app) => {
     }
   });
 
+  app.delete('/api/event/delete/registered/:id', verify ,async (req, res) => {
+    try{
+      const id = req.params.id
+      const user = await Profile.findOne({user: req.user.id})
+      let myEvents = user.myevents
+      let updatedMyEvents =  []
+      myEvents.forEach((event, i) => {
+        if(event._id.toString() !== id){
+          updatedMyEvents.push(event)
+        }
+      })
+      user.myevents = updatedMyEvents
+      await user.save()
+      res.json(user);
+    }catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  })
+
   app.get('/api/event/searchedevents/:eventname', async (req, res) => {
     try {
       const events = await Event.find({

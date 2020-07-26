@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Event from '../../screens/EventHandling/event';
 import Header from '../../shared/header';
+import MyEvent from '../../screens/EventHandling/myEvent';
 
 const Stack = createStackNavigator();
 
@@ -9,11 +9,11 @@ const EventStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Event"
+        name="My Events"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} title="Event" />,
+          headerTitle: () => <Header navigation={navigation} title="My Events" />,
         })}
-        component={Event}
+        component={MyEvent}
       />
     </Stack.Navigator>
   );
