@@ -3,11 +3,14 @@ import { View, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-nat
 import { Text, Card, Button, Icon, Image } from "react-native-elements";
 import { gameImage } from "../../shared/gameImage";
 import moment from 'moment';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteMyEvent } from "../../Redux/actions/event";
 
-const EventCard = ({ item, navigation }) => {
+const EventCard = ({ item, navigation, deleteEvent}) => {
   const [imageUri, setImageUri] = useState("sd");
-  
+
+  const dispatch = useDispatch()
+
   useEffect(() => {
     if (item[0].game === "PUBG") {
       setImageUri(gameImage.pubg.uri);
@@ -19,65 +22,112 @@ const EventCard = ({ item, navigation }) => {
   }, []);
 
   return (
-    <TouchableOpacity  style={styles.container} >
-      <Card title={item[0].title} image={imageUri}>
-      <View style={styles.content}>
-          <View
-            style={{ flexDirection: "column" }}
-          >
-            <Text>
-              Game: <Text>{item[0].game}</Text>
-            </Text>
-            <Text>
-              Entryfee: <Text>{item[0].entryFee}</Text>
-            </Text>
-            <Text>
-              Date&Time: <Text>{moment(item[0].time).format("Do MMMM YYYY, h:mm a")}</Text>
-            </Text>
+    <>
+      <Card 
+        titleStyle={styles.mainTitle} 
+        title={item[0].title} 
+        imageStyle={styles.cardImage} 
+        containerStyle={styles.container} 
+        image={imageUri}
+      >
+        <View style={styles.content}>
+            <View style={{ flexDirection: "column" }}>
+              <View style={styles.fieldView}>
+                <Text style={styles.fieldTitle}>Game: </Text>
+                <Text style={styles.field}>{item[0].game}</Text>
+              </View>
+              <View style={styles.fieldView}>
+                <Text style={styles.fieldTitle}>Entryfee: </Text>
+                <Text style={styles.field}>{item[0].entryFee}</Text>
+              </View>
+              <View style={styles.fieldView}>
+                <Text style={styles.fieldTitle}>Date&Time: </Text>
+                <Text style={styles.field}>{moment(item[0].time).format("Do MMMM YYYY, h:mm a")}</Text>
+              </View>
+            </View>
+            <View style={{ flexDirection: "column" }}>
+              <View style={styles.fieldView}>
+                <Text style={styles.fieldTitle}>Teamsize: </Text>
+                <Text style={styles.field}>{item[0].teamsize}</Text>
+              </View>
+              <View style={styles.fieldView}>
+                <Text style={styles.fieldTitle}>Prize-pool: </Text>
+                <Text style={styles.field}>{item[0].prizepool}</Text>
+              </View>
+            </View>
+            
           </View>
-          <View
-            style={{ flexDirection: "column" }}
-          >
-            <Text>
-              Teamsize: <Text>{item[0].teamsize}</Text>
-            </Text>
-            <Text>
-              Prize-pool: <Text>{item[0].prizepool}</Text>
-            </Text>
-          </View>
-          
+        </Card>
+        <View>
+          {!deleteEvent ? (
+            <Button
+              icon={<Icon name="description" color="#ffffff" />}
+              buttonStyle={styles.btnStyle}
+              containerStyle={styles.btnContainer}
+              onPress={() => {
+                navigation.navigate("EventDetailsCard", {
+                  eventdetails: item[0],
+                  imageUri,
+                });
+              }}
+              title="DETAILS"
+            />
+          ): (
+            <Button
+              icon={<Icon name="description" color="#ffffff" />}
+              buttonStyle={styles.btnStyleDelete}
+              containerStyle={styles.btnContainer}
+              onPress={() => {
+                dispatch(deleteMyEvent(item[0]))
+              }}
+              title="DELETE"
+            />
+          )}
         </View>
-        <Button
-          icon={<Icon name="description" color="#ffffff" />}
-          buttonStyle={{
-            borderRadius: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-          }}
-          onPress={() => {
-            navigation.navigate("EventDetailsCard", {
-              eventdetails: item[0],
-              imageUri,
-            });
-            console.log(item[0])
-          }}
-          title="DETAILS"
-        />
-      </Card>
-    </TouchableOpacity>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 10
+    margin: 0,
+    padding: 8,
+    // marginBottom: 10
   },
   content :{
     flexDirection: "row", 
-    justifyContent: "space-around", 
-    marginVertical:5,
-    marginHorizontal: 19 
+    justifyContent: "space-around",
+  },
+  cardImage: {
+    borderRadius: 20
+  },
+  mainTitle:{
+    fontSize: 25
+  },
+  btnStyle:{
+    borderRadius: 0,
+    marginBottom: 20,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50
+  },
+  btnStyleDelete:{
+    backgroundColor: 'red',
+    borderRadius: 0,
+    marginBottom: 20,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50
+  },
+  fieldView:{
+    borderBottomWidth: 1,
+    borderColor: "#dbdbdb",
+  },
+  fieldTitle:{
+    color: 'grey',
+  },
+  field:{
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: '#666666'
   }
 })
 

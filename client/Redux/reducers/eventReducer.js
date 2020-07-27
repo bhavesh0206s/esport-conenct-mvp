@@ -6,6 +6,7 @@ import {
   CLEAR_EVENTS,
   CLEARSEARCHEDEVENTS,
   GETSEARCHEDEVENTS,
+  DELETE_MY_EVENT,
 } from '../actions/types';
 
 // I have kept this initial state an object so when in future we want to add more stuff we can easily do in object
@@ -34,6 +35,11 @@ export default (state = initialState, action) => {
       console.log('GETSEARCHEDEVENTS-SUCCESSFUL');
       return {
         searchedevents: [...payload],
+        loading: false,
+      };
+    case DELETE_MY_EVENT:
+      console.log('DELETE_MY_EVENT-SUCCESSFUL');
+      return {
         loading: false,
       };
     case CLEAR_EVENTS:

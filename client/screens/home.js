@@ -45,7 +45,7 @@ const Home = ({ navigation }) => {
           data={allEvents}
           onEndReachedThreshold={0.5}
           initialNumToRender={6}
-          keyExtractor={(item) => item._id}
+          keyExtractor={item => item._id}
           renderItem={({ item }) => (
             <EventCard item={[item]} navigation={navigation} />
           )}

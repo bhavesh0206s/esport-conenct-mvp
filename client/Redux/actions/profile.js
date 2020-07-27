@@ -14,20 +14,25 @@ import {
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import { loading } from './loading';
+import {setAlert} from './alert'
 
 // Get current users profile
 // This will run when user will login, to save his data in store and use it
 export const getCurrentProfile = () => async (dispatch) => {
   try {
     console.log('getting profile........');
+    dispatch(loading(true))
     const res = await axios.get(`http://${ipAddress}:3000/api/profile/me`);
     dispatch({
       type: GET_MYPROFILE,
       payload: res.data,
     });
+    dispatch(loading(false))
     console.log('profile added.....');
   } catch (err) {
     console.log('error from getCurrentProfile: ', err.message);
+    dispatch(loading(false))
   }
 };
 
@@ -152,13 +157,15 @@ export const eventRegistration = ({
   });
 
   try {
+    dispatch(loading(true))
     await axios.post(
       `http://${ipAddress}:3000/api/event/registerinevent`,
       body,
       config
     );
-
+    dispatch(loading(false))
     dispatch(getCurrentProfile());
+    dispatch(setAlert('Registraion Successfull!!'))
     // This will update our profile after we register for the event
   } catch (err) {
     console.error(err.message);

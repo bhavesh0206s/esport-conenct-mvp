@@ -5,12 +5,14 @@ import {
   ADDEVENT_FAIL,
   GETSEARCHEDEVENTS,
   CLEARSEARCHEDEVENTS,
+  DELETE_MY_EVENT,
 } from './types';
 import axios from 'axios';
 import { ipAddress } from '../ipaddress';
 import { setAlert } from './alert';
 import { getCurrentProfile } from './profile';
 import {loading} from './loading'
+
 
 //  Fetch all events to show the users/players
 export const fetchallEvents = () => async (dispatch) => {
@@ -74,5 +76,35 @@ export const getEvents = (eventname) => async (dispatch) => {
     });
   } catch (err) {
     console.log('error from searchEvent: ',err.message)
+  }
+};
+
+export const deleteMyEvent = (eventDetails) => async (dispatch) => {
+  try {
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const res = await axios.delete(
+      `http://${ipAddress}:3000/api/event/delete`,
+      { 
+        data: {eventDetails},
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    dispatch({
+      type: DELETE_MY_EVENT,
+      payload: res.data,
+    });
+    dispatch(getCurrentProfile())
+    dispatch(fetchallEvents())
+    dispatch(setAlert('Event Deleted Successfully!!'))
+  } catch (err) {
+    console.log('error from deleteEvent: ',err)
   }
 };
