@@ -78,7 +78,7 @@ const EventCard = ({ item, navigation, deleteEvent}) => {
               buttonStyle={styles.btnStyleDelete}
               containerStyle={styles.btnContainer}
               onPress={() => {
-                dispatch(deleteMyEvent(item[0]._id))
+                dispatch(deleteMyEvent(item[0]))
               }}
               title="DELETE"
             />

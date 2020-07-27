@@ -105,6 +105,7 @@ const profileSchema = new Schema({
       title: String,
       gamelink: String,
       contact: Number,
+      hostedBy: String,
       date: {
         type: Date,
         default: Date.now,

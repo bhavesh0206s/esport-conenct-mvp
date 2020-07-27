@@ -79,10 +79,22 @@ export const getEvents = (eventname) => async (dispatch) => {
   }
 };
 
-export const deleteMyEvent = (id) => async (dispatch) => {
+export const deleteMyEvent = (eventDetails) => async (dispatch) => {
   try {
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
     const res = await axios.delete(
-      `http://${ipAddress}:3000/api/event/delete/registered/${id}`
+      `http://${ipAddress}:3000/api/event/delete`,
+      { 
+        data: {eventDetails},
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     );
 
     dispatch({
@@ -93,6 +105,6 @@ export const deleteMyEvent = (id) => async (dispatch) => {
     dispatch(fetchallEvents())
     dispatch(setAlert('Event Deleted Successfully!!'))
   } catch (err) {
-    console.log('error from deleteEvent: ',err.message)
+    console.log('error from deleteEvent: ',err)
   }
 };

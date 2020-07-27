@@ -18,26 +18,7 @@ module.exports = (app) => {
     }
   });
 
-  app.delete('/api/event/delete/registered/:id', verify ,async (req, res) => {
-    try{
-      const id = req.params.id
-      const user = await Profile.findOne({user: req.user.id})
-      let myEvents = user.myevents
-      let updatedMyEvents =  []
-      myEvents.forEach((event, i) => {
-        if(event._id.toString() !== id){
-          updatedMyEvents.push(event)
-        }
-      })
-      user.myevents = updatedMyEvents
-      await user.save()
-      res.json(user);
-    }catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
-  })
-
+  
   app.get('/api/event/searchedevents/:eventname', async (req, res) => {
     try {
       const events = await Event.find({
@@ -127,8 +108,59 @@ module.exports = (app) => {
     }
   );
 
+  app.delete('/api/event/delete', verify ,async (req, res) => {
+    try{
+      const {_id, teamsize, hostedBy} = req.body.eventDetails;
+    
+      const user = await Profile.findOne({user: req.user.id})
+      const event = await Event.findById(_id);
+      if(teamsize === 1){
+        //deleting from event
+        let playersInfo = event.registeredplayerinfo
+        let updatedPlayersInfo = [];
+        playersInfo.forEach(player => {
+          if(player.username !== user.username){
+            updatedPlayersInfo.push(player);
+          }
+        })
+        event.registeredplayerinfo = updatedPlayersInfo
+        await event.save();
+        
+        //deleting from profile
+        let myEvents = user.myevents
+        let updatedMyEvents =  []
+        myEvents.forEach((event, i) => {
+          if(event._id.toString() !== _id){
+            updatedMyEvents.push(event)
+          }
+        })
+        user.myevents = updatedMyEvents
+        await user.save()
+        res.json(user);
+      }else{
+        let teamsInfo = event.registeredteaminfo;
+        let upadtedTeamsInfo = []
+        let x = []
+        teamsInfo.forEach(team => {
+          team.teammembersinfo.forEach(player => {
+            if(player.username !== user.username){
+              console.log(team.teammembersinfo)
+              x.push(team.teammembersinfo)
+            }
+          })
+          // upadtedTeamsInfo.push(x)
+        })
+        // console.log(upadtedTeamsInfo)
+      }
+    }catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  })
+
   // Register in event
   // Array.isArray(v4)
+
   app.post('/api/event/registerinevent', verify, async (req, res) => {
     let {
       registerinfo,
@@ -147,7 +179,7 @@ module.exports = (app) => {
         (event) => event.id === eventId
       );
 
-      if (teamsize <= 1) {
+      if (teamsize === 1) {
         event.registeredplayerinfo.push(registerinfo);
 
         hostedevent.registeredplayerinfo.push(registerinfo);
