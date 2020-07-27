@@ -5,9 +5,10 @@ import * as yup from 'yup';
 import { View, Platform, Text } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
-import { AddMyEvent} from '../../Redux/actions/event';
+import { AddMyEvent } from '../../Redux/actions/event';
 import RNPickerSelect from 'react-native-picker-select';
 import { useNavigation } from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const eventSchema = yup.object({
   description: yup.string().required(),
@@ -19,12 +20,44 @@ const eventSchema = yup.object({
   entryFee: yup.number(),
 });
 
-const AddEvent = ({setModalOpen}) => {
-
+const AddEvent = ({ setModalOpen }) => {
   const navigation = useNavigation();
-  
+
   const [typeTourn, setTypeTourn] = useState('');
-  
+
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const [therealtime, setTheRealTime] = useState('');
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setShow(Platform.OS === 'android');
+    setDate(currentDate);
+    setShow(false);
+    let hour = currentDate.getHours();
+    let min = currentDate.getMinutes();
+    let month = currentDate.getMonth();
+    let year = currentDate.getFullYear();
+    let day = currentDate.getDate();
+    setTheRealTime(`${day}-${month + 1}-${year} ${hour}:${min}:00`);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+  console.log(show);
   return (
     <View
       style={{
@@ -44,22 +77,24 @@ const AddEvent = ({setModalOpen}) => {
         }}
         validationSchema={eventSchema}
         onSubmit={(values, actions) => {
-          let currentDatetime = moment(values.time, "DD-MM-YYYY hh:mm:ss");
+          let currentDatetime = moment(therealtime, 'DD-MM-YYYY hh:mm:ss');
+          console.log(currentDatetime);
           values.time = currentDatetime;
-          if(!values.entryFee){
+          if (!values.entryFee) {
             values.entryFee = 'FREE';
           }
-          console.log(values)
-          navigation.navigate('Confirm Event', {info: values})
+          console.log(values);
+          navigation.navigate('Confirm Event', { info: values });
           // actions.resetForm();
-          setModalOpen()
-          
+          setModalOpen();
         }}
       >
         {(formikprops) => (
           <View>
             <RNPickerSelect
-              onValueChange={(value) => formikprops.setFieldValue('game', value)}
+              onValueChange={(value) =>
+                formikprops.setFieldValue('game', value)
+              }
               items={[
                 { label: 'PUBG', value: 'PUBG' },
                 { label: 'COD', value: 'COD' },
@@ -68,15 +103,17 @@ const AddEvent = ({setModalOpen}) => {
               placeholder={{
                 label: 'Select a Game...',
                 value: null,
-                color: '#bec2bf'
+                color: '#bec2bf',
               }}
-            />       
+            />
             <Input
               placeholder="Tournament Name"
               onChangeText={formikprops.handleChange('title')}
               value={formikprops.values.title}
               onBlur={formikprops.handleBlur('title')}
-              errorMessage={formikprops.touched.title && formikprops.errors.title}
+              errorMessage={
+                formikprops.touched.title && formikprops.errors.title
+              }
             />
             <Input
               multiline
@@ -84,15 +121,20 @@ const AddEvent = ({setModalOpen}) => {
               onChangeText={formikprops.handleChange('description')}
               value={formikprops.values.description}
               onBlur={formikprops.handleBlur('description')}
-              errorMessage={formikprops.touched.description && formikprops.errors.description}
+              errorMessage={
+                formikprops.touched.description &&
+                formikprops.errors.description
+              }
             />
             <Input
-              placeholder={"Date Time: DD-MM-YYYY hh:mm"}
+              placeholder={'Date Time: DD-MM-YYYY hh:mm'}
               onChangeText={formikprops.handleChange('time')}
               value={formikprops.values.time}
               onBlur={formikprops.handleBlur('time')}
               errorMessage={formikprops.touched.time && formikprops.errors.time}
             />
+            <Button onPress={showDatepicker} title="Add date of event" />
+            <Button onPress={showTimepicker} title="Add time of event" />
             <RNPickerSelect
               onValueChange={(value) => setTypeTourn(value)}
               items={[
@@ -102,7 +144,7 @@ const AddEvent = ({setModalOpen}) => {
               placeholder={{
                 label: 'Type of Tournament...',
                 value: null,
-                color: '#bec2bf'
+                color: '#bec2bf',
               }}
             />
             {typeTourn == 'Paid' ? (
@@ -111,18 +153,24 @@ const AddEvent = ({setModalOpen}) => {
                 onChangeText={formikprops.handleChange('entryFee')}
                 value={`${formikprops.values.entryFee}`}
                 onBlur={formikprops.handleBlur('entryFee')}
-                errorMessage={formikprops.touched.entryFee && formikprops.errors.entryFee}
+                errorMessage={
+                  formikprops.touched.entryFee && formikprops.errors.entryFee
+                }
               />
-            ): null}    
+            ) : null}
             <Input
-              placeholder='Prizepool..'
+              placeholder="Prizepool.."
               onChangeText={formikprops.handleChange('prizepool')}
               value={`${formikprops.values.prizepool}`}
               onBlur={formikprops.handleBlur('prizepool')}
-              errorMessage={formikprops.touched.prizepool && formikprops.errors.prizepool}
+              errorMessage={
+                formikprops.touched.prizepool && formikprops.errors.prizepool
+              }
             />
             <RNPickerSelect
-              onValueChange={(value) => formikprops.setFieldValue('teamsize', value)}
+              onValueChange={(value) =>
+                formikprops.setFieldValue('teamsize', value)
+              }
               items={[
                 { label: '1', value: '1' },
                 { label: '2', value: '2' },
@@ -132,7 +180,7 @@ const AddEvent = ({setModalOpen}) => {
               placeholder={{
                 label: 'Team Size...',
                 value: null,
-                color: '#bec2bf'
+                color: '#bec2bf',
               }}
             />
             <Input
@@ -141,16 +189,29 @@ const AddEvent = ({setModalOpen}) => {
               onChangeText={formikprops.handleChange('contact')}
               value={formikprops.values.contact}
               onBlur={formikprops.handleBlur('contact')}
-              errorMessage={formikprops.touched.contact && formikprops.errors.contact}
+              errorMessage={
+                formikprops.touched.contact && formikprops.errors.contact
+              }
             />
-            <Button onPress={formikprops.handleSubmit}  title="Submit For Verification" />
+            <Button
+              onPress={formikprops.handleSubmit}
+              title="Submit For Verification"
+            />
           </View>
         )}
       </Formik>
-      
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
     </View>
   );
 };
 
 export default AddEvent;
-
