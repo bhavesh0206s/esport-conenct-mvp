@@ -8,7 +8,7 @@ import { deleteMyEvent } from "../../Redux/actions/event";
 
 const EventCard = ({ item, navigation, deleteEvent}) => {
   const [imageUri, setImageUri] = useState("sd");
-
+  const currentUserUsername = useSelector(state => state.profile.userProfile.username)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const EventCard = ({ item, navigation, deleteEvent}) => {
               buttonStyle={styles.btnStyleDelete}
               containerStyle={styles.btnContainer}
               onPress={() => {
-                dispatch(deleteMyEvent(item[0]))
+                dispatch(deleteMyEvent(item[0], currentUserUsername))
               }}
               title="DELETE"
             />

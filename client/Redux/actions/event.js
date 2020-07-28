@@ -79,16 +79,16 @@ export const getEvents = (eventname) => async (dispatch) => {
   }
 };
 
-export const deleteMyEvent = (eventDetails) => async (dispatch) => {
+export const deleteMyEvent = (eventDetails, username) => async (dispatch) => {
   try {
-
+    dispatch(loading(true))
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
     const res = await axios.delete(
-      `http://${ipAddress}:3000/api/event/delete`,
+      `http://${ipAddress}:3000/api/event/delete/${username}`,
       { 
         data: {eventDetails},
         headers: {
@@ -103,8 +103,16 @@ export const deleteMyEvent = (eventDetails) => async (dispatch) => {
     });
     dispatch(getCurrentProfile())
     dispatch(fetchallEvents())
+    dispatch(loading(false))
     dispatch(setAlert('Event Deleted Successfully!!'))
   } catch (err) {
-    console.log('error from deleteEvent: ',err)
+    const errors = err.response.data.errors;
+    // this errors are the errors send form the backend
+    if (errors) {
+      errors.forEach((error) => {
+        dispatch(setAlert(error.msg));
+      });
+    }
+    dispatch(loading(false))
   }
 };

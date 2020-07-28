@@ -108,10 +108,10 @@ module.exports = (app) => {
     }
   );
 
-  app.delete('/api/event/delete', verify ,async (req, res) => {
+  app.delete('/api/event/delete/:username', verify ,async (req, res) => {
     try{
-      const {_id, teamsize, hostedBy} = req.body.eventDetails;
-    
+      const {_id, teamsize } = req.body.eventDetails;
+      const currentUser = req.params.username
       const user = await Profile.findOne({user: req.user.id})
       const event = await Event.findById(_id);
       if(teamsize === 1){
@@ -139,6 +139,41 @@ module.exports = (app) => {
         res.json(user);
       }else{
         let teamsInfo = event.registeredteaminfo;
+        ////deleting from profile
+        let isTeamLeader = false
+        for(let useritem of teamsInfo){
+          for(let item of useritem.teammembersinfo){
+            if(item.teamLeader === currentUser){
+              isTeamLeader = true
+              break
+            }
+          }
+        }
+
+        if(!isTeamLeader){
+          return res
+              .status(404)
+              .json({ errors: [{ msg: 'You are not the Leader of the Team!!' }] });
+        }
+
+        for(let useritem of teamsInfo){
+          let 
+          for(let item of useritem.teammembersinfo){
+            let playerProfile = await Profile.findOne({
+              user: item.user,
+            });
+      
+            let upadtedMyEvents =  playerProfile.myevents.filter((event, i) => {
+              if(event._id.toString() !== _id) return true
+            })
+
+            playerProfile.myevents = upadtedMyEvents;
+
+            await playerProfile.save()
+          }
+        }
+
+        //deleting from event
         let upadtedTeamsInfo = []
         let x = []
         teamsInfo.forEach(team => {
@@ -154,23 +189,16 @@ module.exports = (app) => {
         event.registeredteaminfo = teamsInfo
           .map((team, i) =>({teammembersinfo: upadtedTeamsInfo[i]}))
           .filter(team => team.teammembersinfo !== undefined)
+          
         await event.save();
-
-        let myEvents = user.myevents
-        let updatedMyEvents =  []
-        myEvents.forEach((event, i) => {
-          if(event._id.toString() !== _id){
-            updatedMyEvents.push(event)
-          }
-        })
-        user.myevents = updatedMyEvents
-        await user.save()
 
         res.json(user);
       }
     }catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      return res
+              .status(404)
+              .json({ errors: [{ msg: err.message }] });
     }
   })
 

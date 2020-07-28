@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, FlatList, Button } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import { StyleSheet, View, FlatList } from 'react-native';
+import { Card, Icon, Button } from 'react-native-elements';
 import Profiles from '../profileHandling/profiles';
 import { useDispatch, useSelector } from 'react-redux';
 import { eventRegistration } from '../../Redux/actions/profile';
 import Loading from '../../shared/loading';
 
-const EventRegistration = ({ route }) => {
+const EventRegistration = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { eventdetails, userProfile } = route.params;
-  const {teamLeaderProfile, loading} = useSelector((state) => ({
-    teamLeaderProfile: state.profile.profiles,
+  const {searchProfile, loading} = useSelector((state) => ({
+    searchProfile: state.profile.profiles,
     loading: state.loading
   }));
+  console.log(userProfile.user, searchProfile)
+
   const [teamMember, setTeamMember] = useState([
     {
       email: userProfile.email,
@@ -20,6 +22,7 @@ const EventRegistration = ({ route }) => {
       contact: userProfile.contact,
       username: userProfile.username,
       user: userProfile.user,
+      teamLeader: userProfile.username
     },
   ]);
   
@@ -45,32 +48,28 @@ const EventRegistration = ({ route }) => {
         contact: memberDetail.contact,
       };
       let teamMemberList = [...teamMember, memberDetail];
-
       teamMemberList = arrayUnique(teamMemberList, 'username');
       setTeamMember(teamMemberList);
     }
   };
 
   const removeTeamMember = (username) => {
-    console.log('username:', username);
     const teamMemberAfterRemove = teamMember.filter((item, i) => {
       if (item.username !== username) {
         return true;
       }
     });
-
     setTeamMember(teamMemberAfterRemove);
   };
 
   if(loading){
     return <Loading/>
   }else{
-
     return (
       <View>
         <View>
           <FlatList
-            data={teamLeaderProfile}
+            data={searchProfile}
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => (
               <Profiles
@@ -98,7 +97,8 @@ const EventRegistration = ({ route }) => {
             <Button
               icon={<Icon name="form" type="antdesign" color="#ffffff" />}
               buttonStyle={{
-                borderRadius: 0,
+                borderRadius: 20,
+                marginTop: 20,
                 marginLeft: 0,
                 marginRight: 0,
                 marginBottom: 0,
@@ -115,8 +115,11 @@ const EventRegistration = ({ route }) => {
                     teamsize: eventdetails.teamsize,
                   })
                 );
+                if(!loading){
+                  navigation.goBack()
+                }
               }}
-              title="Register"
+              title="Submit"
             />
           ) : (
             <></>
