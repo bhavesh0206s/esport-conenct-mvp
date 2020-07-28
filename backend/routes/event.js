@@ -142,15 +142,31 @@ module.exports = (app) => {
         let upadtedTeamsInfo = []
         let x = []
         teamsInfo.forEach(team => {
-          team.teammembersinfo.forEach(player => {
+          x = team.teammembersinfo.filter(player => {
             if(player.username !== user.username){
-              console.log(team.teammembersinfo)
-              x.push(team.teammembersinfo)
+              return true
             }
           })
-          // upadtedTeamsInfo.push(x)
+          if(x.length >= teamsize){
+            upadtedTeamsInfo.push(x)
+          }
         })
-        // console.log(upadtedTeamsInfo)
+        event.registeredteaminfo = teamsInfo
+          .map((team, i) =>({teammembersinfo: upadtedTeamsInfo[i]}))
+          .filter(team => team.teammembersinfo !== undefined)
+        await event.save();
+
+        let myEvents = user.myevents
+        let updatedMyEvents =  []
+        myEvents.forEach((event, i) => {
+          if(event._id.toString() !== _id){
+            updatedMyEvents.push(event)
+          }
+        })
+        user.myevents = updatedMyEvents
+        await user.save()
+
+        res.json(user);
       }
     }catch (err) {
       console.error(err.message);
