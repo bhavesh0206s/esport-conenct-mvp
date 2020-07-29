@@ -42,7 +42,6 @@ const Login = ({ navigation }) => {
         validationSchema={LoginSchema}
         onSubmit={async ({ email, password }) => {
           dispatch(login(email.toLowerCase(), password));
-          // if (isAuthenticated) navigation.navigate('Home');
         }}
       >
         {(props) => (

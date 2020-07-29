@@ -13,7 +13,6 @@ const EventRegistration = ({ route, navigation }) => {
     searchProfile: state.profile.profiles,
     loading: state.loading
   }));
-  console.log(userProfile.user, searchProfile)
 
   const [teamMember, setTeamMember] = useState([
     {

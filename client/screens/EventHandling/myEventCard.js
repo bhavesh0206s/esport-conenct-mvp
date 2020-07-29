@@ -6,8 +6,9 @@ import moment from 'moment';
 import { useSelector, useDispatch } from "react-redux";
 import { deleteMyEvent } from "../../Redux/actions/event";
 
-const EventCard = ({ item, navigation }) => {
+const MyEventCard = ({ item, navigation, deleteEvent}) => {
   const [imageUri, setImageUri] = useState("sd");
+  const currentUserUsername = useSelector(state => state.profile.userProfile.username)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -58,18 +59,15 @@ const EventCard = ({ item, navigation }) => {
           </View>
         </Card>
         <View>
-          <Button
-            icon={<Icon name="description" color="#ffffff" />}
-            buttonStyle={styles.btnStyle}
-            containerStyle={styles.btnContainer}
-            onPress={() => {
-              navigation.navigate("EventDetailsCard", {
-                eventdetails: item[0],
-                imageUri,
-              });
-            }}
-            title="DETAILS"
-          />
+            <Button
+              icon={<Icon name="description" color="#ffffff" />}
+              buttonStyle={styles.btnStyleDelete}
+              containerStyle={styles.btnContainer}
+              onPress={() => {
+                dispatch(deleteMyEvent(item[0], currentUserUsername))
+              }}
+              title="DELETE"
+            />
         </View>
     </>
   );
@@ -118,4 +116,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default EventCard;
+export default MyEventCard;

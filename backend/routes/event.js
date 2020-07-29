@@ -157,16 +157,15 @@ module.exports = (app) => {
         }
 
         for(let useritem of teamsInfo){
-          let 
+
           for(let item of useritem.teammembersinfo){
             let playerProfile = await Profile.findOne({
               user: item.user,
             });
-      
+            
             let upadtedMyEvents =  playerProfile.myevents.filter((event, i) => {
               if(event._id.toString() !== _id) return true
             })
-
             playerProfile.myevents = upadtedMyEvents;
 
             await playerProfile.save()
@@ -197,8 +196,8 @@ module.exports = (app) => {
     }catch (err) {
       console.error(err.message);
       return res
-              .status(404)
-              .json({ errors: [{ msg: err.message }] });
+          .status(404)
+          .json({ errors: [{ msg: err.message }] });
     }
   })
 
@@ -213,7 +212,7 @@ module.exports = (app) => {
       usereventId,
       eventdetails,
     } = req.body;
-
+    
     try {
       let event = await Event.findById(eventId);
       let eventhostguy = await Profile.findOne({ user: usereventId });
@@ -242,6 +241,28 @@ module.exports = (app) => {
 
         res.json({ playerevents: playerprofile.myevents, event });
       } else {
+        let teamsInfo = event.registeredteaminfo;
+        ////deleting from profile
+        if(teamsInfo.length > 0){
+          let registeredPlayerUsername = registerinfo.teammembersinfo.map((item) => item.username);
+
+          let alreadyRegisterPlayer = []
+          for(let useritem of teamsInfo){
+            for(let item of useritem.teammembersinfo){
+              if(registeredPlayerUsername.indexOf(item.username) !== -1){
+                alreadyRegisterPlayer.push(item.username)
+              }
+            }
+          }
+
+          if(alreadyRegisterPlayer.length > 0){
+            return res
+              .status(404)
+              .json({ errors: [{ msg: `${alreadyRegisterPlayer} Already Registered in this Event` }] });
+          }
+        }
+
+
         event.registeredteaminfo.push({
           teamname: registerinfo.teamname,
           teammembersinfo: registerinfo.teammembersinfo,

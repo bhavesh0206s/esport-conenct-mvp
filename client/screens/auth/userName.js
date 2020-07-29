@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { username } from '../../Redux/actions/auth';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Icon } from 'react-native-elements';
 
 const userNameSchema = yup.object({
@@ -12,9 +12,10 @@ const userNameSchema = yup.object({
 });
 
 const UserName = ({route}) => {
-
+  const nameFromGoogle = useSelector((state) => state.auth.name);
   const dispatch = useDispatch();
   const {name} = route.params
+
   return (
     <View style={styles.container}>
       <Formik

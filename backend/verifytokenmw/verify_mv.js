@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
     const decoded = jwt.verify(token, keys.jwtSecret);
 
     req.user = decoded.user; // Now req.user will be acessed from anywhere
-
+    
     next();
 
   } catch (err) {

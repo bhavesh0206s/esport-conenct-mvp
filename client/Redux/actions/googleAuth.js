@@ -29,10 +29,10 @@ export const signInAsync = () => async (dispatch) => {
 
     await AsyncStorage.setItem('token', resServer.data.token);
 
-    dispatch({ type: GOOGLE_LOGIN, payload: resServer.data });
+    dispatch({ type: GOOGLE_LOGIN, payload: res.data.name });
 
     const token = await AsyncStorage.getItem('token');
-
+    
     if (token) {
       try {
         dispatch(createProfile({ name: res.data.name }));

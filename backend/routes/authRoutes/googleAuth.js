@@ -9,6 +9,7 @@ module.exports = (app) => {
     console.log('in side google server');
     try {
       let { name, email } = req.body;
+      console.log(name, email)
       let user = await User.findOne({ email });
       // See if user exits
       if (user) {
@@ -39,6 +40,7 @@ module.exports = (app) => {
         let newUser = new User({
           name,
           email,
+          username: ''
         });
         // Save data to atlas
         await newUser.save();

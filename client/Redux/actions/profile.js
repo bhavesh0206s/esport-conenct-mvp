@@ -10,6 +10,7 @@ import {
   GETPARTICULARUSER,
   CLEAR_MYPROFILE,
   UPDATE_PROFILE,
+  UPADTE_MYPROFILE
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
@@ -168,7 +169,14 @@ export const eventRegistration = ({
     dispatch(setAlert('Registraion Successfull!!'))
     // This will update our profile after we register for the event
   } catch (err) {
-    console.error(err.message);
+    const errors = err.response.data.errors;
+    // this errors are the errors send form the backend
+    if (errors) {
+      errors.forEach((error) => {
+        dispatch(setAlert(error.msg, 'danger'));
+      });
+    }
+    dispatch(loading(false))
   }
 };
 
