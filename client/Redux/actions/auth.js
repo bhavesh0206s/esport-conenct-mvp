@@ -33,7 +33,7 @@ export const loadUser = () => async (dispatch) => {
   }
 
   try {
-    const res = await axios.get(`http://${ipAddress}:3000/api/login`);
+    const res = await axios.get(`http://${ipAddress}/api/login`);
 
     dispatch({
       type: USER_LOADED,
@@ -49,7 +49,7 @@ export const username = (username, bio, name) => async (dispatch) =>{
 
   try {
     const res = await axios.post(
-      `http://${ipAddress}:3000/api/signup/${name}/${username}`
+      `http://${ipAddress}/api/signup/${name}/${username}`
     );
 
     dispatch({
@@ -82,7 +82,7 @@ export const register = (name, email, password) => async (dispatch) => {
   const body = JSON.stringify({ name, email, password });
   try {
     const res = await axios.post(
-      `http://${ipAddress}:3000/api/signup`,
+      `http://${ipAddress}/api/signup`,
       body,
       config
     );
@@ -124,7 +124,7 @@ export const login = (email, password) => async (dispatch) => {
   try {
     console.log('wait logging in......');
     const res = await axios.post(
-      `http://${ipAddress}:3000/api/login`,
+      `http://${ipAddress}/api/login`,
       body,
       config
     );

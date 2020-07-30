@@ -23,7 +23,7 @@ export const signInAsync = () => async (dispatch) => {
     );
 
     let resServer = await axios.post(
-      `http://${ipAddress}:3000/api/google/login`,
+      `http://${ipAddress}/api/google/login`,
       res.data
     );
 

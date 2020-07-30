@@ -25,6 +25,9 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": ""
+    "android":{
+      "softwareKeyboardLayoutMode": "pan"
+    },
+    "description": "We rule the Esport Industry"
   }
 }

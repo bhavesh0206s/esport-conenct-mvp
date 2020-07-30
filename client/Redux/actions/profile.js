@@ -24,7 +24,7 @@ export const getCurrentProfile = () => async (dispatch) => {
   try {
     console.log('getting profile........');
     dispatch(loading(true))
-    const res = await axios.get(`http://${ipAddress}:3000/api/profile/me`);
+    const res = await axios.get(`http://${ipAddress}/api/profile/me`);
     dispatch({
       type: GET_MYPROFILE,
       payload: res.data,
@@ -56,7 +56,7 @@ export const createProfile = (formData) => async (dispatch) => {
     const body = JSON.stringify(formData);
     
     const res = await axios.post(
-      `http://${ipAddress}:3000/api/profile/me`,
+      `http://${ipAddress}/api/profile/me`,
       body,
       config
     );
@@ -86,7 +86,7 @@ export const upadteProfile = (formData) => async (dispatch) => {
     console.log('upadating profile.........');
 
     const res = await axios.post(
-      `http://${ipAddress}:3000/api/profile/update/me`,
+      `http://${ipAddress}/api/profile/update/me`,
       formData,
       config
     );
@@ -106,7 +106,7 @@ export const upadteProfile = (formData) => async (dispatch) => {
 export const getProfiles = (username) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `http://${ipAddress}:3000/api/profile/userbyname/${username}`
+      `http://${ipAddress}/api/profile/userbyname/${username}`
     );
 
     dispatch({
@@ -123,7 +123,7 @@ export const getProfiles = (username) => async (dispatch) => {
 export const getProfileById = (user_id) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `http://${ipAddress}:3000/api/profile/userbyid/${user_id}`
+      `http://${ipAddress}/api/profile/userbyid/${user_id}`
     );
 
     dispatch({
@@ -160,7 +160,7 @@ export const eventRegistration = ({
   try {
     dispatch(loading(true))
     await axios.post(
-      `http://${ipAddress}:3000/api/event/registerinevent`,
+      `http://${ipAddress}/api/event/registerinevent`,
       body,
       config
     );
@@ -183,7 +183,7 @@ export const eventRegistration = ({
 // // Delete account & profile
 // export const deleteAccount = () => async (dispatch) => {
 //   try {
-//     await axios.delete(`http://${ipAddress}:3000/api/profile/`);
+//     await axios.delete(`http://${ipAddress}/api/profile/`);
 
 //     dispatch({ type: ACCOUNT_DELETED });
 
