@@ -4,7 +4,7 @@ import moment from 'moment';
 import * as yup from 'yup';
 import { View, Platform, Text, StyleSheet } from 'react-native';
 import { Input, Button } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AddMyEvent } from '../../Redux/actions/event';
 import RNPickerSelect from 'react-native-picker-select';
 import { useNavigation } from '@react-navigation/native';
@@ -13,7 +13,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const eventSchema = yup.object({
   description: yup.string().required(),
   game: yup.string().required(),
-  time: yup.string().required(),
+  time: yup.string(),
   contact: yup.string().required(),
   title: yup.string().required(),
   prizepool: yup.number().required(),
@@ -21,6 +21,9 @@ const eventSchema = yup.object({
 });
 
 const AddEvent = ({ setModalOpen }) => {
+
+  const hostUsername = useSelector((state) => state.profile.userProfile.username);
+
   const navigation = useNavigation();
 
   const [typeTourn, setTypeTourn] = useState('');
@@ -72,17 +75,18 @@ const AddEvent = ({ setModalOpen }) => {
           teamsize: '',
           title: '',
           contact: '',
+          hostedBy: ''
         }}
         validationSchema={eventSchema}
         onSubmit={(values, actions) => {
+          console.log('hello')
           let currentDatetime = moment(therealtime, 'DD-MM-YYYY hh:mm:ss');
-          console.log(currentDatetime);
           values.time = currentDatetime;
+          values.hostedBy = hostUsername;
           if (!values.entryFee) {
             values.entryFee = 'FREE';
           }
           navigation.navigate('Confirm Event', { info: values });
-          // actions.resetForm();
           setModalOpen();
         }}
       >
@@ -136,7 +140,7 @@ const AddEvent = ({ setModalOpen }) => {
             <RNPickerSelect
               onValueChange={(value) => setTypeTourn(value)}
               items={[
-                { label: 'FREE', value: 'Free' },
+                { label: 'FREE', value: 'FREE' },
                 { label: 'PAID', value: 'Paid' },
               ]}
               placeholder={{
@@ -214,9 +218,9 @@ const AddEvent = ({ setModalOpen }) => {
 
 const styles = StyleSheet.create({
   time:{
-    marginHorizontal: 10,
+    marginHorizontal: 7,
     marginVertical: 15,
-    fontSize: 16
+    fontSize: 17
   },
   timeBtnView:{
     flexDirection: 'row',

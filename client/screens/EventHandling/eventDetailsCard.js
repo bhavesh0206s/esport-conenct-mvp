@@ -78,6 +78,10 @@ const EventDetailsCard = ({ route }) => {
     }
   }
 
+  const handleHostEventRemove = () =>{
+    console.log('removing....')
+  }
+
   if(loading){
     return(
       <>
@@ -102,7 +106,12 @@ const EventDetailsCard = ({ route }) => {
               onPress={handleRegistration}
               title="Registration"
             />
-          ) : null}
+          ) : <Button
+              icon={<Icon name="delete"  color="#ffffff" />}
+              buttonStyle={styles.btnStyleDelete}
+              onPress={handleHostEventRemove}
+              title="REMOVE"
+            />}
           <Text style={styles.title}>Game: </Text>
           <Text style={styles.field}>{game}</Text>
           <Text style={styles.title}>Teamsize: </Text>
@@ -145,10 +154,17 @@ const styles = StyleSheet.create({
   },
   btnStyle: {
     borderRadius: 0,
-    marginLeft: 0,
-    marginRight: 0,
-    marginBottom: 10,
-  }
+    marginBottom: 20,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50
+  },
+  btnStyleDelete:{
+    backgroundColor: 'red',
+    borderRadius: 0,
+    marginBottom: 20,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50
+  },
 });
 
 export default EventDetailsCard;

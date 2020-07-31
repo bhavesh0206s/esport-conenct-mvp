@@ -62,11 +62,10 @@ const MyEventCard = ({ item, navigation, deleteEvent}) => {
             <Button
               icon={<Icon name="description" color="#ffffff" />}
               buttonStyle={styles.btnStyleDelete}
-              containerStyle={styles.btnContainer}
               onPress={() => {
                 dispatch(deleteMyEvent(item[0], currentUserUsername))
               }}
-              title="DELETE"
+              title="REMOVE"
             />
         </View>
     </>
