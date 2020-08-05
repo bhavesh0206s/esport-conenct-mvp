@@ -4,6 +4,7 @@ const keys = require('../../config/keys');
 module.exports = async (req, res, next) => {
   // Get token from header
   const token = await req.header('x-auth-token');
+
   if (!token) {
     console.log('not authorized');
   }

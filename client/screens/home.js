@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../shared/loading';
 import { fetchallEvents } from '../Redux/actions/event';
 import EventCard from './EventHandling/eventCard';
+import setAuthToken from '../Redux/setAuthToken';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 const Home = ({ navigation }) => {
@@ -26,8 +28,15 @@ const Home = ({ navigation }) => {
   };
 
   useEffect(() => {
-    console.log('Home Page refreshed');
-    setTimeout(() => dispatch(fetchallEvents()), 100);
+    const loadHome = async () => {
+      console.log('Home Page refreshed');
+      const token = await AsyncStorage.getItem('token');
+      if (token !== null) {
+        setAuthToken(token);
+      }
+      setTimeout(() => dispatch(fetchallEvents()), 100);
+    };
+    loadHome()
   }, []);
 
 

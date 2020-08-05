@@ -29,10 +29,13 @@ export const signInAsync = (navigation) => async (dispatch) => {
     );
 
     await AsyncStorage.setItem('token', resServer.data.token);
-    const authType = resServer.data.auth
+
+    const authType = resServer.data.auth;
+    
     dispatch({ type: GOOGLE_LOGIN, payload: [res.data.email, authType] });
 
     const token = await AsyncStorage.getItem('token');
+    
     navigation.navigate('GoogleUsername');
 
     if (token) {

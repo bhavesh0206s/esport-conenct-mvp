@@ -4,10 +4,11 @@ import { Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import EventCard from './EventHandling/eventCard';
 
+
 const Search = ({ navigation }) => {
   const dispatch = useDispatch();
-  const searchedevents = useSelector((state) => state.event.searchedevents);
-
+  const searchedEvents = useSelector((state) => state.searchEvent);
+  
   return (
     <View>
       {!searchedEvents || searchedEvents.length === 0 ? (
@@ -18,9 +19,7 @@ const Search = ({ navigation }) => {
         <FlatList
           data={searchedEvents}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
-            <EventCard item={[item]} navigation={navigation} />
-          )}
+          renderItem={({ item }) => <EventCard item={[item]} navigation={navigation}/>}
         />
       )}
     </View>
@@ -28,14 +27,15 @@ const Search = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  searchText: {
+  searchText:{
     fontSize: 21,
     textAlign: 'center',
     paddingTop: 250,
     paddingHorizontal: 10,
     textTransform: 'uppercase',
     fontWeight: 'bold',
-  },
+  }
 });
 
 export default Search;
+
