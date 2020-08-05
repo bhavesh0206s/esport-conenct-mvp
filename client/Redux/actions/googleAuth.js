@@ -15,8 +15,9 @@ let config = {
     '467702790820-h5khac5p024mdudn3956thvg0jns445i.apps.googleusercontent.com',
 };
 
-export const signInAsync = () => async (dispatch) => {
+export const signInAsync = (navigation) => async (dispatch) => {
   try {
+    dispatch(loading(true))
     let authState = await AppAuth.authAsync(config);
     let res = await axios.get(
       `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${authState.accessToken}`
@@ -28,19 +29,23 @@ export const signInAsync = () => async (dispatch) => {
     );
 
     await AsyncStorage.setItem('token', resServer.data.token);
-
-    dispatch({ type: GOOGLE_LOGIN, payload: res.data.name });
+    const authType = resServer.data.auth
+    dispatch({ type: GOOGLE_LOGIN, payload: [res.data.email, authType] });
 
     const token = await AsyncStorage.getItem('token');
-    
+    navigation.navigate('GoogleUsername');
+
     if (token) {
       try {
-        dispatch(createProfile({ name: res.data.name }));
+        if(authType === 'signup'){
+          dispatch(createProfile({ name: res.data.name }));
+        }
         dispatch(getCurrentProfile());
       } catch (e) {
         console.log('error from google profile: ', e);
       }
     }
+    dispatch(loading(false))
   } catch (e) {
     const errors = e.response.data.errors;
     // this errors are the errors send form the backend
@@ -50,5 +55,6 @@ export const signInAsync = () => async (dispatch) => {
         dispatch(setAlert(error.msg, 'danger'));
       });
     }
+    dispatch(loading(false))
   }
 };

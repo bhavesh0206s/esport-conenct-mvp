@@ -28,7 +28,7 @@ const AddEvent = ({ setModalOpen }) => {
 
   const [typeTourn, setTypeTourn] = useState('');
 
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
@@ -133,7 +133,6 @@ const AddEvent = ({ setModalOpen }) => {
             </View>
             {(!show && therealtime !== '') && (
               <Text style={styles.time}>
-                {}
                 {moment(therealtime, 'DD-MM-YYYY hh:mm:ss').toString()}
               </Text>
             )}

@@ -8,8 +8,11 @@ import { loading } from '../../Redux/actions/loading';
 export default function GoogleSignin({ title, navigation }) {
   
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.loading)
-
+  const auth = useSelector((state) => state.auth);
+  const isAuthenticated = auth.isAuthenticated;
+  const authType = auth.authType
+  const isUserNameVerified = auth.isUserNameVerified
+  
   return (
     <View>
       <SocialIcon
@@ -18,11 +21,12 @@ export default function GoogleSignin({ title, navigation }) {
         style={{ margin: 40 }}
         type="google"
         onPress={async () => {
-          dispatch(signInAsync());
-          if(!loading){
-            navigation.navigate('UserName')
-          }
-          // if(isAuthenticated) navigation.navigate('Home');
+          dispatch(signInAsync(navigation));
+          console.log(isAuthenticated, isUserNameVerified)
+          // if(isAuthenticated){
+          //   console.log('fdsa')
+          //   navigation.navigate('GoogleUsername')
+          // }
         }}
       />
     </View>

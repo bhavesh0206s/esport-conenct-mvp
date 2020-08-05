@@ -7,6 +7,7 @@ const keys = require('../../../config/keys');
 module.exports = (app) => {
   app.post('/api/google/login', async (req, res) => {
     console.log('in side google server');
+    let auth ;
     try {
       let { name, email } = req.body;
       console.log(name, email)
@@ -16,31 +17,25 @@ module.exports = (app) => {
         let payload = {
           user: {
             id: user._id,
+            name,
+            email,
           },
         };
-
-        jwt.sign(
-          payload,
-          keys.jwtSecret,
-          /* { expiresIn: 3600 }, */ (err, token) => {
-            if (err) throw err;
-            res.json({ token });
-          }
-        );
+        console.log(payload)
+        auth = 'signin'
         jwt.sign(
           payload,
           keys.jwtSecret,
           { expiresIn: '40d' },
           (err, token) => {
             if (err) throw err;
-            res.json({ token });
+            res.json({ token , auth});
           }
         );
       } else {
         let newUser = new User({
           name,
           email,
-          username: ''
         });
         // Save data to atlas
         await newUser.save();
@@ -48,8 +43,11 @@ module.exports = (app) => {
         let payload = {
           user: {
             id: newUser._id,
+            name,
+            email,
           },
         };
+        auth = 'signup'
         // 25200 means 7 hours one user can be online with the given token
         jwt.sign(
           payload,
@@ -57,7 +55,7 @@ module.exports = (app) => {
           { expiresIn: '40d' },
           (err, token) => {
             if (err) throw err;
-            res.json({ token });
+            res.json({ token, auth});
           }
         );
 

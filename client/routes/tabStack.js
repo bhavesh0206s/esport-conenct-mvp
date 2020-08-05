@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -54,7 +55,6 @@ export default function TabStack() {
         tabBarIcon: ({ focused, color, size }) =>
           showTabIcons(route, focused, color, size),
       })}
-      
       tabBarOptions={{
         activeTintColor: '#4ecca3',
         inactiveTintColor: 'gray',

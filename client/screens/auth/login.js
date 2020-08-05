@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import SignUp from './signup';
 import GoogleSignin from './GoogleSigin';
-
+import Loading from '../../shared/loading';
 
 const LoginSchema = yup.object({
   email: yup.string().required().email(),
@@ -20,74 +20,78 @@ const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const { auth, loading } = useSelector((state) => ({
     auth: state.auth,
-    loading: state.auth.loading
+    loading: state.loading
   }));
-  const isAuthenticated = auth.isAuthenticated;
+  
   const [visible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
     setVisible(!visible);
   };
-
-  return (
-    <View style={styles.container}>
-      <GoogleSignin title="Sign In With Google" navigation={navigation} />
-      <SignUp
-        visible={visible}
-        setVisible={setVisible}
-        navigation={navigation}
-      />
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validationSchema={LoginSchema}
-        onSubmit={async ({ email, password }) => {
-          dispatch(login(email.toLowerCase(), password));
-        }}
-      >
-        {(props) => (
-          <View>
-            <Input
-              leftIcon={<Icon name="email" size={24} color="#4ecca3" />}
-              style={styles.input}
-              placeholder="Email"
-              onChangeText={props.handleChange('email')}
-              value={props.values.email}
-              onBlur={props.handleBlur('email')}
-              errorMessage={props.touched.email && props.errors.email}
-            />
-
-            <Input
-              leftIcon={<Icon name="lock" size={24} color="#4ecca3" />}
-              secureTextEntry={true}
-              style={styles.input}
-              placeholder="Password"
-              onChangeText={props.handleChange('password')}
-              value={props.values.password}
-              onBlur={props.handleBlur('password')}
-              errorMessage={props.touched.password && props.errors.password}
-            />
-            <Button
-              title="Sign In"
-              buttonStyle={styles.button}
-              onPress={props.handleSubmit}
-            />
-          </View>
-        )}
-      </Formik>
-      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-        <Text style={{ fontSize: 20 }}>Don't have an account?</Text>
-        <TouchableOpacity>
-          <Text
-            onPress={toggleOverlay}
-            style={{ color: '#4ecca3', fontSize: 20 }}
-          >
-            {' '}
-            Sign Up
-          </Text>
-        </TouchableOpacity>
+  if(loading){
+    return <Loading/>
+  }else{
+    return (
+      <View style={styles.container}>
+        <GoogleSignin title="Sign In With Google" navigation={navigation} />
+  
+        <SignUp
+          visible={visible}
+          setVisible={setVisible}
+          navigation={navigation}
+        />
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          validationSchema={LoginSchema}
+          onSubmit={async ({ email, password }) => {
+            dispatch(login(email.toLowerCase(), password));
+          }}
+        >
+          {(props) => (
+            <View>
+              <Input
+                leftIcon={<Icon name="email" size={24} color="#4ecca3" />}
+                style={styles.input}
+                placeholder="Email"
+                onChangeText={props.handleChange('email')}
+                value={props.values.email}
+                onBlur={props.handleBlur('email')}
+                errorMessage={props.touched.email && props.errors.email}
+              />
+  
+              <Input
+                leftIcon={<Icon name="lock" size={24} color="#4ecca3" />}
+                secureTextEntry={true}
+                style={styles.input}
+                placeholder="Password"
+                onChangeText={props.handleChange('password')}
+                value={props.values.password}
+                onBlur={props.handleBlur('password')}
+                errorMessage={props.touched.password && props.errors.password}
+              />
+              <Button
+                title="Sign In"
+                buttonStyle={styles.button}
+                onPress={props.handleSubmit}
+              />
+            </View>
+          )}
+        </Formik>
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 20 }}>Don't have an account?</Text>
+          <TouchableOpacity>
+            <Text
+              onPress={toggleOverlay}
+              style={{ color: '#4ecca3', fontSize: 20 }}
+            >
+              {' '}
+              Sign Up
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 };
 
 const styles = StyleSheet.create({
