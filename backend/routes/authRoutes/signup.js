@@ -11,14 +11,14 @@ const Profile = require('../../models/Profile');
 // access Public
 module.exports = (app) => {
 
-  app.post('/api/signup/:name/:username', async (req ,res)=>{
+  app.post('/api/signup/:email/:username', async (req ,res)=>{
     try{
       const username = req.params.username;
-      const name = req.params.name;
+      const email = req.params.email;
 
       let user = await User.findOne({ username });
       if(user === null){
-        user = await User.findOne({ name });
+        user = await User.findOne({ email });
         user.username = username;
         await user.save() 
         return res.json(user)

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AppLoading } from 'expo';
 import { ThemeProvider } from 'react-native-elements';
 import { theme } from './styles/theme';
-import { View, Platform, KeyboardAvoidingView } from 'react-native';
+import { View, Platform, KeyboardAvoidingView} from 'react-native';
 import AuthStack from './routes/authStack';
 import { globalStyles } from './styles/global';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,10 +10,9 @@ import DrawerStack from './routes/drawerStack';
 import Alert from './shared/alert';
 import AsyncStorage from '@react-native-community/async-storage';
 import setAuthToken from './Redux/setAuthToken';
-import { loadUser } from './Redux/actions/auth';
+import { loadUser, logout } from './Redux/actions/auth';
 import { getCurrentProfile } from './Redux/actions/profile';
-
-let socket;
+import { Button } from 'react-native-elements';
 
 const MainComponent = () => {
   const dispatch = useDispatch();
@@ -46,11 +45,12 @@ const MainComponent = () => {
       <ThemeProvider theme={theme}>
         <View style={globalStyles.container}>
           <Alert />
-          {!isAuthenticated && !isUserNameVerified ? <AuthStack /> : <DrawerStack />}
+          {(!isAuthenticated && !isUserNameVerified )? <AuthStack /> : <DrawerStack />}
+          <Button title='LogOut' onPress={() => dispatch(logout())} />
         </View>
       </ThemeProvider>
     );
   }
 };
 
-export { MainComponent, socket };
+export default MainComponent;

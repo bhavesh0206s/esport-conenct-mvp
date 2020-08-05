@@ -45,11 +45,11 @@ export const loadUser = () => async (dispatch) => {
     });
   }
 };
-export const username = (username, bio, name) => async (dispatch) =>{
-
+export const username = (username, bio, email) => async (dispatch) =>{
+  dispatch(loading(true))
   try {
     const res = await axios.post(
-      `http://${ipAddress}/api/signup/${name}/${username}`
+      `http://${ipAddress}/api/signup/${email}/${username}`
     );
 
     dispatch({
@@ -60,7 +60,7 @@ export const username = (username, bio, name) => async (dispatch) =>{
     console.log('username succes');
     dispatch(createProfile(argu));
     dispatch(loadUser());
-
+    dispatch(loading(false))
   } catch (err) {
     const errors = err.response.data.errors;
     // this errors are the errors send form the backend
@@ -69,16 +69,17 @@ export const username = (username, bio, name) => async (dispatch) =>{
         dispatch(setAlert(error.msg, 'danger'));
       });
     }
+    dispatch(loading(false))
   }
 }
 // Register user
 export const register = (name, email, password) => async (dispatch) => {
+  dispatch(loading(true))
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-
   const body = JSON.stringify({ name, email, password });
   try {
     const res = await axios.post(
@@ -100,6 +101,7 @@ export const register = (name, email, password) => async (dispatch) => {
 
     
     dispatch(createProfile({name}))
+    dispatch(loading(false))
   } catch (err) {
     const errors = err.response.data.errors;
     // this errors are the errors send form the backend
@@ -108,11 +110,13 @@ export const register = (name, email, password) => async (dispatch) => {
         dispatch(setAlert(error.msg, 'danger'));
       });
     }
+    dispatch(loading(false))
   }
 };
 
 // Login user
 export const login = (email, password) => async (dispatch) => {
+  dispatch(loading(true))
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -140,6 +144,7 @@ export const login = (email, password) => async (dispatch) => {
     // Userloaded jaruri hai iske bina header mai token save nahi hongi isliye getmyprofile mai error aa rahi hai
 
     dispatch(getCurrentProfile());
+    dispatch(loading(false))
     console.log('logged in succesfull......');
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
@@ -149,6 +154,7 @@ export const login = (email, password) => async (dispatch) => {
         dispatch(setAlert(error.msg, 'danger'));
       });
     }
+    dispatch(loading(false))
   }
 };
 

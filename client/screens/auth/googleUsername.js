@@ -12,11 +12,14 @@ const userNameSchema = yup.object({
   bio: yup.string().required(),
 });
 
-const UserName = ({route}) => {
-  const loading = useSelector((state) => state.loading);
-  const dispatch = useDispatch();
-  const {email} = route.params
+const GoogleUsername = ({route}) => {
 
+  const {emailGoogle, loading} = useSelector((state) => ({
+    emailGoogle: state.auth.email,
+    loading: state.loading
+  }));
+
+  const dispatch = useDispatch();
   if(loading){
     return <Loading/>
   }else {
@@ -29,7 +32,7 @@ const UserName = ({route}) => {
           }}
           validationSchema={userNameSchema}
           onSubmit={(values) => {
-            dispatch(username(values.userName, values.bio, email));
+            dispatch(username(values.userName, values.bio, emailGoogle));
           }}
         >
           {(formikprops) => (
@@ -54,7 +57,7 @@ const UserName = ({route}) => {
                 onBlur={formikprops.handleBlur('bio')}
                 errorMessage={formikprops.touched.bio && formikprops.errors.bio}
               />
-  
+
               <Button buttonStyle={styles.button} onPress={formikprops.handleSubmit} title="Submit" />
             </View>
           )}
@@ -81,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
  
-export default UserName;
+export default GoogleUsername;

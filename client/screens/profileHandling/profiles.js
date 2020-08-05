@@ -4,6 +4,7 @@ import { Text, Avatar, Button, Icon } from 'react-native-elements';
 import ProfileTabView from './tabView';
 
 const Profiles = ({ item, adding, handlingTeamMember, remove, teamLeader , removeTeamMember}) => {
+
   return (
     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 7, marginHorizontal: 10}}>
       <TouchableOpacity
@@ -50,7 +51,6 @@ const Profiles = ({ item, adding, handlingTeamMember, remove, teamLeader , remov
           )}
           {( (remove && (teamLeader !== item[0].username)) && (
             <Button
-
               icon={
                 <Icon
                   name="remove"

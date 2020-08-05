@@ -14,44 +14,37 @@ import { ScrollView } from "react-native-gesture-handler";
 import Loading from "../../shared/loading";
 import { getCurrentProfile } from "../../Redux/actions/profile";
 import ProfileTabView from "./tabView";
+import { loading } from "../../Redux/actions/loading";
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
-  const userProfileInfo = useSelector((state) => state.profile);
+  const {userProfileInfo,loading} = useSelector((state) => ({
+    userProfileInfo: state.profile.userProfile,
+    loading: state.loading
+  }));
   const {
     bio,
     name,
     myevents,
     username,
-  } = userProfileInfo.userProfile;
+  } = userProfileInfo;
 
   // Setting the visibility of Modal
-  const [modalOpen, setModalOpen] = useState(false);
 
-  if (!userProfileInfo.userProfile) {
-    dispatch(getCurrentProfile());
+  const handleEdit = () => {
+    navigation.navigate('EditProfile')
+  }
+
+  useEffect(() => {
+    dispatch(getCurrentProfile())
+  },[])
+
+  if (loading) {
     return <Loading />;
   } else {
     return (
       <>
         <View style={{ flexDirection: "column" }}>
-          <Modal
-            style={styles.overlay}
-            isVisible={modalOpen}
-            backdropColor="#3e3f42"
-            animationIn="fadeInUp"
-            animationOut="fadeOutDown"
-            onBackButtonPress={() => setModalOpen(false)}
-          >
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <ScrollView
-                style={{ flex: 1 }}
-                keyboardShouldPersistTaps="always"
-              >
-                <EditProfile setModalOpen={setModalOpen} />
-              </ScrollView>
-            </TouchableWithoutFeedback>
-          </Modal>
           <View
             style={{
               height: 80,
@@ -93,11 +86,11 @@ const Profile = ({ navigation }) => {
             <View
               style={{ marginVertical: 5, width: "20%", alignSelf: "center" }}
             >
-              <Button title="Edit" buttonStyle={{marginBottom: 10}} onPress={() => setModalOpen(true)} />
+              <Button title="Edit" buttonStyle={{marginBottom: 10}} onPress={handleEdit} />
             </View>
           </View>
         </View>
-      <ProfileTabView/>
+        <ProfileTabView/>
       </>
     );
   }
