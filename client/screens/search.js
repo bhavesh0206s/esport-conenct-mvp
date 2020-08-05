@@ -4,18 +4,13 @@ import { Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import EventCard from './EventHandling/eventCard';
 
-
 const Search = ({ navigation }) => {
   const dispatch = useDispatch();
   const searchedevents = useSelector((state) => state.event.searchedevents);
-  const { allEvents, loading } = useSelector((state) => ({
-    allEvents: state.event.allEvents,
-    loading: state.loading
-  }));
 
   return (
     <View>
-      {!searchedevents? (
+      {!searchedevents ? (
         <Text>
           Hey search for some events and show your gaming skill in it....
         </Text>
@@ -23,7 +18,9 @@ const Search = ({ navigation }) => {
         <FlatList
           data={searchedevents}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => <EventCard item={[item]} navigation={navigation}/>}
+          renderItem={({ item }) => (
+            <EventCard item={[item]} navigation={navigation} />
+          )}
         />
       )}
     </View>
