@@ -45,7 +45,7 @@ export default (state = initialState, action) => {
       console.log('UPADTE_MYPROFILE-SUCCESSFULL');
       return {
         ...state,
-        profiles: payload,
+        userProfile: payload,
         loading: false,
       };
     case SETPARTICULARUSER:

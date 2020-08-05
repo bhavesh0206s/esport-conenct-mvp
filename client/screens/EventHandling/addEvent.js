@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import moment from 'moment';
 import * as yup from 'yup';
-import { View, Platform, Text } from 'react-native';
+import { View, Platform, Text, StyleSheet } from 'react-native';
 import { Input, Button } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AddMyEvent } from '../../Redux/actions/event';
 import RNPickerSelect from 'react-native-picker-select';
 import { useNavigation } from '@react-navigation/native';
@@ -13,7 +13,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const eventSchema = yup.object({
   description: yup.string().required(),
   game: yup.string().required(),
-  time: yup.string().required(),
+  time: yup.string(),
   contact: yup.string().required(),
   title: yup.string().required(),
   prizepool: yup.number().required(),
@@ -21,11 +21,14 @@ const eventSchema = yup.object({
 });
 
 const AddEvent = ({ setModalOpen }) => {
+
+  const hostUsername = useSelector((state) => state.profile.userProfile.username);
+
   const navigation = useNavigation();
 
   const [typeTourn, setTypeTourn] = useState('');
 
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
@@ -34,9 +37,7 @@ const AddEvent = ({ setModalOpen }) => {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
-    setShow(Platform.OS === 'android');
     setDate(currentDate);
-    setShow(false);
     let hour = currentDate.getHours();
     let min = currentDate.getMinutes();
     let month = currentDate.getMonth();
@@ -57,7 +58,7 @@ const AddEvent = ({ setModalOpen }) => {
   const showTimepicker = () => {
     showMode('time');
   };
-  console.log(show);
+  
   return (
     <View
       style={{
@@ -74,18 +75,17 @@ const AddEvent = ({ setModalOpen }) => {
           teamsize: '',
           title: '',
           contact: '',
+          hostedBy: ''
         }}
         validationSchema={eventSchema}
         onSubmit={(values, actions) => {
           let currentDatetime = moment(therealtime, 'DD-MM-YYYY hh:mm:ss');
-          console.log(currentDatetime);
           values.time = currentDatetime;
+          values.hostedBy = hostUsername;
           if (!values.entryFee) {
             values.entryFee = 'FREE';
           }
-          console.log(values);
           navigation.navigate('Confirm Event', { info: values });
-          // actions.resetForm();
           setModalOpen();
         }}
       >
@@ -126,19 +126,19 @@ const AddEvent = ({ setModalOpen }) => {
                 formikprops.errors.description
               }
             />
-            <Input
-              placeholder={'Date Time: DD-MM-YYYY hh:mm'}
-              onChangeText={formikprops.handleChange('time')}
-              value={formikprops.values.time}
-              onBlur={formikprops.handleBlur('time')}
-              errorMessage={formikprops.touched.time && formikprops.errors.time}
-            />
-            <Button onPress={showDatepicker} title="Add date of event" />
-            <Button onPress={showTimepicker} title="Add time of event" />
+            <View style={styles.timeBtnView}>
+              <Button buttonStyle={styles.btnStyle} onPress={showDatepicker} title="Add date of event" />
+              <Button buttonStyle={styles.btnStyle} onPress={showTimepicker} title="Add time of event" />
+            </View>
+            {(!show && therealtime !== '') && (
+              <Text style={styles.time}>
+                {moment(therealtime, 'DD-MM-YYYY hh:mm:ss').toString()}
+              </Text>
+            )}
             <RNPickerSelect
               onValueChange={(value) => setTypeTourn(value)}
               items={[
-                { label: 'FREE', value: 'Free' },
+                { label: 'FREE', value: 'FREE' },
                 { label: 'PAID', value: 'Paid' },
               ]}
               placeholder={{
@@ -213,5 +213,20 @@ const AddEvent = ({ setModalOpen }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  time:{
+    marginHorizontal: 7,
+    marginVertical: 15,
+    fontSize: 17
+  },
+  timeBtnView:{
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  btnStyle: {
+    backgroundColor: 'grey'
+  }
+})
 
 export default AddEvent;

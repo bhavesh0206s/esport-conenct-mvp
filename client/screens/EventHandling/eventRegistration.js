@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, FlatList, Button } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import { StyleSheet, View, FlatList } from 'react-native';
+import { Card, Icon, Button } from 'react-native-elements';
 import Profiles from '../profileHandling/profiles';
 import { useDispatch, useSelector } from 'react-redux';
 import { eventRegistration } from '../../Redux/actions/profile';
+import Loading from '../../shared/loading';
 
-const EventRegistration = ({ route }) => {
+const EventRegistration = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { eventdetails, userProfile } = route.params;
-  const teamLeaderProfile = useSelector((state) => state.profile.profiles);
+  const {searchProfile, loading} = useSelector((state) => ({
+    searchProfile: state.profile.profiles,
+    loading: state.loading
+  }));
+
   const [teamMember, setTeamMember] = useState([
     {
       email: userProfile.email,
@@ -16,6 +21,7 @@ const EventRegistration = ({ route }) => {
       contact: userProfile.contact,
       username: userProfile.username,
       user: userProfile.user,
+      teamLeader: userProfile.username
     },
   ]);
   
@@ -41,81 +47,86 @@ const EventRegistration = ({ route }) => {
         contact: memberDetail.contact,
       };
       let teamMemberList = [...teamMember, memberDetail];
-
       teamMemberList = arrayUnique(teamMemberList, 'username');
       setTeamMember(teamMemberList);
     }
   };
 
   const removeTeamMember = (username) => {
-    console.log('username:', username);
     const teamMemberAfterRemove = teamMember.filter((item, i) => {
       if (item.username !== username) {
         return true;
       }
     });
-
     setTeamMember(teamMemberAfterRemove);
   };
 
-  return (
-    <View>
+  if(loading){
+    return <Loading/>
+  }else{
+    return (
       <View>
-        <FlatList
-          data={teamLeaderProfile}
-          keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
-            <Profiles
-              item={[item]}
-              adding={true}
-              handlingTeamMember={handlingTeamMember}
-            />
-          )}
-        />
-      </View>
-      <Card containerStyle={styles.card}  title="TEAM MEMBERS">
-        <FlatList
-          data={teamMember}
-          keyExtractor={(item) => item.user}
-          renderItem={({ item }) => (
-            <Profiles
-              teamLeader={teamMember[0].username}
-              item={[item]}
-              remove={true}
-              removeTeamMember={removeTeamMember}
-            />
-          )}
-        />
-        {eventdetails.teamsize === teamMember.length ? (
-          <Button
-            icon={<Icon name="form" type="antdesign" color="#ffffff" />}
-            buttonStyle={{
-              borderRadius: 0,
-              marginLeft: 0,
-              marginRight: 0,
-              marginBottom: 0,
-            }}
-            onPress={() => {
-              dispatch(
-                eventRegistration({
-                  registerinfo: {
-                    teammembersinfo: teamMember,
-                  },
-                  eventdetails,
-                  eventId: eventdetails._id,
-                  usereventId: eventdetails.user,
-                  teamsize: eventdetails.teamsize,
-                })
-              );
-            }}
-            title="Register"
+        <View>
+          <FlatList
+            data={searchProfile}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => (
+              <Profiles
+                item={[item]}
+                adding={true}
+                handlingTeamMember={handlingTeamMember}
+              />
+            )}
           />
-        ) : (
-          <></>
-        )}
-      </Card>
-    </View>
-  );
+        </View>
+        <Card containerStyle={styles.card}  title="TEAM MEMBERS">
+          <FlatList
+            data={teamMember}
+            keyExtractor={(item) => item.user}
+            renderItem={({ item }) => (
+              <Profiles
+                teamLeader={teamMember[0].username}
+                item={[item]}
+                remove={true}
+                removeTeamMember={removeTeamMember}
+              />
+            )}
+          />
+          {eventdetails.teamsize === teamMember.length ? (
+            <Button
+              icon={<Icon name="form" type="antdesign" color="#ffffff" />}
+              buttonStyle={{
+                borderRadius: 20,
+                marginTop: 20,
+                marginLeft: 0,
+                marginRight: 0,
+                marginBottom: 0,
+              }}
+              onPress={() => {
+                dispatch(
+                  eventRegistration({
+                    registerinfo: {
+                      teammembersinfo: teamMember,
+                    },
+                    eventdetails,
+                    eventId: eventdetails._id,
+                    usereventId: eventdetails.user,
+                    teamsize: eventdetails.teamsize,
+                  })
+                );
+                if(!loading){
+                  navigation.goBack()
+                }
+              }}
+              title="Submit"
+            />
+          ) : (
+            <></>
+          )}
+        </Card>
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

@@ -4,6 +4,7 @@ import Profile from '../../screens/profileHandling/profile';
 import Header from '../../shared/header';
 import EventDetailsCard from '../../screens/EventHandling/eventDetailsCard';
 import { animationConfig } from '../../shared/routeAnimationConfig';
+import EditProfile from '../../screens/profileHandling/editProfile';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,16 @@ const ProfileStack = () => {
           headerTitle: () => <Header navigation={navigation} title="Profile" />,
         })}
         component={Profile}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        options={({ navigation, route }) => ({
+          headerTitle: () => <Header navigation={navigation} type='editProfile' title="Edit Profile" />,
+          headerTitleContainerStyle: {
+            left: 40,
+          },
+        })}
+        component={EditProfile}
       />
       <Stack.Screen
         name="EventDetailsProfile"

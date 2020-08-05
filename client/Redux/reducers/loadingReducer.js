@@ -1,6 +1,6 @@
 import {LOADING} from '../actions/types';
 
-const initialState = true;
+const initialState = false;
 
 export default (state = initialState, action) => {
   const { type, payload } = action;

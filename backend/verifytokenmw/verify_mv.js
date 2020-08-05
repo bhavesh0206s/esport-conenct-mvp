@@ -5,10 +5,7 @@ module.exports = async (req, res, next) => {
   // Get token from header
   const token = await req.header('x-auth-token');
   if (!token) {
-    console.log('not authorized')
-    return res
-      .status(401)
-      .json({ errors: [{ msg: 'No token, authorization denied' }] });
+    console.log('not authorized');
   }
 
   // Verify token
@@ -16,7 +13,7 @@ module.exports = async (req, res, next) => {
     const decoded = jwt.verify(token, keys.jwtSecret);
 
     req.user = decoded.user; // Now req.user will be acessed from anywhere
-
+    
     next();
 
   } catch (err) {

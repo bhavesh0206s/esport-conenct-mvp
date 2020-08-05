@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { StyleSheet, View, TextInput } from 'react-native';
 import { Input, Icon } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
-import { getEvents } from '../Redux/actions/event';
+import { getEvents, fetchallEvents } from '../Redux/actions/event';
 import { CLEARSEARCHEDEVENTS, CLEAR_PROFILES } from '../Redux/actions/types';
 import { getProfiles } from '../Redux/actions/profile';
 

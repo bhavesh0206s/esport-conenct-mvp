@@ -18,7 +18,7 @@ import {loading} from './loading'
 export const fetchallEvents = () => async (dispatch) => {
   try {
     dispatch(loading(true))
-    const res = await axios.get(`http://${ipAddress}:3000/api/event/allevents`);
+    const res = await axios.get(`http://${ipAddress}/api/event/allevents`);
     dispatch({
       type: FETCHEVENTS_SUCCESS,
       payload: res.data,
@@ -41,7 +41,7 @@ export const AddMyEvent = (eventdata) => async (dispatch) => {
   const body = JSON.stringify(eventdata);
   try {
     const res = await axios.post(
-      `http://${ipAddress}:3000/api/event/addevent`,
+      `http://${ipAddress}/api/event/addevent`,
       body,
       config
     );
@@ -67,28 +67,29 @@ export const AddMyEvent = (eventdata) => async (dispatch) => {
 export const getEvents = (eventname) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `http://${ipAddress}:3000/api/event/searchedevents/${eventname}`
+      `http://${ipAddress}/api/event/searchedevents/${eventname}`
     );
 
     dispatch({
       type: GETSEARCHEDEVENTS,
       payload: res.data,
     });
+
   } catch (err) {
     console.log('error from searchEvent: ',err.message)
   }
 };
 
-export const deleteMyEvent = (eventDetails) => async (dispatch) => {
+export const deleteMyEvent = (eventDetails, username) => async (dispatch) => {
   try {
-
+    dispatch(loading(true))
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
     const res = await axios.delete(
-      `http://${ipAddress}:3000/api/event/delete`,
+      `http://${ipAddress}/api/event/delete/${username}`,
       { 
         data: {eventDetails},
         headers: {
@@ -103,8 +104,16 @@ export const deleteMyEvent = (eventDetails) => async (dispatch) => {
     });
     dispatch(getCurrentProfile())
     dispatch(fetchallEvents())
+    dispatch(loading(false))
     dispatch(setAlert('Event Deleted Successfully!!'))
   } catch (err) {
-    console.log('error from deleteEvent: ',err)
+    const errors = err.response.data.errors;
+    // this errors are the errors send form the backend
+    if (errors) {
+      errors.forEach((error) => {
+        dispatch(setAlert(error.msg));
+      });
+    }
+    dispatch(loading(false))
   }
 };
