@@ -18,7 +18,6 @@ const ConfirmEvent = ({route}) => {
 
   const handleSubmit = () =>{
     setOpenPopUp(true)
-    console.log(info)
     dispatch(AddMyEvent(info))
     console.log('event Added..........')
   }

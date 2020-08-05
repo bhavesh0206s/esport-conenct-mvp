@@ -32,9 +32,9 @@ const Login = ({ navigation }) => {
     return <Loading/>
   }else{
     return (
-      <View style={styles.container}>
+      
+      <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
         <GoogleSignin title="Sign In With Google" navigation={navigation} />
-  
         <SignUp
           visible={visible}
           setVisible={setVisible}
@@ -89,7 +89,7 @@ const Login = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 };
@@ -97,10 +97,11 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 150,
     paddingHorizontal: 15,
     backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignContent: 'center',
+    // justifyContent: 'center',
+    // alignContent: 'center',
   },
   button: {
     marginHorizontal: 40,

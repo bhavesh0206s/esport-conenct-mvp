@@ -79,7 +79,6 @@ const AddEvent = ({ setModalOpen }) => {
         }}
         validationSchema={eventSchema}
         onSubmit={(values, actions) => {
-          console.log('hello')
           let currentDatetime = moment(therealtime, 'DD-MM-YYYY hh:mm:ss');
           values.time = currentDatetime;
           values.hostedBy = hostUsername;

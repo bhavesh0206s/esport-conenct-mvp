@@ -5,10 +5,7 @@ module.exports = async (req, res, next) => {
   // Get token from header
   const token = await req.header('x-auth-token');
   if (!token) {
-    console.log('not authorized')
-    return res
-      .status(401)
-      .json({ errors: [{ msg: 'No token, authorization denied' }] });
+    console.log('not authorized');
   }
 
   // Verify token

@@ -58,7 +58,6 @@ const Profile = ({ navigation }) => {
             rounded
             overlayContainerStyle={{ backgroundColor: "black" }}
             icon={{ name: "user", type: "font-awesome-5" }}
-            onPress={() => console.log("Works!")}
             activeOpacity={1}
             containerStyle={{
               position: "absolute",

@@ -79,7 +79,7 @@ const EventDetailsCard = ({ route }) => {
   }
 
   const handleHostEventRemove = () =>{
-    console.log('removing....')
+    console.log('not implemented...')
   }
 
   if(loading){

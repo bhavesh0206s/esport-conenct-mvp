@@ -8,12 +8,6 @@ const Profiles = ({ item, adding, handlingTeamMember, remove, teamLeader , remov
   return (
     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 7, marginHorizontal: 10}}>
       <TouchableOpacity
-        onPress={() => {
-          // navigation.navigate('Userprofile', {
-          //   particularuser: item[0],
-          // });
-          console.log("U can't see his profile i havent implemented that");
-        }}
         style={{
           flexDirection: 'row',
           alignItems: 'center',

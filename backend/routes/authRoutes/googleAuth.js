@@ -21,8 +21,9 @@ module.exports = (app) => {
             email,
           },
         };
-        console.log(payload)
+
         auth = 'signin'
+
         jwt.sign(
           payload,
           keys.jwtSecret,
@@ -32,6 +33,7 @@ module.exports = (app) => {
             res.json({ token , auth});
           }
         );
+        
       } else {
         let newUser = new User({
           name,

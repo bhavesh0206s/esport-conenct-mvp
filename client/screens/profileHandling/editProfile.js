@@ -24,7 +24,6 @@ const EditProfile = ({ route, navigation }) => {
         validationSchema={profileSchema}
         onSubmit={(values) => {
           dispatch(upadteProfile(values));
-          dispatch(getCurrentProfile());
           navigation.goBack();
         }}
       >

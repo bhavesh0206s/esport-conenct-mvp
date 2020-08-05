@@ -73,7 +73,7 @@ export const createProfile = (formData) => async (dispatch) => {
 };
 
 export const upadteProfile = (formData) => async (dispatch) => {
-  console.log(formData);
+
   try {
     const token = await AsyncStorage.getItem('token');
 
@@ -95,6 +95,7 @@ export const upadteProfile = (formData) => async (dispatch) => {
       type: UPADTE_MYPROFILE,
       payload: res.data,
     });
+    dispatch(getCurrentProfile())
     console.log('profile Updated');
   } catch (err) {
     // const errors = err.response.data.errors;

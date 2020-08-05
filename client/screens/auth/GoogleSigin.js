@@ -8,10 +8,6 @@ import { loading } from '../../Redux/actions/loading';
 export default function GoogleSignin({ title, navigation }) {
   
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
-  const isAuthenticated = auth.isAuthenticated;
-  const authType = auth.authType
-  const isUserNameVerified = auth.isUserNameVerified
   
   return (
     <View>
@@ -22,11 +18,6 @@ export default function GoogleSignin({ title, navigation }) {
         type="google"
         onPress={async () => {
           dispatch(signInAsync(navigation));
-          console.log(isAuthenticated, isUserNameVerified)
-          // if(isAuthenticated){
-          //   console.log('fdsa')
-          //   navigation.navigate('GoogleUsername')
-          // }
         }}
       />
     </View>

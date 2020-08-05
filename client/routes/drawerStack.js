@@ -24,7 +24,6 @@ const LogoutContentComponent = (props) => {
   const profileInfo = useSelector((state) => state.profile);
 
   if (!profileInfo.userProfile) {
-    console.log('DrawerStack loading is happening');
     if (!profileInfo.userProfile) {
       dispatch(getCurrentProfile());
     }
@@ -51,7 +50,6 @@ const LogoutContentComponent = (props) => {
                     rounded
                     overlayContainerStyle={{ backgroundColor: 'black' }}
                     icon={{ name: 'user', type: 'font-awesome-5' }}
-                    // onPress={() => console.log('Works!')}
                     activeOpacity={1}
                     containerStyle={{
                       margin: 5,
