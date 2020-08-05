@@ -25,7 +25,6 @@ const MainComponent = () => {
     const userLoad = async () => {
       const token = await AsyncStorage.getItem('token');
       if (token !== null) {
-        setAuthToken(token);
         dispatch(loadUser());
         dispatch(getCurrentProfile());
       }
@@ -46,7 +45,6 @@ const MainComponent = () => {
         <View style={globalStyles.container}>
           <Alert />
           {(!isAuthenticated && !isUserNameVerified )? <AuthStack /> : <DrawerStack />}
-          <Button title='LogOut' onPress={() => dispatch(logout())} />
         </View>
       </ThemeProvider>
     );
