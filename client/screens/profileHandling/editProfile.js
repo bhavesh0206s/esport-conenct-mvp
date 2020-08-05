@@ -11,10 +11,11 @@ const profileSchema = yup.object({
   gameinterest: yup.string(),
 });
 
-const EditProfile = ({ setModalOpen }) => {
+const EditProfile = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const myprofileinfo = useSelector((state) => state.profile);
-  const { bio } = myprofileinfo.userProfile;
+  
+  const myProfileiInfo = useSelector((state) => state.profile.userProfile);
+  const { bio } = myProfileiInfo;
 
   return (
     <View style={styles.content}>
@@ -22,10 +23,8 @@ const EditProfile = ({ setModalOpen }) => {
         initialValues={{ bio }}
         validationSchema={profileSchema}
         onSubmit={(values) => {
-          dispatch(upadteProfile(values))
-          dispatch(getCurrentProfile())
-          // values here is an object containing form data
-          setModalOpen(false);
+          dispatch(upadteProfile(values));
+          navigation.goBack();
         }}
       >
         {(formikprops) => (
@@ -49,7 +48,7 @@ const EditProfile = ({ setModalOpen }) => {
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     padding: 22,
     borderTopStartRadius: 30,
     borderTopEndRadius: 30,

@@ -62,12 +62,13 @@ module.exports = (app) => {
         teamsize,
         prizepool,
         time,
-        username,
+        hostedBy,
       } = req.body;
       // build eventitems object
+      console.log(hostedBy)
       let eventitems = {};
       eventitems.user = req.user.id;
-      eventitems.hostedBy = username;
+      eventitems.hostedBy = hostedBy;
       if (game) eventitems.game = game;
       if (description) eventitems.description = description;
       if (title) eventitems.title = title;
@@ -108,10 +109,10 @@ module.exports = (app) => {
     }
   );
 
-  app.delete('/api/event/delete', verify ,async (req, res) => {
+  app.delete('/api/event/delete/:username', verify ,async (req, res) => {
     try{
-      const {_id, teamsize, hostedBy} = req.body.eventDetails;
-    
+      const {_id, teamsize } = req.body.eventDetails;
+      const currentUser = req.params.username
       const user = await Profile.findOne({user: req.user.id})
       const event = await Event.findById(_id);
       if(teamsize === 1){
@@ -139,22 +140,65 @@ module.exports = (app) => {
         res.json(user);
       }else{
         let teamsInfo = event.registeredteaminfo;
+        ////deleting from profile
+        let isTeamLeader = false
+        for(let useritem of teamsInfo){
+          for(let item of useritem.teammembersinfo){
+            if(item.teamLeader === currentUser){
+              isTeamLeader = true
+              break
+            }
+          }
+        }
+
+        if(!isTeamLeader){
+          return res
+              .status(404)
+              .json({ errors: [{ msg: 'You are not the Leader of the Team!!' }] });
+        }
+
+        for(let useritem of teamsInfo){
+
+          for(let item of useritem.teammembersinfo){
+            let playerProfile = await Profile.findOne({
+              user: item.user,
+            });
+            
+            let upadtedMyEvents =  playerProfile.myevents.filter((event, i) => {
+              if(event._id.toString() !== _id) return true
+            })
+            playerProfile.myevents = upadtedMyEvents;
+
+            await playerProfile.save()
+          }
+        }
+
+        //deleting from event
         let upadtedTeamsInfo = []
         let x = []
         teamsInfo.forEach(team => {
-          team.teammembersinfo.forEach(player => {
+          x = team.teammembersinfo.filter(player => {
             if(player.username !== user.username){
-              console.log(team.teammembersinfo)
-              x.push(team.teammembersinfo)
+              return true
             }
           })
-          // upadtedTeamsInfo.push(x)
+          if(x.length >= teamsize){
+            upadtedTeamsInfo.push(x)
+          }
         })
-        // console.log(upadtedTeamsInfo)
+        event.registeredteaminfo = teamsInfo
+          .map((team, i) =>({teammembersinfo: upadtedTeamsInfo[i]}))
+          .filter(team => team.teammembersinfo !== undefined)
+          
+        await event.save();
+
+        res.json(user);
       }
     }catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      return res
+          .status(404)
+          .json({ errors: [{ msg: err.message }] });
     }
   })
 
@@ -169,7 +213,7 @@ module.exports = (app) => {
       usereventId,
       eventdetails,
     } = req.body;
-
+    
     try {
       let event = await Event.findById(eventId);
       let eventhostguy = await Profile.findOne({ user: usereventId });
@@ -198,6 +242,28 @@ module.exports = (app) => {
 
         res.json({ playerevents: playerprofile.myevents, event });
       } else {
+        let teamsInfo = event.registeredteaminfo;
+        ////deleting from profile
+        if(teamsInfo.length > 0){
+          let registeredPlayerUsername = registerinfo.teammembersinfo.map((item) => item.username);
+
+          let alreadyRegisterPlayer = []
+          for(let useritem of teamsInfo){
+            for(let item of useritem.teammembersinfo){
+              if(registeredPlayerUsername.indexOf(item.username) !== -1){
+                alreadyRegisterPlayer.push(item.username)
+              }
+            }
+          }
+
+          if(alreadyRegisterPlayer.length > 0){
+            return res
+              .status(404)
+              .json({ errors: [{ msg: `${alreadyRegisterPlayer} Already Registered in this Event` }] });
+          }
+        }
+
+
         event.registeredteaminfo.push({
           teamname: registerinfo.teamname,
           teammembersinfo: registerinfo.teammembersinfo,

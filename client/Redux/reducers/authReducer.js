@@ -37,10 +37,10 @@ export default (state = initialState, action) => {
       };
     case GOOGLE_LOGIN:
       return {
-        ...state,
-        isAuthenticated: true,
+        email: payload[0],
+        isAuthenticated: payload[1] === 'signin' ? true :  false,
         loading: false,
-        isUserNameVerified: true,
+        isUserNameVerified:payload[1] === 'signin' ? true :  false,
       };
     case CREATE_USERNAME:{
       console.log('CREATE_USERNAME-SUCCESSFULL')

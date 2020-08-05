@@ -48,6 +48,9 @@ const eventSchema = new Schema({
           username: {
             type: String,
           },
+          teamLeader: {
+            type: String,
+          },
           contact: {
             type: Number,
           },

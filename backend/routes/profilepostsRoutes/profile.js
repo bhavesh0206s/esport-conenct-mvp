@@ -73,7 +73,7 @@ module.exports = (app) => {
       // tag,
     } = req.body;
     // build profile object
-  
+    console.log('createProfile: ',req.user.email)
     let profileFields = {};
     profileFields.email = req.user.email;
     profileFields.user = req.user.id;
