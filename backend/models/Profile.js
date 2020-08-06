@@ -51,9 +51,9 @@ const profileSchema = new Schema({
               number: {
                 type: String,
               },
-              username:{
+              username: {
                 type: String,
-              }
+              },
             },
           ],
         },
@@ -69,8 +69,8 @@ const profileSchema = new Schema({
           number: {
             type: Number,
           },
-          username:{
-            type: String
+          username: {
+            type: String,
           },
         },
       ],
@@ -106,6 +106,10 @@ const profileSchema = new Schema({
       gamelink: String,
       contact: Number,
       hostedBy: String,
+      hostedById: {
+        type: Schema.Types.ObjectId,
+        required: true,
+      },
       date: {
         type: Date,
         default: Date.now,
@@ -125,7 +129,7 @@ const profileSchema = new Schema({
   },
   username: {
     type: String,
-    unique : true,
+    unique: true,
     default: '',
   },
   // numoffollowers:{type:Number},

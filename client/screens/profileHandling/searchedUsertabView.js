@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import EventCard from '../EventHandling/eventCard';
-import Loading from '../../shared/loading';
 import AchivementCard from './achivementCard';
 import EventHostedCard from './evnetHostedcard';
 import { useNavigation } from '@react-navigation/native';
@@ -31,10 +29,9 @@ const renderTabBar = (props) => (
   />
 );
 
-const ProfileTabView = () => {
-  const profileInfo = useSelector((state) => state.profile);
-  const myEvents = profileInfo.userProfile.myhostedevents;
-  const loading = profileInfo.loading;
+const SearchedUsertabView = () => {
+  const profileInfo = useSelector((state) => state.profile.particularUser);
+  const myEvents = profileInfo.myhostedevents;
   const navigation = useNavigation();
 
   const [index, setIndex] = React.useState(0);
@@ -64,7 +61,7 @@ const ProfileTabView = () => {
               <EventHostedCard
                 navigation={navigation}
                 item={item}
-                type={'ProfileEventHostedCard'}
+                type={'SearchedUserEventHostedCard'}
               />
             )}
           />
@@ -88,4 +85,4 @@ const ProfileTabView = () => {
   );
 };
 
-export default ProfileTabView;
+export default SearchedUsertabView;
