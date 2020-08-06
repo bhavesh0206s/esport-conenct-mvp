@@ -13,6 +13,7 @@ import setAuthToken from './Redux/setAuthToken';
 import { loadUser, logout } from './Redux/actions/auth';
 import { getCurrentProfile } from './Redux/actions/profile';
 import { Button } from 'react-native-elements';
+import ConfirmModal from './shared/confirmModal';
 
 const MainComponent = () => {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const MainComponent = () => {
         <View style={globalStyles.container}>
           <Alert />
           {(!isAuthenticated && !isUserNameVerified )? <AuthStack /> : <DrawerStack />}
+          {/* <Button title='LogOut' onPress={() => dispatch(logout())} /> */}
         </View>
       </ThemeProvider>
     );

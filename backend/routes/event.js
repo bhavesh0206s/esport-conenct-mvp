@@ -9,8 +9,8 @@ module.exports = (app) => {
   app.get('/api/event/allevents', verify, async (req, res) => {
     try {
       const events = await Event.find()
-        .select('-registeredteaminfo -registeredplayerinfo')
-        .sort({ date: -1 });
+        // .select('-registeredteaminfo -registeredplayerinfo')
+        // .sort({ date: -1 });
       res.json(events);
     } catch (err) {
       console.error('fetchError: ', err.message);
@@ -65,7 +65,6 @@ module.exports = (app) => {
         hostedBy,
       } = req.body;
       // build eventitems object
-      console.log(hostedBy)
       let eventitems = {};
       eventitems.user = req.user.id;
       eventitems.hostedBy = hostedBy;

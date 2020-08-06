@@ -98,7 +98,7 @@ const Profile = ({ navigation }) => {
 const styles = StyleSheet.create({
   overlay: {
     backgroundColor: "white",
-    margin: 0, // This is the important style you need to set
+    margin: 0, 
   },
 });
 

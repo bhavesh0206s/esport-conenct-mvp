@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Keyboard } from "react-native";
 import { Button, Text} from 'react-native-elements';
 import Modal from 'react-native-modal';
-import { TouchableWithoutFeedback, ScrollView} from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import { fetchallEvents } from '../../Redux/actions/event';
 import { getCurrentProfile } from '../../Redux/actions/profile';

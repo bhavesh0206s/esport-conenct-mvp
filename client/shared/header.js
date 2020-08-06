@@ -48,7 +48,7 @@ const Header = ({ navigation, title, type }) => {
     );
   }
 
-  if(type === 'confirmEvent' || type === 'editProfile'){
+  if(type === 'confirmEvent' || type === 'editProfile' || type==='myEventDetails'){
     return (
         <View>
           <Text style={styles.headerText}>{title}</Text>

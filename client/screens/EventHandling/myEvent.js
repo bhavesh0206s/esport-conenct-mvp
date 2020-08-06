@@ -28,10 +28,6 @@ const MyEvent = ({ navigation }) => {
     dispatch(getCurrentProfile());
     setRefreshing(false);
   };
-
-  // useEffect(() => {
-  //   dispatch(getCurrentProfile())
-  // }, [])
  
   if (loading) {
     return <Loading />;
@@ -45,7 +41,7 @@ const MyEvent = ({ navigation }) => {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => <MyEventCard deleteEvent={true} item={[item]} />}
+            renderItem={({ item }) => <MyEventCard navigation={navigation} deleteEvent={true} item={[item]} />}
           />
         ) : (
           <ScrollView

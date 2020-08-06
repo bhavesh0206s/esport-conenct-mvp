@@ -5,8 +5,12 @@ import Profiles from '../profileHandling/profiles';
 import { useDispatch, useSelector } from 'react-redux';
 import { eventRegistration } from '../../Redux/actions/profile';
 import Loading from '../../shared/loading';
+import ConfirmModal from '../../shared/confirmModal';
 
 const EventRegistration = ({ route, navigation }) => {
+
+  const [modalOpen, setModalOpen] = useState(false)
+
   const dispatch = useDispatch();
   const { eventdetails, userProfile } = route.params;
   const {searchProfile, loading} = useSelector((state) => ({
@@ -47,8 +51,10 @@ const EventRegistration = ({ route, navigation }) => {
         contact: memberDetail.contact,
       };
       let teamMemberList = [...teamMember, memberDetail];
-      teamMemberList = arrayUnique(teamMemberList, 'username');
-      setTeamMember(teamMemberList);
+      if( eventdetails.teamsize >= teamMemberList.length) {
+        teamMemberList = arrayUnique(teamMemberList, 'username');
+        setTeamMember(teamMemberList);
+      }
     }
   };
 
@@ -61,11 +67,36 @@ const EventRegistration = ({ route, navigation }) => {
     setTeamMember(teamMemberAfterRemove);
   };
 
+  const handleSubmit = () => {
+    dispatch(
+      eventRegistration({
+        registerinfo: {
+          teammembersinfo: teamMember,
+        },
+        eventdetails,
+        eventId: eventdetails._id,
+        usereventId: eventdetails.user,
+        teamsize: eventdetails.teamsize,
+      })
+    );
+    if(!loading){
+      navigation.goBack();
+      navigation.navigate('Event');
+    }
+    setModalOpen(false)
+  }
+
   if(loading){
     return <Loading/>
   }else{
     return (
       <View>
+        <ConfirmModal 
+          text='Complete Registration!' 
+          setModalOpen={setModalOpen} 
+          modalOpen={modalOpen} 
+          handleOk={handleSubmit}
+        />
         <View>
           <FlatList
             data={searchProfile}
@@ -94,7 +125,7 @@ const EventRegistration = ({ route, navigation }) => {
           />
           {eventdetails.teamsize === teamMember.length ? (
             <Button
-              icon={<Icon name="form" type="antdesign" color="#ffffff" />}
+              icon={<Icon name="check" color="#ffffff" />}
               buttonStyle={{
                 borderRadius: 20,
                 marginTop: 20,
@@ -102,22 +133,7 @@ const EventRegistration = ({ route, navigation }) => {
                 marginRight: 0,
                 marginBottom: 0,
               }}
-              onPress={() => {
-                dispatch(
-                  eventRegistration({
-                    registerinfo: {
-                      teammembersinfo: teamMember,
-                    },
-                    eventdetails,
-                    eventId: eventdetails._id,
-                    usereventId: eventdetails.user,
-                    teamsize: eventdetails.teamsize,
-                  })
-                );
-                if(!loading){
-                  navigation.goBack()
-                }
-              }}
+              onPress={() => setModalOpen(true)}
               title="Submit"
             />
           ) : (

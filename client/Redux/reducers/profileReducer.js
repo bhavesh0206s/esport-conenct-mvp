@@ -35,7 +35,6 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case GET_PROFILES:
-      console.log('GETPROFILES-SUCCESSFULL');
       return {
         ...state,
         profiles: payload,

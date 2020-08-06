@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-native";
+import { View, TouchableOpacity, ActivityIndicator, StyleSheet, ImageBackground } from "react-native";
 import { Text, Card, Button, Icon, Image } from "react-native-elements";
 import { gameImage } from "../../shared/gameImage";
 import moment from 'moment';
 import { useSelector, useDispatch } from "react-redux";
 import { deleteMyEvent } from "../../Redux/actions/event";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import ConfirmModal from "../../shared/confirmModal";
 
 const MyEventCard = ({ item, navigation, deleteEvent}) => {
   const [imageUri, setImageUri] = useState("sd");
+  const [modalOpen, setModalOpen] = useState(false);
+
   const currentUserUsername = useSelector(state => state.profile.userProfile.username)
   const dispatch = useDispatch()
+
+  const handleSubmit = () => {
+    dispatch(deleteMyEvent(item[0], currentUserUsername))
+  }
+
+  const showDetails = () => {
+    navigation.navigate('My Event Details', {item: item[0]})
+  }
 
   useEffect(() => {
     if (item[0].game === "PUBG") {
@@ -23,48 +35,61 @@ const MyEventCard = ({ item, navigation, deleteEvent}) => {
 
   return (
     <>
+      <ConfirmModal
+        text='Are You Sure?' 
+        setModalOpen={setModalOpen} 
+        modalOpen={modalOpen} 
+        handleOk={handleSubmit}
+      />
       <Card 
         titleStyle={styles.mainTitle} 
         title={item[0].title} 
         imageStyle={styles.cardImage} 
         containerStyle={styles.container} 
-        image={imageUri}
-      >
-        <View style={styles.content}>
-            <View style={{ flexDirection: "column" }}>
-              <View style={styles.fieldView}>
-                <Text style={styles.fieldTitle}>Game: </Text>
-                <Text style={styles.field}>{item[0].game}</Text>
+        // image={imageUri}
+      > 
+        <TouchableOpacity
+          onPress={showDetails}
+        >
+          <ImageBackground 
+            imageStyle={{ borderRadius: 20}} 
+            source={imageUri} 
+            style={styles.image} 
+          >
+            <View style={styles.content}>
+              <View style={{ flexDirection: "column" }}>
+                <View style={styles.fieldView}>
+                  <Text style={styles.fieldTitle}>Game: </Text>
+                  <Text style={styles.field}>{item[0].game}</Text>
+                </View>
+                <View style={styles.fieldView}>
+                  <Text style={styles.fieldTitle}>Entryfee: </Text>
+                  <Text style={styles.field}>{item[0].entryFee}</Text>
+                </View>
+                <View style={styles.fieldView}>
+                  <Text style={styles.fieldTitle}>Date&Time: </Text>
+                  <Text style={styles.field}>{moment(item[0].time).format("Do MMMM YYYY, h:mm a")}</Text>
+                </View>
               </View>
-              <View style={styles.fieldView}>
-                <Text style={styles.fieldTitle}>Entryfee: </Text>
-                <Text style={styles.field}>{item[0].entryFee}</Text>
-              </View>
-              <View style={styles.fieldView}>
-                <Text style={styles.fieldTitle}>Date&Time: </Text>
-                <Text style={styles.field}>{moment(item[0].time).format("Do MMMM YYYY, h:mm a")}</Text>
-              </View>
+              <View style={{ flexDirection: "column" }}>
+                <View style={styles.fieldView}>
+                  <Text style={styles.fieldTitle}>Teamsize: </Text>
+                  <Text style={styles.field}>{item[0].teamsize}</Text>
+                </View>
+                <View style={styles.fieldView}>
+                  <Text style={styles.fieldTitle}>Prize-pool: </Text>
+                  <Text style={styles.field}>{item[0].prizepool}</Text>
+                </View>
+              </View>    
             </View>
-            <View style={{ flexDirection: "column" }}>
-              <View style={styles.fieldView}>
-                <Text style={styles.fieldTitle}>Teamsize: </Text>
-                <Text style={styles.field}>{item[0].teamsize}</Text>
-              </View>
-              <View style={styles.fieldView}>
-                <Text style={styles.fieldTitle}>Prize-pool: </Text>
-                <Text style={styles.field}>{item[0].prizepool}</Text>
-              </View>
-            </View>
-            
-          </View>
+          </ImageBackground>
+        </TouchableOpacity>
         </Card>
         <View>
             <Button
-              icon={<Icon name="description" color="#ffffff" />}
               buttonStyle={styles.btnStyleDelete}
-              onPress={() => {
-                dispatch(deleteMyEvent(item[0], currentUserUsername))
-              }}
+              icon={<MaterialCommunityIcons name="cancel" size={24} color='#fff' />}
+              onPress={() => setModalOpen(true)}
               title="REMOVE"
             />
         </View>
@@ -81,6 +106,14 @@ const styles = StyleSheet.create({
   content :{
     flexDirection: "row", 
     justifyContent: "space-around",
+    backgroundColor:'rgba(0,0,0,0.7)',
+    borderRadius: 20
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    padding: 10,
   },
   cardImage: {
     borderRadius: 20
@@ -106,13 +139,14 @@ const styles = StyleSheet.create({
     borderColor: "#dbdbdb",
   },
   fieldTitle:{
-    color: 'grey',
+    color: '#fff'
   },
   field:{
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#666666'
-  }
+    color: '#fff'
+  },
+  
 })
 
 export default MyEventCard;
