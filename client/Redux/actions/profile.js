@@ -10,30 +10,30 @@ import {
   GETPARTICULARUSER,
   CLEAR_MYPROFILE,
   UPDATE_PROFILE,
-  UPADTE_MYPROFILE
+  UPADTE_MYPROFILE,
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import { loading } from './loading';
-import {setAlert} from './alert'
+import { setAlert } from './alert';
 
 // Get current users profile
 // This will run when user will login, to save his data in store and use it
 export const getCurrentProfile = () => async (dispatch) => {
   try {
     console.log('getting profile........');
-    dispatch(loading(true))
+    dispatch(loading(true));
     const res = await axios.get(`http://${ipAddress}/api/profile/me`);
     dispatch({
       type: GET_MYPROFILE,
       payload: res.data,
     });
-    dispatch(loading(false))
+    dispatch(loading(false));
     console.log('profile added.....');
   } catch (err) {
     console.log('error from getCurrentProfile: ', err.message);
-    dispatch(loading(false))
+    dispatch(loading(false));
   }
 };
 
@@ -54,7 +54,7 @@ export const createProfile = (formData) => async (dispatch) => {
     console.log('creating profile.........');
 
     const body = JSON.stringify(formData);
-    
+
     const res = await axios.post(
       `http://${ipAddress}/api/profile/me`,
       body,
@@ -73,7 +73,6 @@ export const createProfile = (formData) => async (dispatch) => {
 };
 
 export const upadteProfile = (formData) => async (dispatch) => {
-
   try {
     const token = await AsyncStorage.getItem('token');
 
@@ -95,7 +94,7 @@ export const upadteProfile = (formData) => async (dispatch) => {
       type: UPADTE_MYPROFILE,
       payload: res.data,
     });
-    dispatch(getCurrentProfile())
+    dispatch(getCurrentProfile());
     console.log('profile Updated');
   } catch (err) {
     // const errors = err.response.data.errors;
@@ -159,15 +158,15 @@ export const eventRegistration = ({
   });
 
   try {
-    dispatch(loading(true))
+    dispatch(loading(true));
     await axios.post(
       `http://${ipAddress}/api/event/registerinevent`,
       body,
       config
     );
-    dispatch(loading(false))
+    dispatch(loading(false));
     dispatch(getCurrentProfile());
-    dispatch(setAlert('Registraion Successfull!!'))
+    dispatch(setAlert('Registraion Successfull!!'));
     // This will update our profile after we register for the event
   } catch (err) {
     const errors = err.response.data.errors;
@@ -177,7 +176,7 @@ export const eventRegistration = ({
         dispatch(setAlert(error.msg, 'danger'));
       });
     }
-    dispatch(loading(false))
+    dispatch(loading(false));
   }
 };
 
@@ -205,12 +204,6 @@ export const eventRegistration = ({
 //   });
 // };
 
-// // ClearParticularUser
-// export const clearParticularUser = () => async (dispatch) => {
-//   dispatch({
-//     type: CLEARPARTICULARUSER,
-//   });
-// };
 // // ClearProfiles
 // export const clearProflies = () => async (dispatch) => {
 //   dispatch({

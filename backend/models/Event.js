@@ -32,6 +32,10 @@ const eventSchema = new Schema({
     type: String,
     required: true,
   },
+  hostedById: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
   registeredteaminfo: [
     {
       teammembersinfo: [
