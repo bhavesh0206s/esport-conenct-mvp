@@ -42,47 +42,46 @@ const ConfirmEvent = ({route}) => {
 
   return(
     <ScrollView>
-<View style={styles.content}>
-      <View>
-        <Text style={styles.title}>Selected Game:</Text>
-        <Text style={styles.field}>{game}</Text>
+      <View style={styles.content}>
+        <View>
+          <Text style={styles.title}>Selected Game:</Text>
+          <Text style={styles.field}>{game}</Text>
+        </View>
+        <View>
+          <Text style={styles.title}>Tournment Name:</Text>
+          <Text style={styles.field}>{title}</Text>
+        </View>
+        <View>
+          <Text style={styles.title}>Game Description:</Text>
+          <Text style={styles.field}>{description}</Text>
+        </View>
+        <View>
+          <Text style={styles.title}>Date and Time:</Text>
+          <Text style={styles.field}>{time.toString()}</Text>
+        </View>
+        <View>
+          <Text style={styles.title}>Entry Fee:</Text>
+          <Text style={styles.field}>{entryFee}</Text>
+        </View>
+        <View>
+          <Text style={styles.title}>Prizepool:</Text>
+          <Text style={styles.field}>{prizepool}</Text>
+        </View>
+        <View>
+          <Text style={styles.title}>Team Size:</Text>
+          <Text style={styles.field}>{teamsize}</Text>
+        </View>
+        <View>
+          <Text style={styles.title}>Contact Number:</Text>
+          <Text style={styles.field}>{contact}</Text>
+        </View>
+        <View style={styles.btnView}>
+          <Button buttonStyle={{...styles.btnStyle, backgroundColor: 'red'}} onPress={() =>{ dispatch(modal(true)); navigation.goBack()}} title='Cancel' />
+          <Button buttonStyle={styles.btnStyle} onPress={handleSubmit} title='Submit' />
+        </View>
+        <VerifyModel openPopUp={openPopUp} navigation={navigation} setOpenPopUp={setOpenPopUp}/>
       </View>
-      <View>
-        <Text style={styles.title}>Tournment Name:</Text>
-        <Text style={styles.field}>{title}</Text>
-      </View>
-      <View>
-        <Text style={styles.title}>Game Description:</Text>
-        <Text style={styles.field}>{description}</Text>
-      </View>
-      <View>
-        <Text style={styles.title}>Date and Time:</Text>
-        <Text style={styles.field}>{time.toString()}</Text>
-      </View>
-      <View>
-        <Text style={styles.title}>Entry Fee:</Text>
-        <Text style={styles.field}>{entryFee}</Text>
-      </View>
-      <View>
-        <Text style={styles.title}>Prizepool:</Text>
-        <Text style={styles.field}>{prizepool}</Text>
-      </View>
-      <View>
-        <Text style={styles.title}>Team Size:</Text>
-        <Text style={styles.field}>{teamsize}</Text>
-      </View>
-      <View>
-        <Text style={styles.title}>Contact Number:</Text>
-        <Text style={styles.field}>{contact}</Text>
-      </View>
-      <View style={styles.btnView}>
-        <Button buttonStyle={{...styles.btnStyle, backgroundColor: 'red'}} onPress={() =>{ dispatch(modal(true)); navigation.goBack()}} title='Cancel' />
-        <Button buttonStyle={styles.btnStyle} onPress={handleSubmit} title='Submit' />
-      </View>
-      <VerifyModel openPopUp={openPopUp} navigation={navigation} setOpenPopUp={setOpenPopUp}/>
-    </View>
     </ScrollView>
-    
   )
 }
 

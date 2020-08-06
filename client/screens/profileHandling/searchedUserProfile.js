@@ -1,58 +1,78 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text, Avatar } from 'react-native-elements';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  Keyboard,
+  TouchableWithoutFeedback,
+  StyleSheet,
+} from 'react-native';
+import { Avatar, Button } from 'react-native-elements';
+import { useDispatch, useSelector } from 'react-redux';
+import Modal from 'react-native-modal';
+import { ScrollView } from 'react-native-gesture-handler';
+import Loading from '../../shared/loading';
+import SearchedUsertabView from './searchedUsertabView';
 
-const SearchedUserProfile = ({ navigation, route }) => {
-  const { particularuser } = route.params;
-
-  const { followers, following, bio, name, myevents } = particularuser;
-
-  return (
-    <View
-      style={{
-        padding: 10,
-        borderColor: 'coral',
-        borderWidth: 2,
-        height: '100%',
-      }}
-    >
-      <View
-        style={{
-          height: '12%',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'rgb(249, 117, 117)',
-        }}
-      ></View>
-      <Avatar
-        size={60}
-        rounded
-        overlayContainerStyle={{ backgroundColor: 'black' }}
-        icon={{ name: 'user', type: 'font-awesome-5' }}
-        activeOpacity={1}
-        containerStyle={{
-          position: 'absolute',
-          top: '6%',
-          left: '44%',
-        }}
-      />
-      <View style={{ position: 'relative', top: '5%' }}>
-        <View style={{ alignItems: 'center' }}>
-          <Text>{name}</Text>
+const SearchedUserProfile = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const particularuser = useSelector((state) => state.profile.particularUser);
+  
+  if (!particularuser) {
+    return <Loading />;
+  } else {
+    return (
+      <>
+        <View style={{ flexDirection: 'column' }}>
+          <View
+            style={{
+              height: 80,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#839690',
+            }}
+          ></View>
+          <Avatar
+            size={80}
+            rounded
+            overlayContainerStyle={{ backgroundColor: 'black' }}
+            icon={{ name: 'user', type: 'font-awesome-5' }}
+            activeOpacity={1}
+            containerStyle={{
+              position: 'absolute',
+              marginTop: 40,
+              marginHorizontal: 140,
+            }}
+          />
+          <View style={{ position: 'relative', paddingTop: 40 }}>
+            <View style={{ alignItems: 'center' }}>
+              <Text style={{ fontSize: 15, color: 'grey' }}>
+                ( {particularuser.username ? particularuser.username : ''} )
+              </Text>
+            </View>
+            <View style={{ alignItems: 'center' }}>
+              <Text style={{ fontSize: 20 }}>{particularuser.name}</Text>
+            </View>
+            <Text
+              style={{ fontSize: 12, color: '#000000', textAlign: 'center' }}
+            >
+              About:{' '}
+              <Text style={{ fontSize: 15, color: '#888888' }}>
+                {particularuser.bio
+                  ? particularuser.bio
+                  : 'Please fill this pepole want to know about you'}
+              </Text>
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'column', top: '3%' }}>
+            <View
+              style={{ marginVertical: 5, width: '20%', alignSelf: 'center' }}
+            ></View>
+          </View>
         </View>
-
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text>
-            Followers:<Text>{followers ? followers.length : 0}</Text>
-          </Text>
-          <Text>
-            Following:<Text>{following ? following.length : 0}</Text>
-          </Text>
-        </View>
-        {bio > 0 && <Text>About:{bio}</Text>}
-      </View>
-    </View>
-  );
+        <SearchedUsertabView />
+      </>
+    );
+  }
 };
 
 export default SearchedUserProfile;

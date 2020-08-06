@@ -21,8 +21,9 @@ const eventSchema = yup.object({
 });
 
 const AddEvent = ({ setModalOpen }) => {
+  const hostprofile = useSelector((state) => state.profile.userProfile);
 
-  const hostUsername = useSelector((state) => state.profile.userProfile.username);
+  console.log(hostprofile);
 
   const navigation = useNavigation();
 
@@ -58,7 +59,7 @@ const AddEvent = ({ setModalOpen }) => {
   const showTimepicker = () => {
     showMode('time');
   };
-  
+
   return (
     <View
       style={{
@@ -75,13 +76,15 @@ const AddEvent = ({ setModalOpen }) => {
           teamsize: '',
           title: '',
           contact: '',
-          hostedBy: ''
+          hostedBy: '',
+          hostedById: '',
         }}
         validationSchema={eventSchema}
         onSubmit={(values, actions) => {
           let currentDatetime = moment(therealtime, 'DD-MM-YYYY hh:mm:ss');
           values.time = currentDatetime;
-          values.hostedBy = hostUsername;
+          values.hostedBy = hostprofile.username;
+          values.hostedById = hostprofile.user;
           if (!values.entryFee) {
             values.entryFee = 'FREE';
           }
@@ -127,10 +130,18 @@ const AddEvent = ({ setModalOpen }) => {
               }
             />
             <View style={styles.timeBtnView}>
-              <Button buttonStyle={styles.btnStyle} onPress={showDatepicker} title="Add date of event" />
-              <Button buttonStyle={styles.btnStyle} onPress={showTimepicker} title="Add time of event" />
+              <Button
+                buttonStyle={styles.btnStyle}
+                onPress={showDatepicker}
+                title="Add date of event"
+              />
+              <Button
+                buttonStyle={styles.btnStyle}
+                onPress={showTimepicker}
+                title="Add time of event"
+              />
             </View>
-            {(!show && therealtime !== '') && (
+            {!show && therealtime !== '' && (
               <Text style={styles.time}>
                 {moment(therealtime, 'DD-MM-YYYY hh:mm:ss').toString()}
               </Text>
@@ -215,18 +226,18 @@ const AddEvent = ({ setModalOpen }) => {
 };
 
 const styles = StyleSheet.create({
-  time:{
+  time: {
     marginHorizontal: 7,
     marginVertical: 15,
-    fontSize: 17
+    fontSize: 17,
   },
-  timeBtnView:{
+  timeBtnView: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   btnStyle: {
-    backgroundColor: 'grey'
-  }
-})
+    backgroundColor: 'grey',
+  },
+});
 
 export default AddEvent;

@@ -18,27 +18,32 @@ const MyEventDetails = ({ navigation, route }) => {
   const {item} = route.params
   const dispatch = useDispatch();
   const [players, setPlayers] = useState([])
-  const {username, allEvents} = useSelector((state) =>({ 
-    username: state.profile.userProfile.username,
+  const {userProfile, allEvents} = useSelector((state) =>({ 
+    userProfile: state.profile.userProfile,
     allEvents: state.event.allEvents.map(event => ({eventId: event._id,registeredTeamInfo: event.registeredteaminfo})),
   }));
 
    useEffect(() =>{
-    let currentEvent = allEvents.filter((event) => event.eventId === item._id)
-    let playersDetails = currentEvent[0].registeredTeamInfo.map(players => {
-      let currentPlayer
-      for(let player of players.teammembersinfo){
-        if(player.username === username){
-          currentPlayer = players.teammembersinfo
-          break
+    if(item.teamsize === 1){
+      setPlayers([{name: userProfile.name, username: userProfile.username, key: 1}])
+    } else{
+      let username = userProfile.username
+      let currentEvent = allEvents.filter((event) => event.eventId === item._id)
+      let playersDetails = currentEvent[0].registeredTeamInfo.map(players => {
+        let currentPlayer
+        for(let player of players.teammembersinfo){
+          if(player.username === username){
+            currentPlayer = players.teammembersinfo
+            break
+          }
         }
-      }
-      return currentPlayer
-    }).filter(item => item !== undefined)
-    
-    console.log(playersDetails)
-    let players = playersDetails[0].map((item, i) => ({name: item.name, username: item.username, key: i}))
-    setPlayers(players)
+        return currentPlayer
+      }).filter(item => item !== undefined)
+      
+      console.log(playersDetails)
+      let players = playersDetails[0].map((item, i) => ({name: item.name, username: item.username, key: i}))
+      setPlayers(players)
+    }
 
   },[])
 

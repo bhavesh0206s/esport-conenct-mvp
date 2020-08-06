@@ -9,7 +9,7 @@ import ConfirmModal from '../../shared/confirmModal';
 
 const EventRegistration = ({ route, navigation }) => {
 
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
 
   const dispatch = useDispatch();
   const { eventdetails, userProfile } = route.params;

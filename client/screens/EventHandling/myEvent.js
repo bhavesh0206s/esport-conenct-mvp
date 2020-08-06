@@ -28,7 +28,7 @@ const MyEvent = ({ navigation }) => {
     dispatch(getCurrentProfile());
     setRefreshing(false);
   };
- 
+  
   if (loading) {
     return <Loading />;
   } else {

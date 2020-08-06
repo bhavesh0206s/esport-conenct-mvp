@@ -15,26 +15,29 @@ import moment from 'moment';
 import { useState } from 'react';
 import EventRegistration from './eventRegistration';
 import { useDispatch, useSelector } from 'react-redux';
-import { eventRegistration } from '../../Redux/actions/profile';
+import { eventRegistration, getProfileById } from '../../Redux/actions/profile';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../../shared/loading';
+import { CLEARPARTICULARUSER } from '../../Redux/actions/types';
+import ConfirmModal from '../../shared/confirmModal';
 
-const EventDetailsCard = ({ route }) => {
+const EventDetailsCard = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
-  const {userProfile, loading} = useSelector((state) => ({
+  const { userProfile, loading } = useSelector((state) => ({
     userProfile: state.profile.userProfile,
-    loading: state.loading
+    loading: state.loading,
   }));
-  let eventId = userProfile.myevents.map(item => item._id);
-  const { eventdetails, imageUri } = route.params;
+  let eventId = userProfile.myevents.map((item) => item._id);
+  const { eventdetails, imageUri, viewingprofile, showhostBy } = route.params;
   const [eventTime, setEventTime] = useState(
     moment(eventdetails.time).format('dddd, MMMM Do YYYY, h:mm:ss a')
   );
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   const { name } = route;
-  
+
   const {
     title,
     description,
@@ -46,29 +49,35 @@ const EventDetailsCard = ({ route }) => {
     hostedBy,
     _id,
     user,
+    hostedById,
   } = eventdetails;
 
   const handleRegistration = () => {
+    dispatch(
+      eventRegistration({
+        registerinfo: {
+          email: userProfile.email,
+          name: userProfile.name,
+          contact: userProfile.contact,
+          username: userProfile.username,
+          user: userProfile.user,
+        },
+        eventdetails,
+        eventId: _id,
+        usereventId: user,
+        teamsize,
+      })
+    );
+    navigation.navigate('Event');
+  };
+
+  const handleSubmit = () =>{
     if (hostedBy === userProfile.username) {
       alert("You are the Host of the Event you can't register");
     } else if (eventId.indexOf(_id) !== -1) {
-      alert("Already Registered!!");
-    }else if (teamsize === 1) {
-      dispatch(
-        eventRegistration({
-          registerinfo: {
-            email: userProfile.email,
-            name: userProfile.name,
-            contact: userProfile.contact,
-            username: userProfile.username,
-            user: userProfile.user,
-          },
-          eventdetails,
-          eventId: _id,
-          usereventId: user,
-          teamsize,
-        })
-      );
+      alert('Already Registered!!');
+    } else if(teamsize === 1){
+      setModalOpen(true)
     } else {
       navigation.navigate('Register', {
         navigation,
@@ -77,21 +86,37 @@ const EventDetailsCard = ({ route }) => {
       });
     }
   }
-
-  const handleHostEventRemove = () =>{
-    console.log('not implemented...')
+  
+  const showHostProfile = () => {
+    if(userProfile.username === hostedBy){
+      navigation.navigate('Profile');
+    }else{
+      dispatch({ type: CLEARPARTICULARUSER });
+      dispatch(getProfileById(hostedById));
+      navigation.navigate('Userprofile');
+    }
   }
 
-  if(loading){
-    return(
+  const handleHostEventRemove = () => {
+    console.log('not implemented...');
+  };
+
+  if (loading) {
+    return (
       <>
-        <Loading/>
+        <Loading />
         <Text>Hold on..</Text>
       </>
-    )
-  }else{
+    );
+  } else {
     return (
       <ScrollView>
+        <ConfirmModal 
+          text='Complete Registration For Single Player Event!' 
+          setModalOpen={setModalOpen} 
+          modalOpen={modalOpen} 
+          handleOk={handleRegistration}
+        />
         <Card
           title={title}
           image={imageUri}
@@ -103,15 +128,19 @@ const EventDetailsCard = ({ route }) => {
             <Button
               icon={<Icon name="form" type="antdesign" color="#ffffff" />}
               buttonStyle={styles.btnStyle}
-              onPress={handleRegistration}
+              onPress={handleSubmit}
               title="Registration"
             />
-          ) : <Button
-              icon={<Icon name="delete"  color="#ffffff" />}
+          ) : !viewingprofile ? (
+            <Button
+              icon={<Icon name="delete" color="#ffffff" />}
               buttonStyle={styles.btnStyleDelete}
               onPress={handleHostEventRemove}
               title="REMOVE"
-            />}
+            />
+          ) : (
+            <></>
+          )}
           <Text style={styles.title}>Game: </Text>
           <Text style={styles.field}>{game}</Text>
           <Text style={styles.title}>Teamsize: </Text>
@@ -126,7 +155,17 @@ const EventDetailsCard = ({ route }) => {
           <Text style={styles.field}>{contact}</Text>
           <Text style={styles.title}>Description:-</Text>
           <Text style={styles.field}>{description}</Text>
-          
+          {showhostBy && (
+            <View>
+              <TouchableOpacity
+                onPress={showHostProfile}
+              >
+              <Text style={styles.title}>HostedBy: </Text>
+              <Text style={styles.field}>{hostedBy}</Text>
+                <Text>View Profile</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </Card>
       </ScrollView>
     );
@@ -142,28 +181,28 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   container: {
-    margin: 0, 
-    paddingBottom: 20, 
-    paddingHorizontal: 10 
+    margin: 0,
+    paddingBottom: 20,
+    paddingHorizontal: 10,
   },
   mainTitle: {
-    fontSize: 25
+    fontSize: 25,
   },
-  cardImage:{
-    borderRadius: 20
+  cardImage: {
+    borderRadius: 20,
   },
   btnStyle: {
     borderRadius: 0,
     marginBottom: 20,
     borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50
+    borderBottomRightRadius: 50,
   },
-  btnStyleDelete:{
+  btnStyleDelete: {
     backgroundColor: 'red',
     borderRadius: 0,
     marginBottom: 20,
     borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50
+    borderBottomRightRadius: 50,
   },
 });
 
