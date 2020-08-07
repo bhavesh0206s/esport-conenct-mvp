@@ -15,9 +15,12 @@ import SearchedUsertabView from './searchedUsertabView';
 
 const SearchedUserProfile = ({ navigation }) => {
   const dispatch = useDispatch();
-  const particularuser = useSelector((state) => state.profile.particularUser);
-  
-  if (!particularuser) {
+  const {particularUser, loading} = useSelector((state) => ({
+    particularUser: state.profile.particularUser,
+    loading: state.loading
+  }));
+
+  if (loading) {
     return <Loading />;
   } else {
     return (
@@ -46,19 +49,19 @@ const SearchedUserProfile = ({ navigation }) => {
           <View style={{ position: 'relative', paddingTop: 40 }}>
             <View style={{ alignItems: 'center' }}>
               <Text style={{ fontSize: 15, color: 'grey' }}>
-                ( {particularuser.username ? particularuser.username : ''} )
+                ( {particularUser.username ? particularUser.username : ''} )
               </Text>
             </View>
             <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontSize: 20 }}>{particularuser.name}</Text>
+              <Text style={{ fontSize: 20 }}>{particularUser.name}</Text>
             </View>
             <Text
               style={{ fontSize: 12, color: '#000000', textAlign: 'center' }}
             >
               About:{' '}
               <Text style={{ fontSize: 15, color: '#888888' }}>
-                {particularuser.bio
-                  ? particularuser.bio
+                {particularUser.bio
+                  ? particularUser.bio
                   : 'Please fill this pepole want to know about you'}
               </Text>
             </Text>

@@ -50,6 +50,7 @@ const MyEventCard = ({ item, navigation, deleteEvent}) => {
       > 
         <TouchableOpacity
           onPress={showDetails}
+          activeOpacity={0.4}
         >
           <ImageBackground 
             imageStyle={{ borderRadius: 20}} 
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
   content :{
     flexDirection: "row", 
     justifyContent: "space-around",
-    backgroundColor:'rgba(0,0,0,0.7)',
+    backgroundColor:'rgba(0,0,0,0.4)',
     borderRadius: 20
   },
   image: {

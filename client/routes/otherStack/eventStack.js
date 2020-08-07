@@ -4,6 +4,7 @@ import Header from '../../shared/header';
 import MyEvent from '../../screens/EventHandling/myEvent';
 import MyEventDetails from '../../screens/EventHandling/myEventDetails';
 import { animationConfig } from '../../shared/routeAnimationConfig';
+import SearchedUserProfile from '../../screens/profileHandling/searchedUserProfile';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,22 @@ const EventStack = () => {
           },
         })}
         component={MyEventDetails}
+      />
+      <Stack.Screen
+        name="Userprofile"
+        options={({ navigation, route }) => ({
+          headerTitle: () => (
+            <Header
+              navigation={navigation}
+              title="User Profile"
+              type="Userprofile"
+            />
+          ),
+          headerTitleContainerStyle: {
+            left: 40,
+          },
+        })}
+        component={SearchedUserProfile}
       />
     </Stack.Navigator>
   );

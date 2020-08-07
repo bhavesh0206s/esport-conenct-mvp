@@ -11,6 +11,7 @@ import {
   CLEAR_MYPROFILE,
   UPDATE_PROFILE,
   UPADTE_MYPROFILE,
+  GET_PROFILE,
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
@@ -103,16 +104,36 @@ export const upadteProfile = (formData) => async (dispatch) => {
 };
 // Get all profiles
 // will bring bunch of users searched in input
-export const getProfiles = (username) => async (dispatch) => {
+export const getProfile = (username) => async (dispatch) => {
+  dispatch(loading(true))
   try {
     const res = await axios.get(
       `http://${ipAddress}/api/profile/userbyname/${username}`
     );
 
     dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+    
+    dispatch(loading(false))
+  } catch (err) {
+    console.log('error from getProfiles : ', err.message);
+    dispatch(loading(false))
+  }
+};
+
+export const getProfiles = (username) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `http://${ipAddress}/api/profiles/usersbyname/${username}`
+    );
+
+    dispatch({
       type: GET_PROFILES,
       payload: res.data,
     });
+
   } catch (err) {
     console.log('error from getProfiles : ', err.message);
   }
@@ -121,6 +142,7 @@ export const getProfiles = (username) => async (dispatch) => {
 // Get profile by ID
 // get info about a particular user
 export const getProfileById = (user_id) => async (dispatch) => {
+  dispatch(loading(true))
   try {
     const res = await axios.get(
       `http://${ipAddress}/api/profile/userbyid/${user_id}`
@@ -130,8 +152,10 @@ export const getProfileById = (user_id) => async (dispatch) => {
       type: GETPARTICULARUSER,
       payload: res.data,
     });
+    dispatch(loading(false))
   } catch (err) {
     console.log('error from getProfileById : ', err.message);
+    dispatch(loading(false))
   }
 };
 

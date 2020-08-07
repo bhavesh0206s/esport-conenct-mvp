@@ -111,18 +111,20 @@ const EventRegistration = ({ route, navigation }) => {
           />
         </View>
         <Card containerStyle={styles.card}  title="TEAM MEMBERS">
-          <FlatList
-            data={teamMember}
-            keyExtractor={(item) => item.user}
-            renderItem={({ item }) => (
-              <Profiles
-                teamLeader={teamMember[0].username}
-                item={[item]}
-                remove={true}
-                removeTeamMember={removeTeamMember}
-              />
-            )}
-          />
+          <View style={styles.cardView}>
+            <FlatList
+              data={teamMember}
+              keyExtractor={(item) => item.user}
+              renderItem={({ item }) => (
+                <Profiles
+                  teamLeader={teamMember[0].username}
+                  item={[item]}
+                  remove={true}
+                  removeTeamMember={removeTeamMember}
+                />
+              )}
+            />
+          </View>
           {eventdetails.teamsize === teamMember.length ? (
             <Button
               icon={<Icon name="check" color="#ffffff" />}
@@ -149,6 +151,15 @@ const styles = StyleSheet.create({
   card: {
     margin: 0,
   },
+  cardView :{
+    padding: 10,
+    margin: 10,
+    marginBottom: 5,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    elevation: 4,
+    shadowColor: '#666666',
+  }
 });
 
 export default EventRegistration;

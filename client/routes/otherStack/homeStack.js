@@ -71,7 +71,7 @@ const HomeStack = () => {
           headerTitle: () => (
             <Header
               navigation={navigation}
-              title="Userprofile"
+              title="User Profile"
               type="Userprofile"
             />
           ),

@@ -50,9 +50,9 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     marginBottom: 5,
-    backgroundColor: '#eee',
+    backgroundColor: '#fff',
     borderRadius: 12,
-    elevation: 3,
+    elevation: 4,
     shadowColor: '#666666',
   },
   title: {
