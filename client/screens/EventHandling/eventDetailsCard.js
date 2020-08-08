@@ -21,6 +21,7 @@ import { useNavigation } from '@react-navigation/native';
 import Loading from '../../shared/loading';
 import { CLEARPARTICULARUSER } from '../../Redux/actions/types';
 import ConfirmModal from '../../shared/confirmModal';
+import { deleteHostedEvent } from '../../Redux/actions/event';
 
 const EventDetailsCard = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const EventDetailsCard = ({ route, navigation }) => {
     loading: state.loading,
   }));
   let eventId = userProfile.myevents.map((item) => item._id);
-  const { eventdetails, imageUri, viewingprofile, showhostBy } = route.params;
+  const { eventdetails, imageUri, viewingProfile, showhostBy } = route.params;
   const [eventTime, setEventTime] = useState(
     moment(eventdetails.time).format('dddd, MMMM Do YYYY, h:mm:ss a')
   );
@@ -37,7 +38,7 @@ const EventDetailsCard = ({ route, navigation }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const { name } = route;
-
+  
   const {
     title,
     description,
@@ -68,12 +69,13 @@ const EventDetailsCard = ({ route, navigation }) => {
         teamsize,
       })
     );
+    setModalOpen(false)
     navigation.navigate('Event');
   };
 
   const handleSubmit = () =>{
     if (hostedBy === userProfile.username) {
-      alert("You are the Host of the Event you can't register");
+      alert("Host of the Event, can't Register!");
     } else if (eventId.indexOf(_id) !== -1) {
       alert('Already Registered!!');
     } else if(teamsize === 1){
@@ -92,20 +94,26 @@ const EventDetailsCard = ({ route, navigation }) => {
       navigation.navigate('Profile');
     }else{
       dispatch({ type: CLEARPARTICULARUSER });
-      dispatch(getProfileById(hostedById));
+      dispatch(getProfileById(hostedById, navigation));
       navigation.navigate('Userprofile');
     }
   }
 
   const handleHostEventRemove = () => {
-    console.log('not implemented...');
+    dispatch(deleteHostedEvent(eventdetails, hostedBy))
+    navigation.navigate('Profile');
   };
+
+  useEffect(() => {
+    navigation.setParams({ 
+      title
+    })
+  },[])
 
   if (loading) {
     return (
       <>
         <Loading />
-        <Text>Hold on..</Text>
       </>
     );
   } else {
@@ -131,7 +139,7 @@ const EventDetailsCard = ({ route, navigation }) => {
               onPress={handleSubmit}
               title="Registration"
             />
-          ) : !viewingprofile ? (
+          ) : !viewingProfile ? (
             <Button
               icon={<Icon name="delete" color="#ffffff" />}
               buttonStyle={styles.btnStyleDelete}

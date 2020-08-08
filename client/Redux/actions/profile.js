@@ -18,6 +18,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import { loading } from './loading';
 import { setAlert } from './alert';
+import { fetchallEvents } from './event';
 
 // Get current users profile
 // This will run when user will login, to save his data in store and use it
@@ -141,7 +142,7 @@ export const getProfiles = (username) => async (dispatch) => {
 
 // Get profile by ID
 // get info about a particular user
-export const getProfileById = (user_id) => async (dispatch) => {
+export const getProfileById = (user_id, navigation) => async (dispatch) => {
   dispatch(loading(true))
   try {
     const res = await axios.get(
@@ -152,6 +153,7 @@ export const getProfileById = (user_id) => async (dispatch) => {
       type: GETPARTICULARUSER,
       payload: res.data,
     });
+    navigation.setParams({HostProfileTitle: res.data.name})
     dispatch(loading(false))
   } catch (err) {
     console.log('error from getProfileById : ', err.message);
@@ -188,6 +190,7 @@ export const eventRegistration = ({
       body,
       config
     );
+    dispatch(fetchallEvents())
     dispatch(loading(false));
     dispatch(getCurrentProfile());
     dispatch(setAlert('Registraion Successfull!!'));

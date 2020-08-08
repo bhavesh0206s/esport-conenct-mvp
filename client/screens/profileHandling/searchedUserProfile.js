@@ -20,6 +20,8 @@ const SearchedUserProfile = ({ navigation }) => {
     loading: state.loading
   }));
 
+
+  
   if (loading) {
     return <Loading />;
   } else {

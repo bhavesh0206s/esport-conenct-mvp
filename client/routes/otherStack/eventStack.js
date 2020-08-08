@@ -33,7 +33,13 @@ const EventStack = () => {
       <Stack.Screen
         name="My Event Details"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} type='myEventDetails' title="My Event Details" />,
+          headerTitle: () => (
+            <Header 
+              navigation={navigation} 
+              type='myEventDetails' 
+              title={route.params.title}
+            />
+          ),
           headerTitleContainerStyle: {
             left: 40,
           },
@@ -46,7 +52,7 @@ const EventStack = () => {
           headerTitle: () => (
             <Header
               navigation={navigation}
-              title="User Profile"
+              title='Member Profile'
               type="Userprofile"
             />
           ),

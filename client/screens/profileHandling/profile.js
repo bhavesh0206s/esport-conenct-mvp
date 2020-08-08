@@ -36,7 +36,8 @@ const Profile = ({ navigation }) => {
   }
 
   useEffect(() => {
-    dispatch(getCurrentProfile())
+    navigation.setParams({title: 'Profile'})
+    dispatch(getCurrentProfile());
   },[])
 
   if (loading) {

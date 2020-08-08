@@ -25,7 +25,12 @@ const ProfileStack = () => {
       <Stack.Screen
         name="Profile"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} title="Profile" />,
+          headerTitle: (props) => (
+            <Header 
+              {...props}
+              navigation={navigation} 
+              title='Profile'
+            />),
         })}
         component={Profile}
       />
@@ -42,10 +47,11 @@ const ProfileStack = () => {
       <Stack.Screen
         name="EventDetailsProfile"
         options={({ navigation, route }) => ({
-          headerTitle: () => (
+          headerTitle: (props) => (
             <Header
+              {...props}
               navigation={navigation}
-              title="Hosted Event Details "
+              title={route.params.title}
               type="EventDetailsCard"
             />
           ),

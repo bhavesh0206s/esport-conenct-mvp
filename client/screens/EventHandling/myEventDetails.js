@@ -33,6 +33,7 @@ const MyEventDetails = ({ navigation, route }) => {
   }
 
    useEffect(() =>{
+    navigation.setParams({title: item.title})
     if(item.teamsize === 1){
       setPlayers([{name: userProfile.name, username: userProfile.username, key: 1}]);
     } else{
@@ -48,14 +49,13 @@ const MyEventDetails = ({ navigation, route }) => {
         }
         return currentPlayer
       }).filter(item => item !== undefined)
-      console.log(playersDetails)
+
       let players = playersDetails[0].map((item, i) => ({name: item.name, username: item.username, key: i, teamLeader: item.teamLeader}))
       setPlayers(players)
     }
 
   },[])
 
-  // console.log(allEvents)
   return (
     <View>
        <Card containerStyle={{margin: 0}} title={item.teamsize !== 1 && 'TEAM MEMBERS' } >
@@ -66,8 +66,8 @@ const MyEventDetails = ({ navigation, route }) => {
                 <ListItem
                   roundAvatar
                   title={name}
-                  subtitle={teamLeader ? `${username} : (Teamleader)` : username}
-                  leftIcon={<Icon raised name="user" type="font-awesome-5" color='black' />}
+                  subtitle={teamLeader ? `${username}: (Teamleader)` : username}
+                  leftIcon={<Icon  name="user" type="font-awesome-5" color='black' />}
                   bottomDivider
                 />
               </TouchableOpacity>

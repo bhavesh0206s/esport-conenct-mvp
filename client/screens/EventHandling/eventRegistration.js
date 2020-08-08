@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { eventRegistration } from '../../Redux/actions/profile';
 import Loading from '../../shared/loading';
 import ConfirmModal from '../../shared/confirmModal';
+import { fetchallEvents } from '../../Redux/actions/event';
+import { CLEAR_PROFILES } from '../../Redux/actions/types';
 
 const EventRegistration = ({ route, navigation }) => {
 
@@ -79,9 +81,11 @@ const EventRegistration = ({ route, navigation }) => {
         teamsize: eventdetails.teamsize,
       })
     );
+    
     if(!loading){
       navigation.goBack();
       navigation.navigate('Event');
+      dispatch({ type: CLEAR_PROFILES });
     }
     setModalOpen(false)
   }

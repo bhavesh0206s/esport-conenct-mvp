@@ -36,7 +36,7 @@ const SearchStack = () => {
           headerTitle: () => (
             <Header
               navigation={navigation}
-              title="Event Details"
+              title={route.params.title}
               type="EventDetailsCard"
             />
           ),

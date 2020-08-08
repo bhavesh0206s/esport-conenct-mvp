@@ -32,7 +32,7 @@ const HomeStack = () => {
       <Stack.Screen
         name="Home"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} title="Home" />,
+          headerTitle: () => <Header navigation={navigation} title="Esport Connect" />,
           drawerLockMode: 'locked-closed',
         })}
         component={Home}
@@ -40,10 +40,11 @@ const HomeStack = () => {
       <Stack.Screen
         name="EventDetailsCard"
         options={({ navigation, route }) => ({
-          headerTitle: () => (
+          headerTitle: (props) => (
             <Header
+              {...props}
               navigation={navigation}
-              title="Event Details"
+              title={route.params.title}
               type="EventDetailsCard"
             />
           ),
@@ -71,7 +72,7 @@ const HomeStack = () => {
           headerTitle: () => (
             <Header
               navigation={navigation}
-              title="User Profile"
+              title={route.params?.HostProfileTitle ?? 'Host Profile'}
               type="Userprofile"
             />
           ),

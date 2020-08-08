@@ -23,8 +23,6 @@ const eventSchema = yup.object({
 const AddEvent = ({ setModalOpen }) => {
   const hostprofile = useSelector((state) => state.profile.userProfile);
 
-  console.log(hostprofile);
-
   const navigation = useNavigation();
 
   const [typeTourn, setTypeTourn] = useState('');
@@ -44,7 +42,12 @@ const AddEvent = ({ setModalOpen }) => {
     let month = currentDate.getMonth();
     let year = currentDate.getFullYear();
     let day = currentDate.getDate();
-    setTheRealTime(`${day}-${month + 1}-${year} ${hour}:${min}:00`);
+    console.log(day, date.getDate())
+    if(day < date){
+      alert('not allowed')
+    }else{
+      setTheRealTime(`${day}-${month + 1}-${year} ${hour}:${min}:00`);
+    }
   };
 
   const showMode = (currentMode) => {
