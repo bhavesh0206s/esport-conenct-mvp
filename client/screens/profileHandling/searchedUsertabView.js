@@ -61,7 +61,7 @@ const SearchedUsertabView = () => {
               <EventHostedCard
                 navigation={navigation}
                 item={item}
-                type={'SearchedUserEventHostedCard'}
+                type='SearchedUserEventHostedCard'
               />
             )}
           />

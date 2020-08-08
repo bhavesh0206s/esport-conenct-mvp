@@ -36,6 +36,7 @@ const EventDetailsCard = ({ route, navigation }) => {
   );
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [removeModalOpen, setRemoveModalOpen] = useState(false);
 
   const { name } = route;
   
@@ -100,6 +101,7 @@ const EventDetailsCard = ({ route, navigation }) => {
   }
 
   const handleHostEventRemove = () => {
+    
     dispatch(deleteHostedEvent(eventdetails, hostedBy))
     navigation.navigate('Profile');
   };
@@ -125,6 +127,12 @@ const EventDetailsCard = ({ route, navigation }) => {
           modalOpen={modalOpen} 
           handleOk={handleRegistration}
         />
+        <ConfirmModal 
+          text='Are You Sure?' 
+          setModalOpen={setRemoveModalOpen} 
+          modalOpen={removeModalOpen} 
+          handleOk={handleHostEventRemove}
+        />
         <Card
           title={title}
           image={imageUri}
@@ -139,15 +147,15 @@ const EventDetailsCard = ({ route, navigation }) => {
               onPress={handleSubmit}
               title="Registration"
             />
-          ) : !viewingProfile ? (
+          ) : !viewingProfile? (
             <Button
               icon={<Icon name="delete" color="#ffffff" />}
               buttonStyle={styles.btnStyleDelete}
-              onPress={handleHostEventRemove}
+              onPress={() => setRemoveModalOpen(true)}
               title="REMOVE"
             />
           ) : (
-            <></>
+            null
           )}
           <Text style={styles.title}>Game: </Text>
           <Text style={styles.field}>{game}</Text>
@@ -157,7 +165,7 @@ const EventDetailsCard = ({ route, navigation }) => {
           <Text style={styles.field}>{entryFee}</Text>
           <Text style={styles.title}>Prize pool: </Text>
           <Text style={styles.field}>{prizepool}</Text>
-          <Text style={styles.title}>Date&Time:</Text>
+          <Text style={styles.title}>Date & Time:</Text>
           <Text style={styles.field}>{eventTime.toString()}</Text>
           <Text style={styles.title}>Contact: </Text>
           <Text style={styles.field}>{contact}</Text>
@@ -165,12 +173,12 @@ const EventDetailsCard = ({ route, navigation }) => {
           <Text style={styles.field}>{description}</Text>
           {showhostBy && (
             <View>
-              <TouchableOpacity
-                onPress={showHostProfile}
-              >
-              <Text style={styles.title}>HostedBy: </Text>
-              <Text style={styles.field}>{hostedBy}</Text>
-                <Text>View Profile</Text>
+              <Text style={styles.title}>Hosted by: </Text>
+                <TouchableOpacity
+                  onPress={showHostProfile}
+                >
+              <Text style={{fontSize: 18}}>{hostedBy}</Text>
+              <Text style={{color: '#4ecca3'}}>View Profile</Text>
               </TouchableOpacity>
             </View>
           )}

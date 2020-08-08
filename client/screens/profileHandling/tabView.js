@@ -64,7 +64,7 @@ const ProfileTabView = () => {
               <EventHostedCard
                 navigation={navigation}
                 item={item}
-                type={'ProfileEventHostedCard'}
+                type='ProfileEventHostedCard'
               />
             )}
           />

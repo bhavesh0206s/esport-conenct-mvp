@@ -15,14 +15,16 @@ const EventHostedCard = ({ item, navigation, type }) => {
       setImageUri(gameImage.clashRoyale.uri);
     }
   }, []);
+  console.log(type)
   return (
     <View style={styles.card}>
       <TouchableOpacity
         onPress={() => {
+          console.log(type)
           navigation.navigate('EventDetailsProfile', {
             eventdetails: item,
             imageUri,
-            viewingprofile: type === 'ProfileEventHostedCard' ? false : true,
+            viewingProfile: type === 'ProfileEventHostedCard' ? false : true,
             showhostBy: false,
           });
         }}

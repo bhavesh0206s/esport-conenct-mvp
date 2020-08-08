@@ -206,7 +206,7 @@ module.exports = (app) => {
     try {
       const { _id, teamsize } = req.body.eventDetails;
       const currentUser = req.params.username;
-      // const event = await Event.findById(_id);
+      const event = await Event.findById(_id);
       
       if (teamsize === 1) {
         //deleting from event
@@ -232,9 +232,30 @@ module.exports = (app) => {
           };
 
         }
+        
+      } else {
+        if(event.registeredteaminfo !== null){
+
+          let teamsInfo = event.registeredteaminfo;
+          //deleting from profile
+          for (let useritem of teamsInfo) {
+            for (let item of useritem.teammembersinfo) {
+              let playerProfile = await Profile.findOne({
+                user: item.user,
+              });
+  
+              let upadtedMyEvents = playerProfile.myevents.filter((event, i) => {
+                if (event._id.toString() !== _id) return true;
+              });
+              playerProfile.myevents = upadtedMyEvents;
+  
+              await playerProfile.save();
+            }
+          }
+        }
+
         Event.deleteOne({ _id : _id }, (err) => {
           if (err) return handleError(err);
-          res.json('event deleted')
         });
 
         const user = await Profile.findOne({ user: req.user.id });
@@ -248,45 +269,6 @@ module.exports = (app) => {
         }
 
         res.json(user)
-        
-      } else {
-        let teamsInfo = event.registeredteaminfo;
-        ////deleting from profile
-        for (let useritem of teamsInfo) {
-          for (let item of useritem.teammembersinfo) {
-            let playerProfile = await Profile.findOne({
-              user: item.user,
-            });
-
-            let upadtedMyEvents = playerProfile.myevents.filter((event, i) => {
-              if (event._id.toString() !== _id) return true;
-            });
-            playerProfile.myevents = upadtedMyEvents;
-
-            await playerProfile.save();
-          }
-        }
-
-        //deleting from event
-        let upadtedTeamsInfo = [];
-        let x = [];
-        teamsInfo.forEach((team) => {
-          x = team.teammembersinfo.filter((player) => {
-            if (player.username !== user.username) {
-              return true;
-            }
-          });
-          if (x.length >= teamsize) {
-            upadtedTeamsInfo.push(x);
-          }
-        });
-        event.registeredteaminfo = teamsInfo
-          .map((team, i) => ({ teammembersinfo: upadtedTeamsInfo[i] }))
-          .filter((team) => team.teammembersinfo !== undefined);
-
-        await event.save();
-
-        res.json(user);
       }
     } catch (err) {
       console.error(err.message);

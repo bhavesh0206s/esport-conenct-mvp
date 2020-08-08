@@ -72,7 +72,7 @@ const EventCard = ({ item, navigation }) => {
             navigation.navigate('EventDetailsCard', {
               eventdetails: item[0],
               imageUri,
-              viewingprofile: false,
+              viewingProfile: false,
               showhostBy: true,
             });
           }}
