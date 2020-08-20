@@ -134,54 +134,56 @@ const EventDetailsCard = ({ route, navigation }) => {
           handleOk={handleHostEventRemove}
         />
         <Card
-          title={title}
+          title={viewingProfile ? title: null}
           image={imageUri}
           titleStyle={styles.mainTitle}
           containerStyle={styles.container}
           imageStyle={styles.cardImage}
         >
-          {name !== 'EventDetailsProfile' ? (
-            <Button
-              icon={<Icon name="form" type="antdesign" color="#ffffff" />}
-              buttonStyle={styles.btnStyle}
-              onPress={handleSubmit}
-              title="Registration"
-            />
-          ) : !viewingProfile? (
-            <Button
-              icon={<Icon name="delete" color="#ffffff" />}
-              buttonStyle={styles.btnStyleDelete}
-              onPress={() => setRemoveModalOpen(true)}
-              title="REMOVE"
-            />
-          ) : (
-            null
-          )}
-          <Text style={styles.title}>Game: </Text>
-          <Text style={styles.field}>{game}</Text>
-          <Text style={styles.title}>Teamsize: </Text>
-          <Text style={styles.field}>{teamsize}</Text>
-          <Text style={styles.title}>Entryfee: </Text>
-          <Text style={styles.field}>{entryFee}</Text>
-          <Text style={styles.title}>Prize pool: </Text>
-          <Text style={styles.field}>{prizepool}</Text>
-          <Text style={styles.title}>Date & Time:</Text>
-          <Text style={styles.field}>{eventTime.toString()}</Text>
-          <Text style={styles.title}>Contact: </Text>
-          <Text style={styles.field}>{contact}</Text>
-          <Text style={styles.title}>Description:-</Text>
-          <Text style={styles.field}>{description}</Text>
-          {showhostBy && (
-            <View>
-              <Text style={styles.title}>Hosted by: </Text>
-                <TouchableOpacity
-                  onPress={showHostProfile}
-                >
-              <Text style={{fontSize: 18}}>{hostedBy}</Text>
-              <Text style={{color: '#4ecca3'}}>View Profile</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          <View style={styles.cardView}>
+            {name !== 'EventDetailsProfile' ? (
+              <Button
+                icon={<Icon name="form" type="antdesign" color="#ffffff" />}
+                buttonStyle={styles.btnStyle}
+                onPress={handleSubmit}
+                title="Registration"
+              />
+            ) : !viewingProfile? (
+              <Button
+                icon={<Icon name="delete" color="#ffffff" />}
+                buttonStyle={styles.btnStyleDelete}
+                onPress={() => setRemoveModalOpen(true)}
+                title="REMOVE"
+              />
+            ) : (
+              null
+            )}
+            <Text style={styles.title}>Game: </Text>
+            <Text style={styles.field}>{game}</Text>
+            <Text style={styles.title}>Teamsize: </Text>
+            <Text style={styles.field}>{teamsize}</Text>
+            <Text style={styles.title}>Entryfee: </Text>
+            <Text style={styles.field}>{entryFee}</Text>
+            <Text style={styles.title}>Prize pool: </Text>
+            <Text style={styles.field}>{prizepool}</Text>
+            <Text style={styles.title}>Date & Time:</Text>
+            <Text style={styles.field}>{eventTime.toString()}</Text>
+            <Text style={styles.title}>Contact: </Text>
+            <Text style={styles.field}>{contact}</Text>
+            <Text style={styles.title}>Description:-</Text>
+            <Text style={styles.field}>{description}</Text>
+            {showhostBy && (
+              <View>
+                <Text style={styles.title}>Hosted by: </Text>
+                  <TouchableOpacity
+                    onPress={showHostProfile}
+                  >
+                <Text style={{fontSize: 18}}>{hostedBy}</Text>
+                <Text style={{color: '#4ecca3'}}>View Profile</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
         </Card>
       </ScrollView>
     );
@@ -198,14 +200,20 @@ const styles = StyleSheet.create({
   },
   container: {
     margin: 0,
+    borderWidth: 0,
     paddingBottom: 20,
-    paddingHorizontal: 10,
   },
   mainTitle: {
     fontSize: 25,
   },
+  cardView:{
+    paddingHorizontal: 15
+  },  
   cardImage: {
-    borderRadius: 20,
+    // marginTop:2,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    // borderRadius: 0,
   },
   btnStyle: {
     borderRadius: 0,

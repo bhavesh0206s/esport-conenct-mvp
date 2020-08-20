@@ -104,6 +104,7 @@ const EventRegistration = ({ route, navigation }) => {
         <View>
           <FlatList
             data={searchProfile}
+            keyboardShouldPersistTaps='always'
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => (
               <Profiles
