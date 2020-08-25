@@ -56,7 +56,7 @@ const Home = ({ navigation }) => {
           initialNumToRender={6}
           keyExtractor={item => item._id}
           renderItem={({ item }) => (
-            <EventCard item={[item]} navigation={navigation} />
+            <EventCard item={item} navigation={navigation} />
           )}
         />
       </View>

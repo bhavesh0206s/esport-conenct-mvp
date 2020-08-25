@@ -2,24 +2,19 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { signInAsync } from '../../Redux/actions/googleAuth';
-import { SocialIcon } from 'react-native-elements';
+import { SocialIcon, Button, Text } from 'react-native-elements';
 import { loading } from '../../Redux/actions/loading';
 
-const GoogleSignin = ({ title, navigation }) => {
+const LoginType = ({ title, navigation }) => {
   
   const dispatch = useDispatch();
   
   return (
     <View>
-      <SocialIcon
-        title={title}
-        button
-        style={{ margin: 40 }}
-        type="google"
-        onPress={async () => {
-          dispatch(signInAsync(navigation));
-        }}
-      />
+     <Text>Welcome To E-Bind</Text>
+     <Text>Who are you?</Text>
+     <Button title='PLAYER' onPress={() => navigation.navigate('AuthPlayer', {fromHost: false})} />
+     <Button title='HOST' onPress={() => navigation.navigate('AuthHost', {fromHost: true})}/>
     </View>
   );
 }
@@ -30,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GoogleSignin;
+export default LoginType;

@@ -16,9 +16,9 @@ const EventCard = ({ item, navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (item[0].game === 'PUBG') {
+    if (item.game === 'PUBG') {
       setImageUri(gameImage.pubg.uri);
-    } else if (item[0].game === 'COD') {
+    } else if (item.game === 'COD') {
       setImageUri(gameImage.cod.uri);
     } else {
       setImageUri(gameImage.clashRoyale.uri);
@@ -29,7 +29,7 @@ const EventCard = ({ item, navigation }) => {
     <>
       <Card
         titleStyle={styles.mainTitle}
-        title={item[0].title}
+        title={item.title}
         imageStyle={styles.cardImage}
         containerStyle={styles.container}
         image={imageUri}
@@ -38,27 +38,27 @@ const EventCard = ({ item, navigation }) => {
           <View style={{ flexDirection: 'column' }}>
             <View style={styles.fieldView}>
               <Text style={styles.fieldTitle}>Game: </Text>
-              <Text style={styles.field}>{item[0].game}</Text>
+              <Text style={styles.field}>{item.game}</Text>
             </View>
             <View style={styles.fieldView}>
               <Text style={styles.fieldTitle}>Entryfee: </Text>
-              <Text style={styles.field}>{item[0].entryFee}</Text>
+              <Text style={styles.field}>{item.entryFee}</Text>
             </View>
             <View style={styles.fieldView}>
               <Text style={styles.fieldTitle}>Date&Time: </Text>
               <Text style={styles.field}>
-                {moment(item[0].time).format('Do MMMM YYYY, h:mm a')}
+                {moment(item.time).format('Do MMMM YYYY, h:mm a')}
               </Text>
             </View>
           </View>
           <View style={{ flexDirection: 'column' }}>
             <View style={styles.fieldView}>
               <Text style={styles.fieldTitle}>Teamsize: </Text>
-              <Text style={styles.field}>{item[0].teamsize}</Text>
+              <Text style={styles.field}>{item.teamsize}</Text>
             </View>
             <View style={styles.fieldView}>
               <Text style={styles.fieldTitle}>Prize-pool: </Text>
-              <Text style={styles.field}>{item[0].prizepool}</Text>
+              <Text style={styles.field}>{item.prizepool}</Text>
             </View>
           </View>
         </View>
@@ -70,7 +70,7 @@ const EventCard = ({ item, navigation }) => {
           containerStyle={styles.btnContainer}
           onPress={() => {
             navigation.navigate('EventDetailsCard', {
-              eventdetails: item[0],
+              eventdetails: item,
               imageUri,
               viewingProfile: false,
               showhostBy: true,

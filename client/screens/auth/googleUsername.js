@@ -57,7 +57,6 @@ const GoogleUsername = ({route}) => {
                 onBlur={formikprops.handleBlur('bio')}
                 errorMessage={formikprops.touched.bio && formikprops.errors.bio}
               />
-
               <Button buttonStyle={styles.button} onPress={formikprops.handleSubmit} title="Submit" />
             </View>
           )}

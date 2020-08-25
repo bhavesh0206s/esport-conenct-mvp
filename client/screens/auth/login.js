@@ -16,8 +16,9 @@ const LoginSchema = yup.object({
   password: yup.string().required('No password provided.'),
 });
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation, route }) => {
   const dispatch = useDispatch();
+  const {fromHost} = route.params;
   const { auth, loading } = useSelector((state) => ({
     auth: state.auth,
     loading: state.loading
@@ -34,6 +35,7 @@ const Login = ({ navigation }) => {
     return (
       
       <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
+        <Text>{fromHost ? 'WELCOME HOST' : 'WELCOME PLAYER'}</Text>
         <GoogleSignin title="Sign In With Google" navigation={navigation} />
         <SignUp
           visible={visible}
