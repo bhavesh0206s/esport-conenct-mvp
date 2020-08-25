@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { getProfiles } from '../Redux/actions/profile';
-import Search from '../screens/search';
+import Search from '../screens/player/search';
 import SearchBar from './searchbar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 

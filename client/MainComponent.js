@@ -6,7 +6,7 @@ import { View, Platform, KeyboardAvoidingView} from 'react-native';
 import AuthStack from './routes/authStack';
 import { globalStyles } from './styles/global';
 import { useSelector, useDispatch } from 'react-redux';
-import DrawerStack from './routes/drawerStack';
+import DrawerStack from './routes/player/drawerStack';
 import Alert from './shared/alert';
 import AsyncStorage from '@react-native-community/async-storage';
 import setAuthToken from './Redux/setAuthToken';
