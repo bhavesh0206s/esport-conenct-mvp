@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const eventSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Host',
   },
   game: {
     type: String,

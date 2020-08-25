@@ -46,7 +46,7 @@ const MainComponent = () => {
         <View style={globalStyles.container}>
           <Alert />
           {(!isAuthenticated && !isUserNameVerified )? <AuthStack /> : <DrawerStack />}
-          {/* <Button title='LogOut' onPress={() => dispatch(logout())} /> */}
+          <Button title='LogOut' onPress={() => dispatch(logout())} />
         </View>
       </ThemeProvider>
     );

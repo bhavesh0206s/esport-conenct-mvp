@@ -36,7 +36,7 @@ const Login = ({ navigation, route }) => {
       
       <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
         <Text>{fromHost ? 'WELCOME HOST' : 'WELCOME PLAYER'}</Text>
-        <GoogleSignin title="Sign In With Google" navigation={navigation} />
+        <GoogleSignin fromHost={fromHost} title="Sign In With Google" navigation={navigation} />
         <SignUp
           visible={visible}
           setVisible={setVisible}

@@ -12,6 +12,7 @@ import {
   UPDATE_PROFILE,
   UPADTE_MYPROFILE,
   GET_PROFILE,
+  GET_HOST_PROFILE
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
@@ -27,6 +28,23 @@ export const getCurrentProfile = () => async (dispatch) => {
     console.log('getting profile........');
     dispatch(loading(true));
     const res = await axios.get(`http://${ipAddress}/api/profile/me`);
+    dispatch({
+      type: GET_MYPROFILE,
+      payload: res.data,
+    });
+    dispatch(loading(false));
+    console.log('profile added.....');
+  } catch (err) {
+    console.log('error from getCurrentProfile: ', err.message);
+    dispatch(loading(false));
+  }
+};
+
+export const getHostCurrentProfile = () => async (dispatch) => {
+  try {
+    console.log('getting profile........');
+    dispatch(loading(true));
+    const res = await axios.get(`http://${ipAddress}/api/profile/Host`);
     dispatch({
       type: GET_MYPROFILE,
       payload: res.data,
@@ -68,6 +86,38 @@ export const createProfile = (formData) => async (dispatch) => {
       payload: res.data,
     });
     console.log('profile created........');
+  } catch (err) {
+    // const errors = err.response.data.errors;
+    console.log('error from createProfile: ', err.message);
+  }
+};
+
+export const createHostProfile = (formData) => async (dispatch) => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Auth-Token': token,
+      },
+    };
+
+    console.log('creating host profile.........');
+
+    const body = JSON.stringify(formData);
+
+    const res = await axios.post(
+      `http://${ipAddress}/api/profile/host`,
+      body,
+      config
+    );
+
+    dispatch({
+      type: GET_MYPROFILE,
+      payload: res.data,
+    });
+    console.log('host profile created........');
   } catch (err) {
     // const errors = err.response.data.errors;
     console.log('error from createProfile: ', err.message);
