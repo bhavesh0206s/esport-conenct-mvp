@@ -1,24 +1,23 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from '../../../screens/player/home';
+import About from '../../../screens/host/about';
 import Header from '../../../shared/header';
-import UploadPost from '../../../screens/player/postHandling/uploadPost';
 
 const Stack = createStackNavigator()
 
-const UploadStack = () => {
+const AboutStack = () => {
 
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='Upload'
+        name='About'
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} title='Share Post'/>,
+          headerTitle: () => <Header navigation={navigation} title='About'/>,
         })}
-        component={UploadPost}
+        component={About}
       />
     </Stack.Navigator>
   );
 }
  
-export default UploadStack;
+export default AboutStack;

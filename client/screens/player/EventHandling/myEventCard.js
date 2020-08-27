@@ -16,17 +16,17 @@ const MyEventCard = ({ item, navigation, deleteEvent}) => {
   const dispatch = useDispatch()
 
   const handleSubmit = () => {
-    dispatch(deleteMyEvent(item[0], currentUserUsername))
+    dispatch(deleteMyEvent(item, currentUserUsername))
   }
 
   const showDetails = () => {
-    navigation.navigate('My Event Details', {item: item[0]})
+    navigation.navigate('My Event Details', {item: item})
   }
 
   useEffect(() => {
-    if (item[0].game === "PUBG") {
+    if (item.game === "PUBG") {
       setImageUri(gameImage.pubg.uri);
-    } else if (item[0].game === "COD") {
+    } else if (item.game === "COD") {
       setImageUri(gameImage.cod.uri);
     } else {
       setImageUri(gameImage.clashRoyale.uri);
@@ -43,7 +43,7 @@ const MyEventCard = ({ item, navigation, deleteEvent}) => {
       />
       <Card 
         titleStyle={styles.mainTitle} 
-        title={item[0].title} 
+        title={item.title} 
         imageStyle={styles.cardImage} 
         containerStyle={styles.container} 
         // image={imageUri}
@@ -61,25 +61,25 @@ const MyEventCard = ({ item, navigation, deleteEvent}) => {
               <View style={{ flexDirection: "column" }}>
                 <View style={styles.fieldView}>
                   <Text style={styles.fieldTitle}>Game: </Text>
-                  <Text style={styles.field}>{item[0].game}</Text>
+                  <Text style={styles.field}>{item.game}</Text>
                 </View>
                 <View style={styles.fieldView}>
                   <Text style={styles.fieldTitle}>Entryfee: </Text>
-                  <Text style={styles.field}>{item[0].entryFee}</Text>
+                  <Text style={styles.field}>{item.entryFee}</Text>
                 </View>
                 <View style={styles.fieldView}>
                   <Text style={styles.fieldTitle}>Date&Time: </Text>
-                  <Text style={styles.field}>{moment(item[0].time).format("Do MMMM YYYY, h:mm a")}</Text>
+                  <Text style={styles.field}>{moment(item.time).format("Do MMMM YYYY, h:mm a")}</Text>
                 </View>
               </View>
               <View style={{ flexDirection: "column" }}>
                 <View style={styles.fieldView}>
                   <Text style={styles.fieldTitle}>Teamsize: </Text>
-                  <Text style={styles.field}>{item[0].teamsize}</Text>
+                  <Text style={styles.field}>{item.teamsize}</Text>
                 </View>
                 <View style={styles.fieldView}>
                   <Text style={styles.fieldTitle}>Prize-pool: </Text>
-                  <Text style={styles.field}>{item[0].prizepool}</Text>
+                  <Text style={styles.field}>{item.prizepool}</Text>
                 </View>
               </View>    
             </View>
@@ -87,12 +87,12 @@ const MyEventCard = ({ item, navigation, deleteEvent}) => {
         </TouchableOpacity>
         </Card>
         <View>
-            <Button
-              buttonStyle={styles.btnStyleDelete}
-              icon={<MaterialCommunityIcons name="cancel" size={24} color='#fff' />}
-              onPress={() => setModalOpen(true)}
-              title="REMOVE"
-            />
+          <Button
+            buttonStyle={styles.btnStyleDelete}
+            icon={<MaterialCommunityIcons name="cancel" size={24} color='#fff' />}
+            onPress={() => setModalOpen(true)}
+            title="REMOVE"
+          />
         </View>
     </>
   );
@@ -125,15 +125,15 @@ const styles = StyleSheet.create({
   btnStyle:{
     borderRadius: 0,
     marginBottom: 20,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5
   },
   btnStyleDelete:{
     backgroundColor: 'red',
     borderRadius: 0,
     marginBottom: 20,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5
   },
   fieldView:{
     borderBottomWidth: 1,

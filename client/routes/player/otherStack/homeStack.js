@@ -10,7 +10,8 @@ import EventDetailsCard from '../../../screens/player/EventHandling/eventDetails
 import { Easing } from 'react-native';
 import { animationConfig } from '../../../shared/routeAnimationConfig';
 import EventRegistration from '../../../screens/player/EventHandling/eventRegistration';
-import SearchedUserProfile from '../../../screens/player/profileHandling/searchedUserProfile';
+import SearchedProfile from '../../../screens/player/profileHandling/searchedProfile';
+import SearchStack from './searchStack';
 
 const Stack = createStackNavigator();
 
@@ -32,10 +33,20 @@ const HomeStack = () => {
       <Stack.Screen
         name="Home"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} title="Esport Connect" />,
+          headerTitle: () => <Header navigation={navigation} type='home' title="EBind" />,
           drawerLockMode: 'locked-closed',
         })}
         component={Home}
+      />
+      <Stack.Screen
+        name="Search"
+        options={({ navigation, route }) => ({
+          headerTitle: () => <Header navigation={navigation} title="Search" type="Search" />,
+          headerTitleContainerStyle: {
+            left: 40,
+          },
+        })}
+        component={SearchStack}
       />
       <Stack.Screen
         name="EventDetailsCard"
@@ -73,14 +84,14 @@ const HomeStack = () => {
             <Header
               navigation={navigation}
               title={route.params?.HostProfileTitle ?? 'Host Profile'}
-              type="Userprofile"
+              type="userProfile"
             />
           ),
           headerTitleContainerStyle: {
             left: 40,
           },
         })}
-        component={SearchedUserProfile}
+        component={SearchedProfile}
       />
       <Stack.Screen
         name="EventDetailsProfile"

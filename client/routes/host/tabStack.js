@@ -4,13 +4,13 @@ import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import EventStack from './otherStack/eventStack'
 import ProfileStack from './otherStack/profileStack';
 import HomeStack from './otherStack/homeStack';
-import NotificationStack from './otherStack/notificationStack';
-import { Icon } from 'react-native-elements';
+import UploadPostModal from '../../screens/host/postHandling/uploadPost';
 
 const Tab = createBottomTabNavigator();
+
+const UploadPostComponent = () => null;
 
 export default function TabStack() {
   
@@ -19,12 +19,13 @@ export default function TabStack() {
       return (
         <AntDesign name="home" size={30} color={focused ? '#4ecca3' : 'gray'} />
       );
-    } else if (route.name === 'Notification') {
+    } else if (route.name === 'Search') {
       return (
-        <MaterialIcons 
-          name="notifications-none" 
+        <FontAwesome
+          name="search"
           size={30}
-          color={focused ? '#4ecca3' : 'gray'}/>
+          color={focused ? '#4ecca3' : 'gray'}
+        />
       );
     } else if (route.name === 'Profile') {
       return (
@@ -58,8 +59,13 @@ export default function TabStack() {
       }}
     >
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Event" component={EventStack} />
-      <Tab.Screen name="Notification" component={NotificationStack} />
+      <Tab.Screen 
+        name="Upload" 
+        options={({ navigation, route }) => ({
+          tabBarIcon: () => (<UploadPostModal navigation={navigation} />),
+        })}
+        component={UploadPostComponent} 
+      />
       <Tab.Screen name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   );

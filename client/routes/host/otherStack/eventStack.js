@@ -1,10 +1,10 @@
 import React from 'react';
 import { createStackNavigator, CardStyleInterpolators  } from '@react-navigation/stack';
 import Header from '../../../shared/header';
-import MyEvent from '../../../screens/player/EventHandling/myEvent';
-import MyEventDetails from '../../../screens/player/EventHandling/myEventDetails';
+import MyEvent from '../../../screens/host/EventHandling/myEvent';
+import MyEventDetails from '../../../screens/host/EventHandling/myEventDetails';
 import { animationConfig } from '../../../shared/routeAnimationConfig';
-import SearchedProfile from '../../../screens/player/profileHandling/searchedProfile';
+import SearchedUserProfile from '../../../screens/host/profileHandling/searchedUserProfile';
 
 const Stack = createStackNavigator();
 
@@ -52,15 +52,15 @@ const EventStack = () => {
           headerTitle: () => (
             <Header
               navigation={navigation}
-              title='Team Member Profile'
-              type="userProfile"
+              title='Member Profile'
+              type="Userprofile"
             />
           ),
           headerTitleContainerStyle: {
             left: 40,
           },
         })}
-        component={SearchedProfile}
+        component={SearchedUserProfile}
       />
     </Stack.Navigator>
   );

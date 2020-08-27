@@ -6,6 +6,7 @@ import loadingReducer from './loadingReducer';
 import eventReducer from './eventReducer';
 import modalReducer from './modalReducer';
 import searchEventReducer from './searchEventReducer';
+import detailsReducer from './detailsReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   loading: loadingReducer,
   event: eventReducer,
   modal: modalReducer,
-  searchEvent: searchEventReducer
+  searchEvent: searchEventReducer,
+  details: detailsReducer
 });

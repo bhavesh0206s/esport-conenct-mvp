@@ -21,7 +21,7 @@ const eventSchema = yup.object({
 });
 
 const AddEvent = ({ setModalOpen }) => {
-  const hostprofile = useSelector((state) => state.profile.userProfile);
+  const hostProfile = useSelector((state) => state.profile.userProfile);
 
   const navigation = useNavigation();
 
@@ -81,11 +81,13 @@ const AddEvent = ({ setModalOpen }) => {
         onSubmit={(values, actions) => {
           let currentDatetime = moment(therealtime, 'DD-MM-YYYY hh:mm:ss');
           values.time = currentDatetime;
-          values.hostedBy = hostprofile.username;
-          values.hostedById = hostprofile.user;
+          console.log(hostProfile)
+          values.hostedBy = hostProfile.username;
+          values.hostedById = hostProfile.user;
           if (!values.entryFee) {
             values.entryFee = 'FREE';
           }
+
           navigation.navigate('Confirm Event', { info: values });
           setModalOpen();
         }}

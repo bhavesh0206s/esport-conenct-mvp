@@ -11,7 +11,7 @@ import Alert from './shared/alert';
 import AsyncStorage from '@react-native-community/async-storage';
 import setAuthToken from './Redux/setAuthToken';
 import { loadUser, logout } from './Redux/actions/auth';
-import { getCurrentProfile } from './Redux/actions/profile';
+import { getCurrentProfile, getHostCurrentProfile } from './Redux/actions/profile';
 import { Button } from 'react-native-elements';
 import ConfirmModal from './shared/confirmModal';
 
@@ -26,7 +26,9 @@ const MainComponent = () => {
     const userLoad = async () => {
       const token = await AsyncStorage.getItem('token');
       if (token !== null) {
+        setAuthToken(token)
         dispatch(loadUser());
+        dispatch(getHostCurrentProfile());
         dispatch(getCurrentProfile());
       }
       setTimeout(() => {
@@ -46,7 +48,7 @@ const MainComponent = () => {
         <View style={globalStyles.container}>
           <Alert />
           {(!isAuthenticated && !isUserNameVerified )? <AuthStack /> : <DrawerStack />}
-          <Button title='LogOut' onPress={() => dispatch(logout())} />
+          {/* <Button title='LogOut' onPress={() => dispatch(logout())} /> */}
         </View>
       </ThemeProvider>
     );

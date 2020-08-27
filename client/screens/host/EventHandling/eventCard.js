@@ -10,8 +10,10 @@ import { gameImage } from '../../../shared/gameImage';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteMyEvent } from '../../../Redux/actions/event';
+import detailsReducer from '../../../Redux/reducers/detailsReducer';
+import { sendToEventCardDetails } from '../../../Redux/actions/details';
 
-const EventCard = ({ item, navigation }) => {
+const EventCard = ({ item, navigation, route }) => {
   const [imageUri, setImageUri] = useState('sd');
   const dispatch = useDispatch();
 
@@ -24,7 +26,7 @@ const EventCard = ({ item, navigation }) => {
       setImageUri(gameImage.clashRoyale.uri);
     }
   }, []);
-
+  
   return (
     <>
       <Card
@@ -69,12 +71,14 @@ const EventCard = ({ item, navigation }) => {
           buttonStyle={styles.btnStyle}
           containerStyle={styles.btnContainer}
           onPress={() => {
-            navigation.navigate('EventDetailsCard', {
+            const details = {
               eventdetails: item,
               imageUri,
               viewingProfile: false,
               showhostBy: true,
-            });
+            }
+            navigation.navigate('EventDetailsCard');
+            dispatch(sendToEventCardDetails(details, navigation))
           }}
           title="DETAILS"
         />
@@ -102,15 +106,15 @@ const styles = StyleSheet.create({
   btnStyle: {
     borderRadius: 0,
     marginBottom: 20,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
   },
   btnStyleDelete: {
     backgroundColor: 'red',
     borderRadius: 0,
     marginBottom: 20,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
   },
   fieldView: {
     borderBottomWidth: 1,

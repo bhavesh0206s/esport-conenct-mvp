@@ -1,69 +1,68 @@
 import React from 'react';
-import { createStackNavigator, CardStyleInterpolators  } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import Profile from '../../../screens/host/profileHandling/profile';
 import Header from '../../../shared/header';
-import MyEvent from '../../../screens/player/EventHandling/myEvent';
-import MyEventDetails from '../../../screens/player/EventHandling/myEventDetails';
+import EventDetailsCard from '../../../screens/host/EventHandling/eventDetailsCard';
 import { animationConfig } from '../../../shared/routeAnimationConfig';
-import SearchedProfile from '../../../screens/player/profileHandling/searchedProfile';
+import EditProfile from '../../../screens/host/profileHandling/editProfile';
 
 const Stack = createStackNavigator();
 
-const EventStack = () => {
+const ProfileStack = () => {
   return (
     <Stack.Navigator
-       screenOptions={{
+      screenOptions={{
         gestureEnabled: true,
         gestureDirection: 'horizontal',
         transitionSpec:{
           open: animationConfig,
           close: animationConfig
         },
-        
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
       }}
       headerMode='screen'
     >
       <Stack.Screen
-        name="My Events"
+        name="Profile"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} title="My Events" />,
-        })}
-        component={MyEvent}
-      />
-      <Stack.Screen
-        name="My Event Details"
-        options={({ navigation, route }) => ({
-          headerTitle: () => (
+          headerTitle: (props) => (
             <Header 
+              {...props}
               navigation={navigation} 
-              type='myEventDetails' 
-              title={route.params.title}
-            />
-          ),
-          headerTitleContainerStyle: {
-            left: 40,
-          },
+              title='Profile'
+            />),
         })}
-        component={MyEventDetails}
+        component={Profile}
       />
       <Stack.Screen
-        name="Userprofile"
+        name="EditProfile"
         options={({ navigation, route }) => ({
-          headerTitle: () => (
+          headerTitle: () => <Header navigation={navigation} type='editProfile' title="Edit Profile" />,
+          headerTitleContainerStyle: {
+            left: 40,
+          },
+        })}
+        component={EditProfile}
+      />
+      <Stack.Screen
+        name="EventDetailsProfile"
+        options={({ navigation, route }) => ({
+          headerTitle: (props) => (
             <Header
+              {...props}
               navigation={navigation}
-              title='Team Member Profile'
-              type="userProfile"
+              title={route.params.title}
+              type="EventDetailsCard"
             />
           ),
           headerTitleContainerStyle: {
             left: 40,
           },
         })}
-        component={SearchedProfile}
+        component={EventDetailsCard}
       />
     </Stack.Navigator>
   );
 };
 
-export default EventStack;
+export default ProfileStack;

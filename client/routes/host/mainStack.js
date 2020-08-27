@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Login from '../../screens/auth/login';
 import TabStack from './tabStack';
 import Header from '../../shared/header';
-import ConfirmEvent from '../../screens/player/postHandling/confirmEvent';
+import ConfirmEvent from '../../screens/host/EventHandling/confirmEvent';
 import { animationConfig } from '../../shared/routeAnimationConfig';
 
 const Stack = createStackNavigator();

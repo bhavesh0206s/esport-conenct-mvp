@@ -29,7 +29,7 @@ const renderTabBar = (props) => (
   />
 );
 
-const SearchedUserTabView = () => {
+const SearchedUsertabView = () => {
   const profileInfo = useSelector((state) => state.profile.particularUser);
   const myEvents = profileInfo.myhostedevents;
   const navigation = useNavigation();
@@ -85,4 +85,4 @@ const SearchedUserTabView = () => {
   );
 };
 
-export default SearchedUserTabView;
+export default SearchedUsertabView;

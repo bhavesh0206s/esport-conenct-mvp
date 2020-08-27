@@ -25,7 +25,7 @@ const MyEventDetails = ({ navigation, route }) => {
       navigation.navigate('Profile');
     }else{
       dispatch(getProfile(username));
-      navigation.navigate('Userprofile');
+      navigation.navigate('Userprofile', {isHostProfile: false});
     }
   }
 

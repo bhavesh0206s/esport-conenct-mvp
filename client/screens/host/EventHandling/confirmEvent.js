@@ -5,12 +5,12 @@ import { Button } from 'react-native-elements';
 import { modal } from '../../../Redux/actions/modal';
 import { useNavigation } from '@react-navigation/native';
 import { HeaderBackButton } from '@react-navigation/stack';
-import VerifyModel from '../EventHandling/verifyModel';
+import VerifyModel from './verifyModel';
 import { AddMyEvent } from '../../../Redux/actions/event';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const ConfirmEvent = ({route}) => {
-  const { info } = route.params
+  const { info } = route.params;
   const {description, game, time, entryFee, prizepool, teamsize, title, contact} = info;
   const navigation = useNavigation()
   const dispatch = useDispatch();

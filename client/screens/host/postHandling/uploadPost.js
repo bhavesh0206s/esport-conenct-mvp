@@ -6,6 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import HostEventModal from './hostEvent';
 import { useDispatch, useSelector } from 'react-redux';
 import { modal } from '../../../Redux/actions/modal';
+import { getHostCurrentProfile } from '../../../Redux/actions/profile';
 
 export default UploadPostModal = ({navigation}) => {
   const [visible, setVisible] = useState(false);

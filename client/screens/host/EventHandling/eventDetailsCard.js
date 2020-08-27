@@ -9,21 +9,23 @@ import { ScrollView } from 'react-native-gesture-handler';
 import moment from 'moment';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getHostProfileById } from '../../../Redux/actions/profile';
-import { eventRegistration } from '../../../Redux/actions/event';
+import { eventRegistration, getProfileById } from '../../../Redux/actions/profile';
 import Loading from '../../../shared/loading';
 import { CLEARPARTICULARUSER } from '../../../Redux/actions/types';
 import ConfirmModal from '../../../shared/confirmModal';
+import { deleteHostedEvent } from '../../../Redux/actions/event';
+import { useRoute } from '@react-navigation/native';
 
-const EventDetailsCard = ({ route, navigation }) => {
+const EventDetailsCard = ({ navigation }) => {
+
   const dispatch = useDispatch();
-  const { userProfile, hostProfile, loading } = useSelector((state) => ({
-    userProfile: state.profile.userProfile,
-    hostProfile: state.profile.particularUser,
+  const { hostProfile, loading,eventInfo } = useSelector((state) => ({
+    hostProfile: state.profile.userProfile,
     loading: state.loading,
+    eventInfo: state.details
   }));
-  let eventId = userProfile.myevents.map((item) => item._id);
-  const { eventdetails, imageUri, viewingProfile, showhostBy } = route.params;
+
+  const { eventdetails, imageUri, viewingProfile, showhostBy } = eventInfo;
   const [eventTime, setEventTime] = useState(
     moment(eventdetails.time).format('dddd, MMMM Do YYYY, h:mm:ss a')
   );
@@ -31,7 +33,6 @@ const EventDetailsCard = ({ route, navigation }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [removeModalOpen, setRemoveModalOpen] = useState(false);
 
-  const { name } = route;
   
   const {
     title,
@@ -41,59 +42,24 @@ const EventDetailsCard = ({ route, navigation }) => {
     prizepool,
     entryFee,
     contact,
-    hostedBy,
-    _id,
-    user,
-    hostedById,
   } = eventdetails;
 
   const handleRegistration = () => {
-    dispatch(
-      eventRegistration({
-        registerinfo: {
-          email: userProfile.email,
-          name: userProfile.name,
-          contact: userProfile.contact,
-          username: userProfile.username,
-          user: userProfile.user,
-        },
-        eventdetails,
-        eventId: _id,
-        usereventId: user,
-        teamsize,
-      })
-    );
     setModalOpen(false)
     navigation.navigate('Event');
   };
 
-  const handleSubmit = () =>{
-    if (userProfile.email === hostProfile.email) {
-      alert("Host of the Event, can't Register!");
-    } else if (eventId.indexOf(_id) !== -1) {
-      alert('Already Registered!!');
-    } else if(teamsize === 1){
-      setModalOpen(true)
-    } else {
-      navigation.navigate('Register', {
-        navigation,
-        eventdetails,
-        userProfile,
-      });
-    }
-  }
-  
-  const showHostProfile = () => {
-    dispatch({ type: CLEARPARTICULARUSER });
-    dispatch(getHostProfileById(hostedById, navigation));
-    navigation.navigate('Userprofile',{isHostProfile: true});
-  }
+  const handleHostEventRemove = () => {
+    let hostedBy = hostProfile.username;
+    console.log(hostedBy)
+    dispatch(deleteHostedEvent(eventdetails, hostedBy))
+    navigation.navigate('Home');
+  };
 
   useEffect(() => {
     navigation.setParams({ 
       title
     })
-    dispatch(getHostProfileById(hostedById, navigation, false));
   },[])
 
   if (loading) {
@@ -111,20 +77,26 @@ const EventDetailsCard = ({ route, navigation }) => {
           modalOpen={modalOpen} 
           handleOk={handleRegistration}
         />
+        <ConfirmModal 
+          text='Are You Sure?' 
+          setModalOpen={setRemoveModalOpen} 
+          modalOpen={removeModalOpen} 
+          handleOk={handleHostEventRemove}
+        />
         <Card
-          title={viewingProfile ? title: null}
+          title={title}
           image={imageUri}
           titleStyle={styles.mainTitle}
           containerStyle={styles.container}
           imageStyle={styles.cardImage}
         >
+          <Button
+            icon={<Icon name="delete" color="#ffffff" />}
+            buttonStyle={styles.btnStyleDelete}
+            onPress={() => setRemoveModalOpen(true)}
+            title="REMOVE"
+          />
           <View style={styles.cardView}>
-            <Button
-              icon={<Icon name="form" type="antdesign" color="#ffffff" />}
-              buttonStyle={styles.btnStyle}
-              onPress={handleSubmit}
-              title="Registration"
-            />
             <Text style={styles.title}>Game: </Text>
             <Text style={styles.field}>{game}</Text>
             <Text style={styles.title}>Teamsize: </Text>
@@ -139,17 +111,6 @@ const EventDetailsCard = ({ route, navigation }) => {
             <Text style={styles.field}>{contact}</Text>
             <Text style={styles.title}>Description:-</Text>
             <Text style={styles.field}>{description}</Text>
-            {showhostBy && (
-              <View>
-                <Text style={styles.title}>Hosted by: </Text>
-                  <TouchableOpacity
-                    onPress={showHostProfile}
-                  >
-                <Text style={{fontSize: 18}}>{hostedBy}</Text>
-                <Text style={{color: '#4ecca3'}}>View Profile</Text>
-                </TouchableOpacity>
-              </View>
-            )}
           </View>
         </Card>
       </ScrollView>
@@ -174,24 +135,20 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   cardView:{
-    paddingHorizontal: 15
+    paddingHorizontal: 13
   },  
   cardImage: {
-    // marginTop:2,
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
-    // borderRadius: 0,
-  },
-  btnStyle: {
-    borderRadius: 5,
-    marginBottom: 20,
+    margin: 10,
+    marginHorizontal: 13,
+    borderRadius: 20,
   },
   btnStyleDelete: {
     backgroundColor: 'red',
-    borderRadius: 0,
+    borderRadius: 5,
     marginBottom: 20,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
+    marginHorizontal: 13
+    // borderBottomLeftRadius: 50,
+    // borderBottomRightRadius: 50,
   },
 });
 

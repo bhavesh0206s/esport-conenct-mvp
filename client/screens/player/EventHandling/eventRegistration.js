@@ -3,7 +3,7 @@ import { StyleSheet, View, FlatList } from 'react-native';
 import { Card, Icon, Button } from 'react-native-elements';
 import Profiles from '../profileHandling/profiles';
 import { useDispatch, useSelector } from 'react-redux';
-import { eventRegistration } from '../../../Redux/actions/profile';
+import { eventRegistration } from '../../../Redux/actions/event';
 import Loading from '../../../shared/loading';
 import ConfirmModal from '../../../shared/confirmModal';
 import { fetchallEvents } from '../../../Redux/actions/event';
@@ -77,7 +77,7 @@ const EventRegistration = ({ route, navigation }) => {
         },
         eventdetails,
         eventId: eventdetails._id,
-        usereventId: eventdetails.user,
+        hostId: eventdetails.user,
         teamsize: eventdetails.teamsize,
       })
     );

@@ -6,6 +6,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
+import MainStack from './mainStack';
 import AboutStack from './otherStack/aboutStack';
 import { Button, Avatar } from 'react-native-elements';
 import { StyleSheet, View, Text, useWindowDimensions } from 'react-native';
@@ -15,7 +16,6 @@ import { logout, loadUser } from '../../Redux/actions/auth';
 import Loading from '../../shared/loading';
 import { getCurrentProfile } from '../../Redux/actions/profile';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import TabStack from './tabStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -105,7 +105,7 @@ export default function DrawerStack() {
       <Drawer.Navigator
         drawerContent={(props) => <LogoutContentComponent {...props} />}
       >
-        <Drawer.Screen name="Home" component={TabStack} />
+        <Drawer.Screen name="Home" component={MainStack} />
         <Drawer.Screen name="About" component={AboutStack} />
       </Drawer.Navigator>
     </NavigationContainer>

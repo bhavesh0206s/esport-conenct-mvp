@@ -7,7 +7,7 @@ const HostProfile = require('../../models/HostProfile');
 
 module.exports = (app) => {
 
-  app.get('/api/profile/me', verify, async (req, res) => {
+  app.get('/api/profile/host', verify, async (req, res) => {
     try {
       const hostProfile = await HostProfile.findOne({
         user: req.user.id,
@@ -19,9 +19,9 @@ module.exports = (app) => {
           .json({ msg: 'There is no profile for this user' });
       }
 
-      res.json(profile);
+      res.json(hostProfile);
     } catch (err) {
-      console.error('error from profile: ', err.message);
+      console.error('error from host profile: ', err.message);
       res.status(500).send('Server Error');
     }
   });
@@ -60,16 +60,16 @@ module.exports = (app) => {
       // tag,
     } = req.body;
     // build profile object
+    console.log('from host profile: ',name)
     let profileFields = {};
     profileFields.email = req.user.email;
     profileFields.user = req.user.id;
-    if (name) profileFields.name = name;
+    if (name !== undefined) profileFields.name = name;
     profileFields.bio = bio;
     profileFields.username = username;
     
     try {
       // Using upsert option (creates new doc if no match is found):
-      console.log(profileFields)
       let hostProfile = await HostProfile.findOneAndUpdate(
         { user: req.user.id },
         { $set: profileFields },
@@ -83,5 +83,19 @@ module.exports = (app) => {
     }
   });
 
-  
+  app.get('/api/profile/host-by-id/:user_id', async (req, res) => {
+    try {
+      const hostProfile = await HostProfile.findOne({
+        user: req.params.user_id,
+      });
+      // .populate('user', ['name']);
+
+      if (!hostProfile) return res.status(400).json({ msg: 'Profile not found' });
+
+      res.json(hostProfile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  });
 };
