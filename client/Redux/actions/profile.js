@@ -12,6 +12,7 @@ import {
   UPDATE_PROFILE,
   UPADTE_MYPROFILE,
   GET_PROFILE,
+  GET_HOST_PROFILE
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
@@ -35,6 +36,24 @@ export const getCurrentProfile = () => async (dispatch) => {
     console.log('profile added.....');
   } catch (err) {
     console.log('error from getCurrentProfile: ', err.message);
+    dispatch(loading(false));
+  }
+};
+
+export const getHostCurrentProfile = () => async (dispatch) => {
+  try {
+    console.log('getting host profile........');
+    dispatch(loading(true));
+    const res = await axios.get(`http://${ipAddress}/api/profile/host`);
+    dispatch({
+      type: GET_MYPROFILE,
+      payload: res.data,
+    });
+    console.log(res.data)
+    dispatch(loading(false));
+    console.log('host profile added.....');
+  } catch (err) {
+    console.log('error from getHostCurrentProfile: ', err.message);
     dispatch(loading(false));
   }
 };
@@ -68,6 +87,38 @@ export const createProfile = (formData) => async (dispatch) => {
       payload: res.data,
     });
     console.log('profile created........');
+  } catch (err) {
+    // const errors = err.response.data.errors;
+    console.log('error from createProfile: ', err.message);
+  }
+};
+
+export const createHostProfile = (formData) => async (dispatch) => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Auth-Token': token,
+      },
+    };
+
+    console.log('creating host profile.........');
+
+    const body = JSON.stringify(formData);
+
+    const res = await axios.post(
+      `http://${ipAddress}/api/profile/host`,
+      body,
+      config
+    );
+
+    dispatch({
+      type: GET_MYPROFILE,
+      payload: res.data,
+    });
+    console.log('host profile created........');
   } catch (err) {
     // const errors = err.response.data.errors;
     console.log('error from createProfile: ', err.message);
@@ -161,51 +212,29 @@ export const getProfileById = (user_id, navigation) => async (dispatch) => {
   }
 };
 
-// Register user/team in an event
-export const eventRegistration = ({
-  registerinfo,
-  teamsize,
-  eventId,
-  usereventId,
-  eventdetails,
-}) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  const body = JSON.stringify({
-    registerinfo,
-    teamsize,
-    eventId,
-    usereventId,
-    eventdetails,
-  });
-
+export const getHostProfileById = (host_id, navigation, allowNav = true) => async (dispatch) => {
+  dispatch(loading(true))
   try {
-    dispatch(loading(true));
-    await axios.post(
-      `http://${ipAddress}/api/event/registerinevent`,
-      body,
-      config
+    const res = await axios.get(
+      `http://${ipAddress}/api/profile/host-by-id/${host_id}`
     );
-    dispatch(fetchallEvents())
-    dispatch(loading(false));
-    dispatch(getCurrentProfile());
-    dispatch(setAlert('Registraion Successfull!!'));
-    // This will update our profile after we register for the event
-  } catch (err) {
-    const errors = err.response.data.errors;
-    // this errors are the errors send form the backend
-    if (errors) {
-      errors.forEach((error) => {
-        dispatch(setAlert(error.msg, 'danger'));
-      });
+
+    dispatch({
+      type: GETPARTICULARUSER,
+      payload: res.data,
+    });
+    if(allowNav){
+      navigation.setParams({HostProfileTitle: res.data.name})
     }
-    dispatch(loading(false));
+    dispatch(loading(false))
+  } catch (err) {
+    console.log('error from getProfileById : ', err.message);
+    dispatch(loading(false))
   }
 };
+
+// Register user/team in an event
+
 
 // // Delete account & profile
 // export const deleteAccount = () => async (dispatch) => {

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "scheme": "esport",
-    "name": "esport-connect",
-    "slug": "esport-connect",
+    "scheme": "e-bind",
+    "name": "E-Bind",
+    "slug": "E-Bind",
     "platforms": [
       "ios",
       "android",

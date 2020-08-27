@@ -38,14 +38,6 @@ const SearchBar = ({ focusTextInput, textInput, type }) => {
 
   return (
     <View style={styles.searchSection}>
-      {!type && (
-        <AntDesign
-          name="search1"
-          style={styles.searchIcon}
-          size={24}
-          color="black"
-        />
-      )}
       <TextInput
         ref={textInput}
         style={styles.input}

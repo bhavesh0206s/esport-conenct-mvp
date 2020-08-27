@@ -28,11 +28,11 @@ export default (state = initialState, action) => {
 
   switch (type) {
     case GET_MYPROFILE:
-    case UPDATE_PROFILE:
-      console.log('GETMYPROFILE-SUCCESSFULL');
-      return {
-        ...state,
-        userProfile: payload,
+      case UPDATE_PROFILE:
+        console.log('GETMYPROFILE-SUCCESSFULL');
+        return {
+          ...state,
+          userProfile: payload,
         loading: false,
       };
     case GET_PROFILE:

@@ -5,11 +5,22 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../../config/keys');
 const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
+const Host = require('../../models/Host');
 
 module.exports = (app) => {
   app.get('/api/login', verify, async (req, res) => {
     try {
       const user = await User.findById(req.user.id).select('-password');
+      res.json(user);
+    } catch (err) {
+      console.error('error from login: ', err.message);
+      res.status(500).send('Server Error');
+    }
+  });
+
+  app.get('/api/host/login', verify, async (req, res) => {
+    try {
+      const user = await Host.findById(req.user.id).select('-password');
       res.json(user);
     } catch (err) {
       console.error('error from login: ', err.message);
