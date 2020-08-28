@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Feather } from '@expo/vector-icons';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { Text } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { getProfiles } from '../Redux/actions/profile';
@@ -66,7 +66,13 @@ const Header = ({ navigation, title, type }) => {
     <View style={styles.header}>
       <Feather name="menu" size={29} onPress={openMenu} />
       <View style={{ flex: 1,flexDirection: 'row', justifyContent:'space-between' }}>
-        <Text style={styles.headerText}>{title}</Text>
+        {type === 'home' ? (
+          <View style={styles.imageContainer}>
+            <Image style={styles.stretch} source={require('../assets/splash.png')}/>
+          </View>
+        ): (
+          <Text style={styles.headerText}>{title}</Text>
+        )}
         {type === 'home' && (
           <View>
             <AntDesign
@@ -103,6 +109,18 @@ const styles = StyleSheet.create({
     width: 26,
     height: 26,
     marginHorizontal: 10,
+  },
+  imageContainer :{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },  
+  stretch: {
+    position: 'absolute',
+    width: 70,
+    height: 35,
+    paddingTop: 10,
+    resizeMode: 'stretch',
   },
 });
 

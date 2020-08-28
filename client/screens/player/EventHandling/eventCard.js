@@ -41,11 +41,11 @@ const EventCard = ({ item, navigation }) => {
               <Text style={styles.field}>{item.game}</Text>
             </View>
             <View style={styles.fieldView}>
-              <Text style={styles.fieldTitle}>Entryfee: </Text>
+              <Text style={styles.fieldTitle}>Entry Fees: </Text>
               <Text style={styles.field}>{item.entryFee}</Text>
             </View>
             <View style={styles.fieldView}>
-              <Text style={styles.fieldTitle}>Date&Time: </Text>
+              <Text style={styles.fieldTitle}>Date & Time: </Text>
               <Text style={styles.field}>
                 {moment(item.time).format('Do MMMM YYYY, h:mm a')}
               </Text>

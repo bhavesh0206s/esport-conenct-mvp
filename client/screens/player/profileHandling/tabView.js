@@ -40,7 +40,7 @@ const ProfileTabView = () => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'first', title: 'Achivements' },
-    { key: 'second', title: 'Hosted Events' },
+    // { key: 'second', title: 'Hosted Events' },
   ]);
 
   const achivements = () => (
@@ -53,28 +53,8 @@ const ProfileTabView = () => {
     </View>
   );
 
-  const hostedEvents = () => {
-    return (
-      <View>
-        {myEvents !== null || myEvents ? (
-          <FlatList
-            data={myEvents}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (
-              <EventHostedCard
-                navigation={navigation}
-                item={item}
-                type='ProfileEventHostedCard'
-              />
-            )}
-          />
-        ) : null}
-      </View>
-    );
-  };
   const renderScene = SceneMap({
     first: achivements,
-    second: hostedEvents,
   });
 
   return (

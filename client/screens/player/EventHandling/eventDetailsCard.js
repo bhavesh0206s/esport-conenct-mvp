@@ -142,11 +142,12 @@ const EventDetailsCard = ({ route, navigation }) => {
             {showhostBy && (
               <View>
                 <Text style={styles.title}>Hosted by: </Text>
-                  <TouchableOpacity
-                    onPress={showHostProfile}
-                  >
-                <Text style={{fontSize: 18}}>{hostedBy}</Text>
-                <Text style={{color: '#4ecca3'}}>View Profile</Text>
+                <TouchableOpacity onPress={showHostProfile} >
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{fontSize: 18}}>{hostProfile.name} </Text>
+                    <Text style={{...styles.title, fontSize: 18}}>({hostedBy})</Text>
+                  </View>
+                  <Text style={{color: '#4ecca3'}}>View Profile</Text>
                 </TouchableOpacity>
               </View>
             )}
