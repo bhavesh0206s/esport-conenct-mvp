@@ -49,7 +49,6 @@ export const getHostCurrentProfile = () => async (dispatch) => {
       type: GET_MYPROFILE,
       payload: res.data,
     });
-    console.log(res.data)
     dispatch(loading(false));
     console.log('host profile added.....');
   } catch (err) {

@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function DrawerStack() {
+export default function HostDrawerStack() {
   return (
     <NavigationContainer>
       <Drawer.Navigator

@@ -10,23 +10,19 @@ const Host = require('../../models/Host');
 module.exports = (app) => {
   app.get('/api/login', verify, async (req, res) => {
     try {
-      const user = await User.findById(req.user.id).select('-password');
-      res.json(user);
+      let user = await User.findById(req.user.id).select('-password');
+      if(!user){
+        user = await Host.findById(req.user.id).select('-password');
+        res.json({user, fromHost: true});
+      }else{
+        res.json({user, fromHost: false});
+      }
     } catch (err) {
       console.error('error from login: ', err.message);
       res.status(500).send('Server Error');
     }
   });
 
-  app.get('/api/host/login', verify, async (req, res) => {
-    try {
-      const user = await Host.findById(req.user.id).select('-password');
-      res.json(user);
-    } catch (err) {
-      console.error('error from login: ', err.message);
-      res.status(500).send('Server Error');
-    }
-  });
 
   app.post(
     '/api/login',

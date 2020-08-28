@@ -15,8 +15,9 @@ import { getCurrentProfile, getHostCurrentProfile } from '../../Redux/actions/pr
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { myEvents, loading } = useSelector((state) => ({
+  const { myEvents, loading, host } = useSelector((state) => ({
     myEvents: state.profile.userProfile.myhostedevents,
+    host: state.profile.userProfile,
     loading: state.loading
   }));
 

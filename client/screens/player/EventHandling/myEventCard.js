@@ -89,9 +89,9 @@ const MyEventCard = ({ item, navigation, deleteEvent}) => {
         <View>
           <Button
             buttonStyle={styles.btnStyleDelete}
-            icon={<MaterialCommunityIcons name="cancel" size={24} color='#fff' />}
+            icon={<MaterialCommunityIcons name="cancel" size={15} color='#fff' />}
             onPress={() => setModalOpen(true)}
-            title="REMOVE"
+            title="EXIT"
           />
         </View>
     </>

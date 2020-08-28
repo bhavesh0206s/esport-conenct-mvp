@@ -22,7 +22,7 @@ import { setAlert } from './alert';
 import { loading } from './loading';
 
 //  Load User
-export const loadUser = (fromHost=false) => async (dispatch) => {
+export const loadUser = () => async (dispatch) => {
   // set header
   const token = await AsyncStorage.getItem('token');
   if (token !== null) {
@@ -33,19 +33,14 @@ export const loadUser = (fromHost=false) => async (dispatch) => {
   }
 
   try {
-    let res;
-    if(fromHost){
-      res = await axios.get(`http://${ipAddress}/api/host/login`)
-    }else{
-      res = await axios.get(`http://${ipAddress}/api/login`);
-    }
-
+    let res = await axios.get(`http://${ipAddress}/api/login`);
+    console.log({user: res.data.user, fromHost: res.data.fromHost})
     dispatch({
       type: USER_LOADED,
-      payload: res.data,
+      payload: {user: res.data.user, fromHost: res.data.fromHost},
     });
   } catch (err) {
-    console.log('error from loaduser: ', err.response.data)
+    console.log('error from loaduser: ', err)
     dispatch({
       type: AUTH_ERROR,
     });
@@ -70,7 +65,7 @@ export const username = (username, bio, email, fromHost) => async (dispatch) =>{
     if(fromHost){
       console.log(argu)
       dispatch(createHostProfile(argu))
-      dispatch(loadUser(fromHost));
+      dispatch(loadUser());
     }else{
       dispatch(createProfile(argu));
       dispatch(loadUser());

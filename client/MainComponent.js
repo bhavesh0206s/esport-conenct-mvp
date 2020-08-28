@@ -6,7 +6,8 @@ import { View, Platform, KeyboardAvoidingView} from 'react-native';
 import AuthStack from './routes/authStack';
 import { globalStyles } from './styles/global';
 import { useSelector, useDispatch } from 'react-redux';
-import DrawerStack from './routes/player/drawerStack';
+import PlayerDrawerStack from './routes/player/drawerStack';
+import HostDrawerStack from './routes/host/drawerStack';
 import Alert from './shared/alert';
 import AsyncStorage from '@react-native-community/async-storage';
 import setAuthToken from './Redux/setAuthToken';
@@ -20,6 +21,8 @@ const MainComponent = () => {
   const auth = useSelector((state) => state.auth);
   const isAuthenticated = auth.isAuthenticated;
   const isUserNameVerified = auth.isUserNameVerified;
+  const fromHost = auth.fromHost;
+  
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -29,7 +32,7 @@ const MainComponent = () => {
         setAuthToken(token)
         dispatch(loadUser());
         dispatch(getHostCurrentProfile());
-        dispatch(getCurrentProfile());
+        // dispatch(getCurrentProfile());
       }
       setTimeout(() => {
         setIsReady(true);
@@ -47,7 +50,11 @@ const MainComponent = () => {
       <ThemeProvider theme={theme}>
         <View style={globalStyles.container}>
           <Alert />
-          {(!isAuthenticated && !isUserNameVerified )? <AuthStack /> : <DrawerStack />}
+          {(!isAuthenticated && !isUserNameVerified )? 
+            (
+              <AuthStack />
+            ) : fromHost ? <HostDrawerStack /> : <PlayerDrawerStack/>
+            }
           {/* <Button title='LogOut' onPress={() => dispatch(logout())} /> */}
         </View>
       </ThemeProvider>

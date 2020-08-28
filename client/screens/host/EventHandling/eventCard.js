@@ -106,15 +106,8 @@ const styles = StyleSheet.create({
   btnStyle: {
     borderRadius: 0,
     marginBottom: 20,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
-  },
-  btnStyleDelete: {
-    backgroundColor: 'red',
-    borderRadius: 0,
-    marginBottom: 20,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
   },
   fieldView: {
     borderBottomWidth: 1,

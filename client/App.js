@@ -5,6 +5,10 @@ import MainComponent from './MainComponent';
 import { enableScreens } from 'react-native-screens';
 enableScreens();
 
+if(!__DEV__){
+  console.log = () => {};
+}
+
 const App = () => {
   return (
     <Provider store={store}>

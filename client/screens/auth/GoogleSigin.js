@@ -5,7 +5,7 @@ import { signInAsync, signInHostAsync } from '../../Redux/actions/googleAuth';
 import { SocialIcon } from 'react-native-elements';
 import { loading } from '../../Redux/actions/loading';
 
-const GoogleSignin = ({ title, fromHost,navigation }) => {
+const GoogleSignin = ({ title, fromHost, navigation, googleBtnStyle }) => {
   
   const dispatch = useDispatch();
 
@@ -22,7 +22,7 @@ const GoogleSignin = ({ title, fromHost,navigation }) => {
       <SocialIcon
         title={title}
         button
-        style={{ margin: 40 }}
+        style={googleBtnStyle}
         type="google"
         onPress={handleLogin}
       />

@@ -72,12 +72,6 @@ const EventDetailsCard = ({ navigation }) => {
     return (
       <ScrollView>
         <ConfirmModal 
-          text='Complete Registration For Single Player Event!' 
-          setModalOpen={setModalOpen} 
-          modalOpen={modalOpen} 
-          handleOk={handleRegistration}
-        />
-        <ConfirmModal 
           text='Are You Sure?' 
           setModalOpen={setRemoveModalOpen} 
           modalOpen={removeModalOpen} 
