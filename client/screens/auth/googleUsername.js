@@ -13,7 +13,7 @@ const userNameSchema = yup.object({
 });
 
 const GoogleUsername = ({route}) => {
-
+  const {fromHost} = route.params;
   const {emailGoogle, loading} = useSelector((state) => ({
     emailGoogle: state.auth.email,
     loading: state.loading
@@ -32,7 +32,7 @@ const GoogleUsername = ({route}) => {
           }}
           validationSchema={userNameSchema}
           onSubmit={(values) => {
-            dispatch(username(values.userName, values.bio, emailGoogle));
+            dispatch(username(values.userName, values.bio, emailGoogle, fromHost));
           }}
         >
           {(formikprops) => (
@@ -57,7 +57,6 @@ const GoogleUsername = ({route}) => {
                 onBlur={formikprops.handleBlur('bio')}
                 errorMessage={formikprops.touched.bio && formikprops.errors.bio}
               />
-
               <Button buttonStyle={styles.button} onPress={formikprops.handleSubmit} title="Submit" />
             </View>
           )}

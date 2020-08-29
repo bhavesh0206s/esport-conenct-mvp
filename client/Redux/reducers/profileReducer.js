@@ -12,6 +12,7 @@ import {
   PARTICULARUSER_ERROR,
   GETPARTICULARUSER,
   UPADTE_MYPROFILE,
+  GET_PROFILE
 } from '../actions/types';
 
 const initialState = {
@@ -27,20 +28,25 @@ export default (state = initialState, action) => {
 
   switch (type) {
     case GET_MYPROFILE:
-    case UPDATE_PROFILE:
-      console.log('GETMYPROFILE-SUCCESSFULL');
-      return {
-        ...state,
-        userProfile: payload,
+      case UPDATE_PROFILE:
+        console.log('GETMYPROFILE-SUCCESSFULL');
+        return {
+          ...state,
+          userProfile: payload,
         loading: false,
       };
-    case GET_PROFILES:
-      console.log('GETPROFILES-SUCCESSFULL');
+    case GET_PROFILE:
       return {
         ...state,
-        profiles: payload,
+        particularUser: payload,
         loading: false,
       };
+      case GET_PROFILES:
+        return {
+          ...state,
+          profiles: payload,
+          loading: false,
+        };
     case UPADTE_MYPROFILE:
       console.log('UPADTE_MYPROFILE-SUCCESSFULL');
       return {

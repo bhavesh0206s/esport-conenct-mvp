@@ -3,6 +3,7 @@ import {
   ADDEVENT_SUCCESS,
   CLEAR_EVENTS,
   DELETE_MY_EVENT,
+  FETCH_EVENT_DETAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -18,6 +19,12 @@ export default (state = initialState, action) => {
       console.log('FETCHEVENTS-SUCCESSFUL');
       return {
         allEvents: [...payload],
+        loading: false,
+      };
+    case FETCH_EVENT_DETAIL:
+      console.log('FETCH_EVENT_DETAIL');
+      return {
+        eventDetail: payload,
         loading: false,
       };
     case ADDEVENT_SUCCESS:

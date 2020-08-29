@@ -17,6 +17,7 @@ const initialState = {
   loading: true,
   isUserNameVerified: false,
   user: null,
+  fromHost: false,
 };
 
 export default (state = initialState, action) => {
@@ -52,11 +53,17 @@ export default (state = initialState, action) => {
     }
     case USER_LOADED:
       console.log('USERLOADING-SUCCESSFULL');
+      console.log({isAuthenticated: true,
+        loading: false,
+        user: payload.user,
+        fromHost: payload.fromHost,
+        isUserNameVerified: true})
       return {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: payload,
+        user: payload.user,
+        fromHost: payload.fromHost,
         isUserNameVerified: true,
       };
     case LOGIN_FAIL:

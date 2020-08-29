@@ -4,14 +4,28 @@ const Event = require('../models/Event');
 const Profile = require('../models/Profile');
 const verify = require('../verifytokenmw/verify_mv');
 const mongoose = require('mongoose');
+const HostProfile = require('../models/HostProfile');
 
 module.exports = (app) => {
   app.get('/api/event/allevents', verify, async (req, res) => {
     try {
-      const events = await Event.find()
-        .select('-registeredteaminfo -registeredplayerinfo')
-        .sort({ date: -1 });
+      const events = await Event.find().sort({date: -1})
+        // .select('-registeredteaminfo -registeredplayerinfo')
+        // .sort({ date: -1 });
       res.json(events);
+    } catch (err) {
+      console.error('fetchError: ', err.message);
+      res.status(500).send('Server Error');
+    }
+  });
+
+  app.get('/api/event/details/:eventId', verify, async (req, res) => {
+    try {
+      const eventId = req.body.params
+      const eventDetails = await Event.findById({_id: eventId})
+        // .select('-registeredteaminfo -registeredplayerinfo')
+        // .sort({ date: -1 });
+      res.json(eventDetails);
     } catch (err) {
       console.error('fetchError: ', err.message);
       res.status(500).send('Server Error');
@@ -34,7 +48,7 @@ module.exports = (app) => {
   });
 
   app.post(
-    '/api/event/addevent',
+    '/api/event/add-event',
     [
       verify,
       [
@@ -65,7 +79,6 @@ module.exports = (app) => {
         hostedById,
       } = req.body;
       // build eventitems object
-      console.log(hostedBy);
       let eventitems = {};
       eventitems.user = req.user.id;
       eventitems.hostedBy = hostedBy;
@@ -90,19 +103,19 @@ module.exports = (app) => {
           });
         }
 
-        let profile = await Profile.findOne({ user: req.user.id });
+        let hostProfile = await HostProfile.findOne({ user: req.user.id });
 
-        profile.myhostedevents.push(event);
+        hostProfile.myhostedevents.push(event);
 
-        await profile.save();
+        await hostProfile.save();
 
-        if (!profile) {
+        if (!hostProfile) {
           return res.json({
             errors: [{ msg: 'Sorry ur event was not saved in your profile' }],
           });
         }
 
-        res.json(profile.myhostedevents);
+        res.json(hostProfile.myhostedevents);
       } catch (err) {
         res.status(500).send('Server Error');
         console.error(err.message);
@@ -203,21 +216,95 @@ module.exports = (app) => {
   // Register in event
   // Array.isArray(v4)
 
-  app.post('/api/event/registerinevent', verify, async (req, res) => {
+  app.delete('/api/event/host/delete/:username', verify, async (req, res) => {
+    try {
+      const { _id, teamsize } = req.body.eventDetails;
+      const currentUser = req.params.username;
+      const event = await Event.findById(_id);
+      
+      if (teamsize === 1) {
+        //deleting from event
+        
+        if(event.registeredplayerinfo !== null){
+          let playersInfo = event.registeredplayerinfo;
+          let updatedPlayersInfo = [];
+          playersInfo.forEach((player) => {
+            updatedPlayersInfo.push(player.username);
+          });
+          
+          for (let player of updatedPlayersInfo){
+            const profile = await Profile.findOne({ username: player });
+            let myEvents = profile.myevents;
+            let updatedMyEvents = [];
+            myEvents.forEach((event, i) => {
+              if (event._id.toString() !== _id) {
+                updatedMyEvents.push(event);
+              }
+            });
+            profile.myevents = updatedMyEvents;
+            await profile.save();
+          };
+
+        }
+        
+      } else {
+        if(event.registeredteaminfo !== null){
+
+          let teamsInfo = event.registeredteaminfo;
+          //deleting from profile
+          for (let useritem of teamsInfo) {
+            for (let item of useritem.teammembersinfo) {
+              let playerProfile = await Profile.findOne({
+                user: item.user,
+              });
+  
+              let upadtedMyEvents = playerProfile.myevents.filter((event, i) => {
+                if (event._id.toString() !== _id) return true;
+              });
+              playerProfile.myevents = upadtedMyEvents;
+  
+              await playerProfile.save();
+            }
+          }
+        }
+
+        Event.deleteOne({ _id : _id }, (err) => {
+          if (err) return handleError(err);
+        });
+
+        const host = await HostProfile.findOne({ user: req.user.id });
+        if(host.myhostedevents !== null) {
+          let myHostedEvent = host.myhostedevents;
+
+          myHostedEvent = myHostedEvent.filter(event => event._id.toString() !== _id)
+
+          host.myhostedevents = myHostedEvent;
+          await host.save();
+        }
+
+        res.json(host)
+      }
+    } catch (err) {
+      console.error(err.message);
+      return res.status(404).json({ errors: [{ msg: err.message }] });
+    }
+  });
+
+  app.post('/api/event/register', verify, async (req, res) => {
     let {
       registerinfo,
       teamsize,
       eventId,
-      usereventId,
+      hostId,
       eventdetails,
     } = req.body;
 
     try {
       let event = await Event.findById(eventId);
-      let eventhostguy = await Profile.findOne({ user: usereventId });
+      let eventHost = await HostProfile.findOne({ user: hostId });
 
       // Pull out the event
-      let hostedevent = eventhostguy.myhostedevents.find(
+      let hostedevent = eventHost.myhostedevents.find(
         (event) => event.id === eventId
       );
 
@@ -226,7 +313,7 @@ module.exports = (app) => {
 
         hostedevent.registeredplayerinfo.push(registerinfo);
 
-        await eventhostguy.save();
+        await eventHost.save();
 
         await event.save();
 
@@ -279,7 +366,7 @@ module.exports = (app) => {
 
         await event.save();
 
-        await eventhostguy.save();
+        await eventHost.save();
 
         registerinfo.teammembersinfo.forEach(async (useritem) => {
           try {
