@@ -54,11 +54,6 @@ export default (state = initialState, action) => {
     }
     case USER_LOADED:
       console.log('USERLOADING-SUCCESSFULL');
-      console.log({isAuthenticated: true,
-        loading: false,
-        user: payload.user,
-        fromHost: payload.fromHost,
-        isUserNameVerified: true})
       return {
         ...state,
         isAuthenticated: true,

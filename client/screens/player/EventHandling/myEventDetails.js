@@ -30,7 +30,8 @@ const MyEventDetails = ({ navigation, route }) => {
   }
 
    useEffect(() =>{
-    navigation.setParams({title: item.title})
+    navigation.setParams({title: item.title});
+    
     if(item.teamsize === 1){
       setPlayers([{name: userProfile.name, username: userProfile.username, key: 1}]);
     } else{
@@ -48,9 +49,8 @@ const MyEventDetails = ({ navigation, route }) => {
       }).filter(item => item !== undefined)
 
       let players = playersDetails[0].map((item, i) => ({name: item.name, username: item.username, key: i, teamLeader: item.teamLeader}))
-      setPlayers(players)
+      setPlayers(players);
     }
-
   },[])
 
   return (

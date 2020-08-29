@@ -46,7 +46,6 @@ const MyEventCard = ({ item, navigation, deleteEvent}) => {
         title={item.title} 
         imageStyle={styles.cardImage} 
         containerStyle={styles.container} 
-        // image={imageUri}
       > 
         <TouchableOpacity
           onPress={showDetails}

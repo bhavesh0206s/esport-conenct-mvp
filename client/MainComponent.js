@@ -32,7 +32,7 @@ const MainComponent = () => {
         setAuthToken(token)
         dispatch(loadUser());
         dispatch(getHostCurrentProfile());
-        // dispatch(getCurrentProfile());
+        dispatch(getCurrentProfile());
       }
       setTimeout(() => {
         setIsReady(true);

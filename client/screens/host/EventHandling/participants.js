@@ -5,22 +5,24 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import EventDetailsCard from './eventDetailsCard';
 
 const Participants = () => {
+
+  // const myEvent = useSelector(state => state.userProfile.myhostedevents)
+
+  // useEffect(() =>{
+  //   const {teamsize, registeredteaminfo, registeredplayerinfo} = myEvent;
+  //   if(teamsize === 1){
+      
+  //   } else{
+
+  //   }
+
+  // }, [])
+  
+  // console.log(allEvents)
   return (
     <View>
       <Text>No Participants</Text>
-      {/* {myEvents !== null || myEvents ? (
-        <FlatList
-          data={myEvents}
-          keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
-            <EventHostedCard
-              navigation={navigation}
-              item={item}
-              type='ProfileEventHostedCard'
-            />
-          )}
-        />
-      ) : null} */}
+      
     </View>
   );
 };

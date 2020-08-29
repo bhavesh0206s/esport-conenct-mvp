@@ -16,11 +16,11 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  userProfile: null,
-  particularUser: null,
+  userProfile: {},
+  particularUser: {},
   profiles: [],
   loading: true,
-  error: null,
+  error: {},
 };
 
 export default (state = initialState, action) => {
@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
         return {
           ...state,
           userProfile: payload,
-        loading: false,
+          loading: false,
       };
     case GET_PROFILE:
       return {
