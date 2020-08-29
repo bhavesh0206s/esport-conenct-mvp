@@ -107,7 +107,6 @@ export default function PlayerDrawerStack({fromHost}) {
     <NavigationContainer>
       <Drawer.Navigator
         drawerContent={(props) => <LogoutContentComponent {...props} />}
-        
       >
         <Drawer.Screen name="Home" component={TabStack} />
         <Drawer.Screen name="About" component={AboutStack} />

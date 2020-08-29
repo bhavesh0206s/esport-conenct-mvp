@@ -42,6 +42,7 @@ export default (state = initialState, action) => {
         isAuthenticated: payload[1] === 'signin' ? true :  false,
         loading: false,
         isUserNameVerified:payload[1] === 'signin' ? true :  false,
+        fromHost: payload[2],
       };
     case CREATE_USERNAME:{
       console.log('CREATE_USERNAME-SUCCESSFULL')

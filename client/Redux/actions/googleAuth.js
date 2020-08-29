@@ -32,7 +32,7 @@ export const signInAsync = (navigation, fromHost = false) => async (dispatch) =>
 
     const authType = resServer.data.auth;
     
-    dispatch({ type: GOOGLE_LOGIN, payload: [res.data.email, authType] });
+    dispatch({ type: GOOGLE_LOGIN, payload: [res.data.email, authType, fromHost] });
 
     const token = await AsyncStorage.getItem('token');
     
@@ -79,7 +79,7 @@ export const signInHostAsync = (navigation, fromHost = true) => async (dispatch)
 
     const authType = resServer.data.auth;
     
-    dispatch({ type: GOOGLE_LOGIN, payload: [res.data.email, authType] });
+    dispatch({ type: GOOGLE_LOGIN, payload: [res.data.email, authType, fromHost] });
 
     const token = await AsyncStorage.getItem('token');
     

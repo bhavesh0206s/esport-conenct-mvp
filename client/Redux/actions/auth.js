@@ -34,7 +34,6 @@ export const loadUser = () => async (dispatch) => {
 
   try {
     let res = await axios.get(`http://${ipAddress}/api/login`);
-    console.log({user: res.data.user, fromHost: res.data.fromHost})
     dispatch({
       type: USER_LOADED,
       payload: {user: res.data.user, fromHost: res.data.fromHost},
