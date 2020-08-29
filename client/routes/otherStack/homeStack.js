@@ -11,6 +11,7 @@ import { Easing } from 'react-native';
 import { animationConfig } from '../../shared/routeAnimationConfig';
 import EventRegistration from '../../screens/EventHandling/eventRegistration';
 import SearchedUserProfile from '../../screens/profileHandling/searchedUserProfile';
+import Notifypractice from '../../screens/notifypractice';
 
 const Stack = createStackNavigator();
 
