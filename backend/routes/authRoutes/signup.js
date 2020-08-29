@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../../config/keys');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
+const Host = require('../../models/Host');
 
 // @route POST api/signup
 // desc   test route
@@ -13,12 +14,23 @@ module.exports = (app) => {
 
   app.post('/api/signup/:email/:username', async (req ,res)=>{
     try{
+      const {fromHost} = req.body;
       const username = req.params.username;
       const email = req.params.email;
+      console.log(req.body, username)
+      let user;
+      if(fromHost){
+        user = await Host.findOne({ username });
+      }else{
+        user = await User.findOne({ username });
+      }
 
-      let user = await User.findOne({ username });
       if(user === null){
-        user = await User.findOne({ email });
+        if(fromHost){
+          user = await Host.findOne({ email });
+        }else{
+          user = await User.findOne({ email });
+        }
         user.username = username;
         await user.save() 
         return res.json(user)
@@ -34,7 +46,7 @@ module.exports = (app) => {
       }
     }catch(e){
       res.status(500).send('Server Error');
-      console.error('login error signup server: ', e.message);
+      console.error('login error username signup server: ', e.message);
     }
   });
 

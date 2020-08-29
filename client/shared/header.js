@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { Feather } from '@expo/vector-icons';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { Text } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { getProfiles } from '../Redux/actions/profile';
-import Search from '../screens/search';
 import SearchBar from './searchbar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 const Header = ({ navigation, title, type }) => {
   const dispatch = useDispatch();
@@ -22,13 +22,12 @@ const Header = ({ navigation, title, type }) => {
   if (type === 'Search' ) {
     return (
       <View style={styles.header}>
-        <Feather name="menu" size={29} onPress={openMenu} style={styles.icon} />
         <SearchBar focusTextInput={focusTextInput} textInput={textInput} />
       </View>
     );
   }
 
-  if (type === 'Userprofile') {
+  if (type === 'Search') {
     return (
       <View style={styles.header}>
         <View style={{ flexDirection: 'row' }}>
@@ -48,7 +47,7 @@ const Header = ({ navigation, title, type }) => {
     );
   }
 
-  if(type === 'confirmEvent' || type === 'editProfile'){
+  if(type === 'confirmEvent' || type === 'editProfile' || type==='myEventDetails' || type==='userProfile'){
     return (
         <View>
           <Text style={styles.headerText}>{title}</Text>
@@ -66,8 +65,25 @@ const Header = ({ navigation, title, type }) => {
   return (
     <View style={styles.header}>
       <Feather name="menu" size={29} onPress={openMenu} />
-      <View style={{ flexDirection: 'row' }}>
-        <Text style={styles.headerText}>{title}</Text>
+      <View style={{ flex: 1,flexDirection: 'row', justifyContent:'space-between' }}>
+        {type === 'home' ? (
+          <View style={styles.imageContainer}>
+            <Image style={styles.stretch} source={require('../assets/splash.png')}/>
+          </View>
+        ): (
+          <Text style={styles.headerText}>{title}</Text>
+        )}
+        {type === 'home' && (
+          <View>
+            <AntDesign
+              name="search1"
+              style={styles.searchIcon}
+              size={24}
+              color="black"
+              onPress={() => navigation.navigate('Search')}
+            />
+          </View>
+        )}
       </View>
     </View>
   );
@@ -93,6 +109,18 @@ const styles = StyleSheet.create({
     width: 26,
     height: 26,
     marginHorizontal: 10,
+  },
+  imageContainer :{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },  
+  stretch: {
+    position: 'absolute',
+    width: 70,
+    height: 35,
+    paddingTop: 10,
+    resizeMode: 'stretch',
   },
 });
 

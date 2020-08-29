@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Input, Button, Text, Icon } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import { login } from '../../Redux/actions/auth';
 import { globalStyles } from '../../styles/global';
 import { Formik } from 'formik';
@@ -16,8 +16,9 @@ const LoginSchema = yup.object({
   password: yup.string().required('No password provided.'),
 });
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation, route }) => {
   const dispatch = useDispatch();
+  const {fromHost} = route.params;
   const { auth, loading } = useSelector((state) => ({
     auth: state.auth,
     loading: state.loading
@@ -32,10 +33,13 @@ const Login = ({ navigation }) => {
     return <Loading/>
   }else{
     return (
-      
-      <ScrollView style={styles.container} keyboardShouldPersistTaps="always">
-        <GoogleSignin title="Sign In With Google" navigation={navigation} />
-        <SignUp
+        <View style={styles.container}>
+          <View style={styles.imageContainer}>
+            <Image style={styles.stretch} source={require('../../assets/splash.png')}/>
+          </View>
+          <Text style={styles.text} >{fromHost ? 'WELCOME HOST!' : 'WELCOME PLAYER!'}</Text>
+          <GoogleSignin googleBtnStyle={styles.btnStyle} fromHost={fromHost} title="Sign In With Google" navigation={navigation} />
+        {/* <SignUp
           visible={visible}
           setVisible={setVisible}
           navigation={navigation}
@@ -88,21 +92,13 @@ const Login = ({ navigation }) => {
               Sign Up
             </Text>
           </TouchableOpacity>
+        </View> */}
         </View>
-      </ScrollView>
     );
   }
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 150,
-    paddingHorizontal: 15,
-    backgroundColor: '#fff',
-    // justifyContent: 'center',
-    // alignContent: 'center',
-  },
   button: {
     marginHorizontal: 40,
     marginVertical: 40,
@@ -110,6 +106,32 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 5,
   },
+  container: {
+    padding: 40,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 200,
+  },
+  stretch: {
+    width: 300,
+    height: 150,
+    resizeMode: 'stretch',
+  },
+  text:{
+    marginTop: 70,
+    fontSize: 30
+  },
+  btnContainer:{
+    flexDirection: 'row',
+    margin: 10
+  },
+  btnStyle:{
+    padding: 15,
+    paddingHorizontal: 30,
+    margin: 10,
+    marginTop: 30
+  }
 });
 
 export default Login;

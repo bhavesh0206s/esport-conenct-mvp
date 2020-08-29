@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Text, Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
+import { AntDesign } from '@expo/vector-icons';
 
 const Alert = () => {
   const alerts = useSelector(state => state.alert);
@@ -25,7 +26,6 @@ const Alert = () => {
         alerts.map((alert) => (
           <View key={alert.id}>
             <Modal
-              testID={'modal'}
               animationIn="bounceIn"
               backdropOpacity={0.8}
               onSwipeComplete={toggleOverlay}
@@ -36,7 +36,15 @@ const Alert = () => {
               onBackdropPress={toggleOverlay}
             >
               <View style={styles.content}>
-                <Text style={styles.contentTitle}>{alert.msg} 👋!</Text>
+                <Text style={styles.contentTitle}>{alert.msg}</Text>
+                <View style={styles.btnView}>
+                  <Button
+                    buttonStyle={styles.btnOk} 
+                    icon={<AntDesign name="checkcircleo" size={24} color="#fff" />}
+                    title='OK'
+                    onPress={toggleOverlay} 
+                  />
+                </View>
               </View>
             </Modal>
           </View>
@@ -46,22 +54,28 @@ const Alert = () => {
 };
 
 const styles = StyleSheet.create({
-  overLay: {
-    justifyContent: 'flex-end',
-    margin: 0,
-  },
   content: {
     backgroundColor: 'white',
-    padding: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderTopStartRadius: 30,
-    borderTopEndRadius: 30,
+    borderTopStartRadius: 5,
+    borderTopEndRadius: 5,
+    borderBottomStartRadius: 5,
+    borderBottomEndRadius: 5,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
   contentTitle: {
     fontSize: 20,
-    marginBottom: 12,
+    textAlign:'center',
+    paddingVertical: 30,
+    paddingHorizontal: 5,
+  },
+  btnView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  btnOk:{
+    paddingHorizontal: 139.5,
+    borderRadius: 0,
+    backgroundColor: '#3297fc'
   },
 });
 

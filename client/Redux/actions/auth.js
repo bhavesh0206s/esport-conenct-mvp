@@ -17,7 +17,7 @@ import axios from 'axios';
 import setAuthToken from '../setAuthToken';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ipAddress } from '../ipaddress';
-import { createProfile, getCurrentProfile } from './profile';
+import { createProfile, getCurrentProfile, createHostProfile } from './profile';
 import { setAlert } from './alert';
 import { loading } from './loading';
 
@@ -33,33 +33,44 @@ export const loadUser = () => async (dispatch) => {
   }
 
   try {
-    const res = await axios.get(`http://${ipAddress}/api/login`);
-
+    let res = await axios.get(`http://${ipAddress}/api/login`);
+    console.log({user: res.data.user, fromHost: res.data.fromHost})
     dispatch({
       type: USER_LOADED,
-      payload: res.data,
+      payload: {user: res.data.user, fromHost: res.data.fromHost},
     });
   } catch (err) {
+    console.log('error from loaduser: ', err)
     dispatch({
       type: AUTH_ERROR,
     });
   }
 };
-export const username = (username, bio, email) => async (dispatch) =>{
+export const username = (username, bio, email, fromHost) => async (dispatch) =>{
   dispatch(loading(true))
   try {
+
     const res = await axios.post(
-      `http://${ipAddress}/api/signup/${email}/${username}`
+      `http://${ipAddress}/api/signup/${email}/${username}`,
+      {fromHost}
     );
 
     dispatch({
       type: CREATE_USERNAME,
       payload: res.data,
     });
-    let argu = {username,bio}
+
+    let argu = {username,bio};
     console.log('username succes');
-    dispatch(createProfile(argu));
-    dispatch(loadUser());
+    if(fromHost){
+      console.log(argu)
+      dispatch(createHostProfile(argu))
+      dispatch(loadUser());
+    }else{
+      dispatch(createProfile(argu));
+      dispatch(loadUser());
+    }
+
     dispatch(loading(false))
   } catch (err) {
     const errors = err.response.data.errors;
