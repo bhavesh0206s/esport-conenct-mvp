@@ -8,7 +8,7 @@ import EventCard from './EventHandling/eventCard';
 const Search = ({ navigation }) => {
   const dispatch = useDispatch();
   const searchedEvents = useSelector((state) => state.searchEvent);
-  
+
   return (
     <View>
       {!searchedEvents || searchedEvents.length === 0 ? (
@@ -19,7 +19,7 @@ const Search = ({ navigation }) => {
         <FlatList
           data={searchedEvents}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => <EventCard item={[item]} navigation={navigation}/>}
+          renderItem={({ item }) => <EventCard item={item} navigation={navigation}/>}
         />
       )}
     </View>

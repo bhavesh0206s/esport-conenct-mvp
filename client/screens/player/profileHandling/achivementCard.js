@@ -5,13 +5,9 @@ import { Text, Card, Button, Icon } from "react-native-elements";
 const AchivementCard = ({title}) => {
   return (
     <TouchableOpacity>
-      <Card
-        title={title}
-        image={require("../../../assets/cod.jpg")}
-        marginBottom={10}
-        featuredTitle='1st position in xyz'
-        containerStyle={{marginBottom: 10}}
-      >
+      <Card containerStyle={{marginBottom: 10}} >
+        <Card.Title >{title}</Card.Title>
+        <Card.Image source={require("../../../assets/cod.jpg")} />
         <Text>
           Idhar achivement ka description hoga
         </Text>

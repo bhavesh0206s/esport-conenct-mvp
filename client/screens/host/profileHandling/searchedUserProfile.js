@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Avatar, Button } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../shared/loading';
@@ -11,13 +7,11 @@ import SearchedUsertabView from './searchedUsertabView';
 
 const SearchedUserProfile = ({ navigation }) => {
   const dispatch = useDispatch();
-  const {particularUser, loading} = useSelector((state) => ({
+  const { particularUser, loading } = useSelector((state) => ({
     particularUser: state.profile.particularUser,
-    loading: state.loading
+    loading: state.loading,
   }));
 
-
-  
   if (loading) {
     return <Loading />;
   } else {

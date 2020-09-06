@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import moment from 'moment';
 import * as yup from 'yup';
@@ -27,6 +27,24 @@ const AddEvent = ({ setModalOpen }) => {
 
   const [typeTourn, setTypeTourn] = useState('');
 
+  //  For the current date
+  const [currentdateinfo, setCurrentDateInfo] = useState({
+    year: '',
+    month: '',
+    day: '',
+  });
+
+  // useEffect(() => {
+  //   let list = moment().format('YYYY-MM-DD').split('-');
+
+  //   setCurrentDateInfo({
+  //     ...currentdateinfo,
+  //     year: list[0],
+  //     month: list[1],
+  //     day: list[2],
+  //   });
+  // }, [currentdateinfo]);
+
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -42,7 +60,28 @@ const AddEvent = ({ setModalOpen }) => {
     let month = currentDate.getMonth();
     let year = currentDate.getFullYear();
     let day = currentDate.getDate();
-    setTheRealTime(`${day}-${month + 1}-${year} ${hour}:${min}:00`);
+    if (year < currentdateinfo.year) {
+      alert(
+        "You cannot organize event in past, time machine haven't invented yet"
+      );
+      setDate('');
+    } else if (year === currentdateinfo.year && month < currentdateinfo.month) {
+      alert(
+        "You cannot organize event in past, time machine hasn't invented yet"
+      );
+      setDate('');
+    } else if (
+      year === currentdateinfo.year &&
+      month === currentdateinfo.month &&
+      (day === currentdateinfo.day || day === currentdateinfo.day + 1)
+    ) {
+      alert(
+        'Player should get 1 or 2 day to know about your tournament, so change the date'
+      );
+      setDate('');
+    } else {
+      setTheRealTime(`${day}-${month + 1}-${year} ${hour}:${min}:00`);
+    }
   };
 
   const showMode = (currentMode) => {
@@ -81,7 +120,7 @@ const AddEvent = ({ setModalOpen }) => {
         onSubmit={(values, actions) => {
           let currentDatetime = moment(therealtime, 'DD-MM-YYYY hh:mm:ss');
           values.time = currentDatetime;
-          console.log(hostProfile)
+          console.log(hostProfile);
           values.hostedBy = hostProfile.username;
           values.hostedById = hostProfile.user;
           if (!values.entryFee) {
@@ -204,10 +243,12 @@ const AddEvent = ({ setModalOpen }) => {
                 formikprops.touched.contact && formikprops.errors.contact
               }
             />
-            <Button
-              onPress={formikprops.handleSubmit}
-              title="Submit For Verification"
-            />
+            {date && (
+              <Button
+                onPress={formikprops.handleSubmit}
+                title="Submit For Verification"
+              />
+            )}
           </View>
         )}
       </Formik>
@@ -220,6 +261,14 @@ const AddEvent = ({ setModalOpen }) => {
           display="default"
           onChange={onChange}
         />
+      )}
+      {!date && (
+        <View>
+          <Text>
+            Seems like you haven't set the date correctly,set it and then you
+            can submit for verification
+          </Text>
+        </View>
       )}
     </View>
   );

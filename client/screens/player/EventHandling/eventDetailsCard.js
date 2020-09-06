@@ -112,13 +112,12 @@ const EventDetailsCard = ({ route, navigation }) => {
           modalOpen={modalOpen} 
           handleOk={handleRegistration}
         />
-        <Card
-          title={viewingProfile ? title: null}
-          image={imageUri}
-          titleStyle={styles.mainTitle}
-          containerStyle={styles.container}
-          imageStyle={styles.cardImage}
-        >
+
+        <Card containerStyle={styles.container} >
+          {viewingProfile && (
+            <Card.Title style={styles.mainTitle}>{title}</Card.Title>
+          )}
+          <Card.Image source={imageUri} style={styles.cardImage} />
           <View style={styles.cardView}>
             <Button
               icon={<Icon name="form" type="antdesign" color="#ffffff" />}
@@ -176,25 +175,17 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   cardView:{
-    paddingHorizontal: 15
+    paddingHorizontal: 10
   },  
   cardImage: {
-    // marginTop:2,
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
-    // borderRadius: 0,
+    borderRadius: 20,
+    margin: 10
   },
   btnStyle: {
     borderRadius: 5,
     marginBottom: 20,
   },
-  btnStyleDelete: {
-    backgroundColor: 'red',
-    borderRadius: 0,
-    marginBottom: 20,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
-  },
+  
 });
 
 export default EventDetailsCard;

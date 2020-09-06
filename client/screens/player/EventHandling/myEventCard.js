@@ -41,12 +41,8 @@ const MyEventCard = ({ item, navigation, deleteEvent}) => {
         modalOpen={modalOpen} 
         handleOk={handleSubmit}
       />
-      <Card 
-        titleStyle={styles.mainTitle} 
-        title={item.title} 
-        imageStyle={styles.cardImage} 
-        containerStyle={styles.container} 
-      > 
+      <Card containerStyle={styles.container} >
+        <Card.Title style={styles.mainTitle}>{item.title}</Card.Title>
         <TouchableOpacity
           onPress={showDetails}
           activeOpacity={0.4}

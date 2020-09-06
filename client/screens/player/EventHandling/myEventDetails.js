@@ -9,7 +9,7 @@ import MyEventCard from './myEventCard';
 import Loading from '../../../shared/loading';
 import { getCurrentProfile, getProfile } from '../../../Redux/actions/profile';
 import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
-import { Button, ListItem, Card, Icon } from 'react-native-elements';
+import { Button, ListItem, Card, Icon, Avatar } from 'react-native-elements';
 
 const MyEventDetails = ({ navigation, route }) => {
   const {item} = route.params
@@ -55,18 +55,23 @@ const MyEventDetails = ({ navigation, route }) => {
 
   return (
     <View>
-       <Card containerStyle={{margin: 0}} title={item.teamsize !== 1 && 'TEAM MEMBERS' } >
+       <Card containerStyle={{margin: 0}} >
+        <Card.Title style={styles.mainTitle}>{item.teamsize !== 1 && 'TEAM MEMBERS'}</Card.Title>
         <View style={styles.card}>
           {
             players.map(({name, username, key, teamLeader}) => (
               <TouchableOpacity key={key} onPress={() => handleProfileSubmit(username)}>
-                <ListItem
-                  roundAvatar
-                  title={name}
-                  subtitle={teamLeader ? `${username}: (Teamleader)` : username}
-                  leftIcon={<Icon  name="user" type="font-awesome-5" color='black' />}
-                  bottomDivider
-                />
+                <ListItem bottomDivider>
+                  <Avatar
+                    size="medium"
+                    rounded
+                    icon={{name:"user", type:"font-awesome-5", color:'black'}}
+                  />
+                  <ListItem.Content>
+                    <ListItem.Title>{name}</ListItem.Title>
+                    <ListItem.Subtitle>{teamLeader ? `${username} (Teamleader)` : username}</ListItem.Subtitle>
+                  </ListItem.Content>
+                </ListItem>
               </TouchableOpacity>
             ))
           }
