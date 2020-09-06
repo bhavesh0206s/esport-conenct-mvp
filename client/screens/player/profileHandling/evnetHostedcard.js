@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import { gameImage } from '../../../shared/gameImage';
-import SearchedUsertabView from './searchedUsertabView';
+import SearchedUsertabView from './searchedUserTabView';
 
 const EventHostedCard = ({ item, navigation, type }) => {
   const [imageUri, setImageUri] = useState('sd');
