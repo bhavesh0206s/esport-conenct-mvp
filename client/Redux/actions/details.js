@@ -1,8 +1,8 @@
-import { OPEN_MODAL, SEND_EVENT_DETAILS } from "./types";
+import { SEND_PARTICIPANTS_DETAILS, SEND_EVENT_DETAILS } from "./types";
 import { loading } from "./loading";
 
 export const sendToEventCardDetails = (details, navigation) =>{
-  loading(true)
+
   navigation.setParams({
     title: details.eventdetails.title
   })
@@ -10,5 +10,5 @@ export const sendToEventCardDetails = (details, navigation) =>{
     type: SEND_EVENT_DETAILS,
     payload: details,
   };
-  loading(false)
+
 };
