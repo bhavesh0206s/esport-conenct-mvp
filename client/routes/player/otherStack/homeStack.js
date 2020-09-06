@@ -33,7 +33,9 @@ const HomeStack = () => {
       <Stack.Screen
         name="Home"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} type='home' title="EBind" />,
+          headerTitle: () => (
+            <Header navigation={navigation} type="home" title="EBind" />
+          ),
           drawerLockMode: 'locked-closed',
         })}
         component={Home}
@@ -41,7 +43,9 @@ const HomeStack = () => {
       <Stack.Screen
         name="Search"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} title="Search" type="Search" />,
+          headerTitle: () => (
+            <Header navigation={navigation} title="Search" type="Search" />
+          ),
           headerTitleContainerStyle: {
             left: 40,
           },
