@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Avatar, Button } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../shared/loading';
-import SearchedUserTabView from './searchedUserTabView';
+import SearchedUserTabView from './searchedUsertabView';
 import SearchedHostTabView from './searchedHostTabView ';
 
 const SearchedUserProfile = ({ navigation, route }) => {
