@@ -8,10 +8,8 @@ import {
 import { Text, Card, Button, Icon, Image } from 'react-native-elements';
 import { gameImage } from '../../../shared/gameImage';
 import moment from 'moment';
-import { useSelector, useDispatch } from 'react-redux';
-import { deleteMyEvent } from '../../../Redux/actions/event';
-import detailsReducer from '../../../Redux/reducers/detailsReducer';
-import { sendToEventCardDetails } from '../../../Redux/actions/details';
+import { useDispatch } from 'react-redux';
+import { sendToEventCardDetails} from '../../../Redux/actions/details';
 
 const EventCard = ({ item, navigation, route }) => {
   const [imageUri, setImageUri] = useState('sd');
@@ -78,7 +76,8 @@ const EventCard = ({ item, navigation, route }) => {
               showhostBy: true,
             }
             navigation.navigate('EventDetailsCard');
-            dispatch(sendToEventCardDetails(details, navigation))
+            dispatch(sendToEventCardDetails(details, navigation));
+    
           }}
           title="DETAILS"
         />

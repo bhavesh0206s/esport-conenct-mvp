@@ -24,7 +24,7 @@ const EventDetailsCard = ({ navigation }) => {
     loading: state.loading,
     eventInfo: state.details
   }));
-
+  console.log(eventInfo)
   const { eventdetails, imageUri, viewingProfile, showhostBy } = eventInfo;
   const [eventTime, setEventTime] = useState(
     moment(eventdetails.time).format('dddd, MMMM Do YYYY, h:mm:ss a')
