@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import { gameImage } from '../../../shared/gameImage';
-import SearchedUsertabView from './searchedUserTabView';
+import SearchedUsertabView from './searchedUsertabView';
 
 const EventHostedCard = ({ item, navigation, type }) => {
   const [imageUri, setImageUri] = useState('sd');
@@ -15,12 +15,12 @@ const EventHostedCard = ({ item, navigation, type }) => {
       setImageUri(gameImage.clashRoyale.uri);
     }
   }, []);
-  console.log(type)
+  console.log(type);
   return (
     <View style={styles.card}>
       <TouchableOpacity
         onPress={() => {
-          console.log(type)
+          console.log(type);
           navigation.navigate('EventDetailsProfile', {
             eventdetails: item,
             imageUri,

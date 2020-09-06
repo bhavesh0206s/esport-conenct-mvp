@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Avatar, Button } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../shared/loading';
-import SearchedUserTabView from './searchedUserTabView';
+import SearchedUserTabView from './searchedUsertabView';
 import SearchedHostTabView from './searchedHostTabView ';
 
 const SearchedUserProfile = ({ navigation, route }) => {
   const dispatch = useDispatch();
-  const {particularUser, loading} = useSelector((state) => ({
+  const { particularUser, loading } = useSelector((state) => ({
     particularUser: state.profile.particularUser,
-    loading: state.loading
+    loading: state.loading,
   }));
 
-  const {isHostProfile} = route.params;
-  
+  const { isHostProfile } = route.params;
+
   if (loading) {
     return <Loading />;
   } else {
@@ -71,11 +67,7 @@ const SearchedUserProfile = ({ navigation, route }) => {
             ></View>
           </View>
         </View>
-        {isHostProfile ? (
-          <SearchedHostTabView/>
-        ): (
-          <SearchedUserTabView />
-        )}
+        {isHostProfile ? <SearchedHostTabView /> : <SearchedUserTabView />}
       </>
     );
   }
