@@ -7,22 +7,22 @@ import EventDetailsCard from './eventDetailsCard';
 
 const Participants = () => {
 
-  // const myEvent = useSelector(state => state.details)
-  // const [singlePlayers, setSinglePlayers] = useState([])
-  // const [team, setTeam] = useState([])
-  // console.log(myEvent);
-  // useEffect(() =>{
-    
-  //   const {teamsize, registeredteaminfo, registeredplayerinfo} = myEvent.myhostedevents;
-  //   if(teamsize === 1){
-  //     setSinglePlayers(registeredplayerinfo);
-  //   } else{
-  //     team = registeredteaminfo.map((team, i) => ({teamMember: team.teammembersinfo, index: i}));
-  //     setTeam(team);
-  //     console.log(team)
-  //   }
+  const myEvent = useSelector(state => state.details)
+  const [singlePlayers, setSinglePlayers] = useState([])
+  const [team, setTeam] = useState([])
+ 
+  useEffect(() =>{
+ 
+    const {teamsize, registeredteaminfo, registeredplayerinfo} = myEvent.eventdetails;
+    if(teamsize === 1){
+      setSinglePlayers(registeredplayerinfo);
+    } else{
+      let teamInfo = registeredteaminfo.map((team, i) => ({teamMember: team.teammembersinfo, index: i}));
+      setTeam(teamInfo);
+      console.log(teamInfo)
+    }
 
-  // }, []);
+  }, []);
   
   return (
     <View>
