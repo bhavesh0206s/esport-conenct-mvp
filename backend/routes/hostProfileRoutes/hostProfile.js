@@ -91,7 +91,7 @@ module.exports = (app) => {
       // .populate('user', ['name']);
 
       if (!hostProfile) return res.status(400).json({ msg: 'Profile not found' });
-
+  
       res.json(hostProfile);
     } catch (err) {
       console.error(err.message);

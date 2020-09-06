@@ -120,7 +120,7 @@ const HomeStack = () => {
       <Stack.Screen
         name="Home"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} title="Esport Connect" />,
+          headerTitle: () => <Header navigation={navigation} type='home' />,
           drawerLockMode: 'locked-closed',
         })}
         component={Home}

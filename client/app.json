@@ -1,8 +1,8 @@
 {
   "expo": {
     "scheme": "e-bind",
-    "name": "E-Bind",
-    "slug": "E-Bind",
+    "name": "EBind",
+    "slug": "ebind",
     "platforms": [
       "ios",
       "android",

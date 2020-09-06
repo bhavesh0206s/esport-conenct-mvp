@@ -42,6 +42,7 @@ export default (state = initialState, action) => {
         isAuthenticated: payload[1] === 'signin' ? true :  false,
         loading: false,
         isUserNameVerified:payload[1] === 'signin' ? true :  false,
+        fromHost: payload[2],
       };
     case CREATE_USERNAME:{
       console.log('CREATE_USERNAME-SUCCESSFULL')
@@ -53,11 +54,6 @@ export default (state = initialState, action) => {
     }
     case USER_LOADED:
       console.log('USERLOADING-SUCCESSFULL');
-      console.log({isAuthenticated: true,
-        loading: false,
-        user: payload.user,
-        fromHost: payload.fromHost,
-        isUserNameVerified: true})
       return {
         ...state,
         isAuthenticated: true,

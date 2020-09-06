@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -16,12 +16,14 @@ import { logout, loadUser } from '../../Redux/actions/auth';
 import Loading from '../../shared/loading';
 import { getCurrentProfile } from '../../Redux/actions/profile';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import ConfirmModal from '../../shared/confirmModal';
 
 const Drawer = createDrawerNavigator();
 
 const LogoutContentComponent = (props) => {
   const dispatch = useDispatch();
   const profileInfo = useSelector((state) => state.profile);
+  const [modalOpen, setModalOpen] = useState(false);
 
   if (!profileInfo.userProfile) {
     if (!profileInfo.userProfile) {
@@ -31,6 +33,12 @@ const LogoutContentComponent = (props) => {
   } else {
     return (
       <DrawerContentScrollView {...props}>
+        <ConfirmModal
+          text='Do you really want to Sign Out...' 
+          setModalOpen={setModalOpen} 
+          modalOpen={modalOpen} 
+          handleOk={() => dispatch(logout())}
+        />
         <DrawerItem
           label=""
           icon={() => {
@@ -80,10 +88,10 @@ const LogoutContentComponent = (props) => {
                   color="white"
                 />
               }
-              buttonStyle={{ padding: 10 }}
+              buttonStyle={{ padding: 10, paddingHorizontal: 20 }}
               title="Sign Out"
               onPress={() => {
-                dispatch(logout());
+                setModalOpen(true)
               }}
             />
           )}
@@ -93,11 +101,6 @@ const LogoutContentComponent = (props) => {
   }
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default function HostDrawerStack() {
   return (

@@ -22,7 +22,7 @@ const EventDetailsCard = ({ route, navigation }) => {
     hostProfile: state.profile.particularUser,
     loading: state.loading,
   }));
-  let eventId = userProfile.myevents.map((item) => item._id);
+  const [eventId] = useState(userProfile.myevents.map((item) => item._id));
   const { eventdetails, imageUri, viewingProfile, showhostBy } = route.params;
   const [eventTime, setEventTime] = useState(
     moment(eventdetails.time).format('dddd, MMMM Do YYYY, h:mm:ss a')
@@ -94,6 +94,7 @@ const EventDetailsCard = ({ route, navigation }) => {
       title
     })
     dispatch(getHostProfileById(hostedById, navigation, false));
+    console.log(hostProfile)
   },[])
 
   if (loading) {
@@ -144,7 +145,7 @@ const EventDetailsCard = ({ route, navigation }) => {
                 <Text style={styles.title}>Hosted by: </Text>
                 <TouchableOpacity onPress={showHostProfile} >
                   <View style={{flexDirection: 'row'}}>
-                    <Text style={{fontSize: 18}}>{hostProfile.name} </Text>
+                    {/* <Text style={{fontSize: 18}}>{hostProfile.name} </Text> */}
                     <Text style={{...styles.title, fontSize: 18}}>({hostedBy})</Text>
                   </View>
                   <Text style={{color: '#4ecca3'}}>View Profile</Text>
