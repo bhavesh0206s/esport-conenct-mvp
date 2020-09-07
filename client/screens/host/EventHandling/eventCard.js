@@ -37,11 +37,11 @@ const EventCard = ({ item, navigation, route }) => {
                 <Text style={styles.field}>{item.game}</Text>
               </View>
               <View style={styles.fieldView}>
-                <Text style={styles.fieldTitle}>Entryfee: </Text>
+                <Text style={styles.fieldTitle}>Entry Fee: </Text>
                 <Text style={styles.field}>{item.entryFee}</Text>
               </View>
               <View style={styles.fieldView}>
-                <Text style={styles.fieldTitle}>Date&Time: </Text>
+                <Text style={styles.fieldTitle}>Date & Time: </Text>
                 <Text style={styles.field}>
                   {moment(item.time).format('Do MMMM YYYY, h:mm a')}
                 </Text>
@@ -53,7 +53,7 @@ const EventCard = ({ item, navigation, route }) => {
                 <Text style={styles.field}>{item.teamsize}</Text>
               </View>
               <View style={styles.fieldView}>
-                <Text style={styles.fieldTitle}>Prize-pool: </Text>
+                <Text style={styles.fieldTitle}>Prize Pool: </Text>
                 <Text style={styles.field}>{item.prizepool}</Text>
               </View>
             </View>
@@ -85,7 +85,8 @@ const EventCard = ({ item, navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     margin: 0,
-    padding: 8,
+    borderColor: '#232931'
+    // padding: 8,
     // marginBottom: 10
   },
   content: {
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     fontSize: 25,
+    color: '#eeeeee'
   },
   btnStyle: {
     borderRadius: 0,
@@ -110,12 +112,11 @@ const styles = StyleSheet.create({
     borderColor: '#dbdbdb',
   },
   fieldTitle: {
-    color: 'grey',
+    color: '#95bdb5',
   },
   field: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#666666',
   },
 });
 

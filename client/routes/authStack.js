@@ -8,9 +8,21 @@ import LoginType from '../screens/auth/loginType';
 
 const Stack = createStackNavigator();
 
+const MyTheme = {
+  dark: false,
+  colors: {
+    primary: '#232931',
+    background: '#232931',
+    card: '#232931',
+    text: '#eeeeee',
+    border: '#232931',
+    notification: '#232931',
+  },
+};
+
 const AuthStack = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,

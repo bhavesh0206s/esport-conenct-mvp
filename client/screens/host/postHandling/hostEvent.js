@@ -74,11 +74,12 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   content: {
+    flex: 1,
     fontSize: 20,
     marginBottom: 12,
   },
   contentView: {
-    backgroundColor: 'white',
+    backgroundColor: '#232931',
     margin: 0,
   },
   input: {

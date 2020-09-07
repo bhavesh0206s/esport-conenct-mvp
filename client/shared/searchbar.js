@@ -6,6 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { getEvents, fetchallEvents } from '../Redux/actions/event';
 import { CLEARSEARCHEDEVENTS, CLEAR_PROFILES } from '../Redux/actions/types';
 import { getProfiles } from '../Redux/actions/profile';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const SearchBar = ({ focusTextInput, textInput, type }) => {
   const dispatch = useDispatch();
@@ -46,13 +47,15 @@ const SearchBar = ({ focusTextInput, textInput, type }) => {
         value={inputsearch}
       />
       {showCancelBtn && (
-        <Icon
-          onPress={handleCancel}
-          name="clear"
-          style={styles.searchIcon}
-          size={24}
-          color="black"
-        />
+        <TouchableOpacity>
+          <Icon
+            onPress={handleCancel}
+            name="clear"
+            style={styles.searchIcon}
+            size={24}
+            color="white"
+          />
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -74,6 +77,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 4,
     borderBottomWidth: 0.7,
+    borderColor: '#eeeeee',
+    color: '#eeeeee'
   },
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators, HeaderBackButton } from '@react-navigation/stack';
 import Profile from '../../../screens/host/profileHandling/profile';
 import Header from '../../../shared/header';
 import EventDetailsCard from '../../../screens/host/EventHandling/eventDetailsCard';
@@ -38,6 +38,12 @@ const ProfileStack = () => {
         name="EditProfile"
         options={({ navigation, route }) => ({
           headerTitle: () => <Header navigation={navigation} type='editProfile' title="Edit Profile" />,
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              tintColor='#4ecca3'
+            />
+          ),
           headerTitleContainerStyle: {
             left: 40,
           },

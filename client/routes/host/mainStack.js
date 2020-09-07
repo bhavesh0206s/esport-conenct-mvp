@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators, HeaderBackButton } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from '../../screens/auth/login';
 import TabStack from './tabStack';
@@ -31,6 +31,12 @@ const MainStack = () => {
         name='Confirm Event'
         options={({ navigation, route }) => ({
           headerTitle: () => <Header navigation={navigation} type='confirmEvent' title='Confirm Event'/>,
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              tintColor='#4ecca3'
+            />
+          ),
           headerTitleContainerStyle: {
             left: 40,
           },

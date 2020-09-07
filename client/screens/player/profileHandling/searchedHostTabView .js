@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import AchivementCard from './achivementCard';
 import EventHostedCard from './evnetHostedcard';
 import { useNavigation } from '@react-navigation/native';
+import { Text } from 'react-native-elements';
 
 
 const renderTabBar = (props) => (

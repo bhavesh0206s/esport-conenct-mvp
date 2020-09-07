@@ -55,21 +55,23 @@ const MyEventDetails = ({ navigation, route }) => {
 
   return (
     <View>
-       <Card containerStyle={{margin: 0}} >
+       <Card containerStyle={{margin: 0, borderWidth: 0}} >
         <Card.Title style={styles.mainTitle}>{item.teamsize !== 1 && 'TEAM MEMBERS'}</Card.Title>
         <View style={styles.card}>
           {
             players.map(({name, username, key, teamLeader}) => (
               <TouchableOpacity key={key} onPress={() => handleProfileSubmit(username)}>
-                <ListItem bottomDivider>
+                <ListItem containerStyle={styles.listContainer} bottomDivider>
                   <Avatar
                     size="medium"
                     rounded
-                    icon={{name:"user", type:"font-awesome-5", color:'black'}}
+                    icon={{name:"user", type:"font-awesome-5", color:'white'}}
                   />
                   <ListItem.Content>
                     <ListItem.Title>{name}</ListItem.Title>
-                    <ListItem.Subtitle>{teamLeader ? `${username} (Teamleader)` : username}</ListItem.Subtitle>
+                    <ListItem.Subtitle style={{color: '#95bdb5'}}>
+                      {teamLeader ? `${username} (Teamleader)` : username}
+                    </ListItem.Subtitle>
                   </ListItem.Content>
                 </ListItem>
               </TouchableOpacity>
@@ -84,13 +86,19 @@ const MyEventDetails = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   card: {
     padding: 10,
-    margin: 10,
+    margin: 2,
     marginBottom: 5,
-    backgroundColor: '#fff',
+    backgroundColor: '#232931',
     borderRadius: 12,
     elevation: 4,
-    shadowColor: '#666666',
+    shadowColor: '#4ecca3',
   },
+  listContainer: {
+    backgroundColor: '#232931'
+  },
+  mainTitle: {
+    color: '#eeeeee'
+  }
 })
 
 export default MyEventDetails;

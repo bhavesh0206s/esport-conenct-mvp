@@ -17,15 +17,15 @@ const Profiles = ({ item, adding, handlingTeamMember, remove, teamLeader , remov
           <Avatar
             size={35}
             rounded
-            overlayContainerStyle={{ backgroundColor: 'black' }}
-            icon={{ name: 'user', type: 'font-awesome-5' }}
+            overlayContainerStyle={{ backgroundColor: 'white' }}
+            icon={{ name: 'user', type: 'font-awesome-5', color:'black' }}
             activeOpacity={1}
             containerStyle={{ margin: 5 }}
           />
         </View>
         <View style={{ margin: 3 }}>
           <Text style={{ fontSize: 16 }}>{item[0].name}{" "}</Text>
-          <Text style={{color: 'grey'}}>{item[0].username}</Text>
+          <Text style={{color: '#95bdb5'}}>{item[0].username}</Text>
         </View>
       </TouchableOpacity>
         <View>
@@ -52,7 +52,7 @@ const Profiles = ({ item, adding, handlingTeamMember, remove, teamLeader , remov
                   color="white"
                 />
               }
-              buttonStyle={{backgroundColor: 'red'}}
+              buttonStyle={{backgroundColor: '#d9534f'}}
               onPress={() => {
                 removeTeamMember(item[0].username)
               }}

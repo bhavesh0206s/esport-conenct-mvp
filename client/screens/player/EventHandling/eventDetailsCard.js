@@ -144,7 +144,7 @@ const EventDetailsCard = ({ route, navigation }) => {
                 <Text style={styles.title}>Hosted by: </Text>
                 <TouchableOpacity onPress={showHostProfile} >
                   <View style={{flexDirection: 'row'}}>
-                    {/* <Text style={{fontSize: 18}}>{hostProfile.name} </Text> */}
+                    <Text style={{fontSize: 18}}>{hostProfile.name} </Text>
                     <Text style={{...styles.title, fontSize: 18}}>({hostedBy})</Text>
                   </View>
                   <Text style={{color: '#4ecca3'}}>View Profile</Text>
@@ -160,7 +160,7 @@ const EventDetailsCard = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   title: {
-    color: 'grey',
+    color: '#95bdb5',
   },
   field: {
     fontSize: 18,
@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     fontSize: 25,
+    color: '#eeeeee'
   },
   cardView:{
     paddingHorizontal: 10

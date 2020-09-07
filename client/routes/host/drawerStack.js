@@ -5,11 +5,12 @@ import {
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import MainStack from './mainStack';
 import AboutStack from './otherStack/aboutStack';
 import { Button, Avatar } from 'react-native-elements';
-import { StyleSheet, View, Text, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Text} from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, loadUser } from '../../Redux/actions/auth';
@@ -56,7 +57,7 @@ const LogoutContentComponent = (props) => {
                   <Avatar
                     size={50}
                     rounded
-                    overlayContainerStyle={{ backgroundColor: 'black' }}
+                    overlayContainerStyle={{ backgroundColor: 'gray' }}
                     icon={{ name: 'user', type: 'font-awesome-5' }}
                     activeOpacity={1}
                     containerStyle={{
@@ -71,7 +72,7 @@ const LogoutContentComponent = (props) => {
             );
           }}
         />
-        <DrawerItemList {...props} />
+        <DrawerItemList activeBackgroundColor='#4ecca3' {...props} />
         <DrawerItem
           style={{ marginHorizontal: 70 }}
           label=""
@@ -101,14 +102,26 @@ const LogoutContentComponent = (props) => {
   }
 };
 
+const MyTheme = {
+  dark: false,
+  colors: {
+    primary: '#232931',
+    background: '#393e46',
+    card: '#232931',
+    text: '#eeeeee',
+    border: '#232931',
+    notification: '#232931',
+  },
+};
+
 
 export default function HostDrawerStack() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme} >
       <Drawer.Navigator
         drawerContent={(props) => <LogoutContentComponent {...props} />}
       >
-        <Drawer.Screen name="Home" component={MainStack} />
+        <Drawer.Screen options={{}} name="Home" component={MainStack} />
         <Drawer.Screen name="About" component={AboutStack} />
       </Drawer.Navigator>
     </NavigationContainer>

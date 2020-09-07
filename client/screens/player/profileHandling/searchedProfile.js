@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Avatar, Button } from 'react-native-elements';
+import { View, StyleSheet } from 'react-native';
+import { Avatar, Button, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../shared/loading';
 import SearchedUserTabView from './searchedUsertabView';
@@ -43,7 +43,7 @@ const SearchedUserProfile = ({ navigation, route }) => {
           />
           <View style={{ position: 'relative', paddingTop: 40 }}>
             <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontSize: 15, color: 'grey' }}>
+              <Text style={{ fontSize: 15, color: '#95bdb5' }}>
                 ( {particularUser.username ? particularUser.username : ''} )
               </Text>
             </View>
@@ -51,10 +51,10 @@ const SearchedUserProfile = ({ navigation, route }) => {
               <Text style={{ fontSize: 20 }}>{particularUser.name}</Text>
             </View>
             <Text
-              style={{ fontSize: 12, color: '#000000', textAlign: 'center' }}
+              style={{ fontSize: 15, color: 'gray', textAlign: 'center' }}
             >
               About:{' '}
-              <Text style={{ fontSize: 15, color: '#888888' }}>
+              <Text style={{ fontSize: 15, color: '#95bdb5' }}>
                 {particularUser.bio
                   ? particularUser.bio
                   : 'Please fill this pepole want to know about you'}

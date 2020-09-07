@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   Keyboard,
   TouchableWithoutFeedback,
   StyleSheet,
 } from "react-native";
-import { Avatar, Button } from "react-native-elements";
+import { Avatar, Button, Text } from "react-native-elements";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../shared/loading";
 import { getCurrentProfile, getHostCurrentProfile } from "../../../Redux/actions/profile";
@@ -64,16 +63,16 @@ const Profile = ({ navigation }) => {
           />
           <View style={{ position: "relative", paddingTop:40 }}>
           <View style={{ alignItems: "center" }}>
-              <Text style={{ fontSize: 15, color: 'grey' }}>({' '}{username ? username : ''}{' '})</Text>
+              <Text style={{ fontSize: 15, color: '#95bdb5' }}>({' '}{username ? username : ''}{' '})</Text>
             </View>
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontSize: 20 }}>{name}</Text>
             </View>
             <Text
-              style={{ fontSize: 12, color: "#000000", textAlign:'center' }}
+              style={{ fontSize: 14, color: "gray", textAlign:'center' }}
             >
               About:{" "}
-              <Text style={{ fontSize: 15, color: "#888888" }}>
+              <Text style={{ fontSize: 15, color: '#95bdb5' }}>
                 {bio ? bio : "Please fill this pepole want to know about you"}
               </Text>
             </Text>
@@ -91,11 +90,5 @@ const Profile = ({ navigation }) => {
   }
 };
 
-const styles = StyleSheet.create({
-  overlay: {
-    backgroundColor: "white",
-    margin: 0, 
-  },
-});
 
 export default Profile;

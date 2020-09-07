@@ -116,7 +116,7 @@ const EventRegistration = ({ route, navigation }) => {
           />
         </View>
         <Card containerStyle={styles.card} >
-        <Card.Title>TEAM MEMBERS</Card.Title>
+        <Card.Title style={{color: '#eeeeee'}}>TEAM MEMBERS</Card.Title>
           <View style={styles.cardView}>
             <FlatList
               data={teamMember}
@@ -156,12 +156,15 @@ const EventRegistration = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   card: {
     margin: 0,
+    borderColor: '#393e46',
+    borderWidth: 0
   },
+  
   cardView :{
     padding: 10,
     margin: 10,
     marginBottom: 5,
-    backgroundColor: '#fff',
+    backgroundColor: '#232931',
     borderRadius: 12,
     elevation: 4,
     shadowColor: '#666666',

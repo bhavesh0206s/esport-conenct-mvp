@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator, CardStyleInterpolators  } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators, HeaderBackButton} from '@react-navigation/stack';
 import Header from '../../../shared/header';
 import MyEvent from '../../../screens/player/EventHandling/myEvent';
 import MyEventDetails from '../../../screens/player/EventHandling/myEventDetails';
@@ -40,6 +40,12 @@ const EventStack = () => {
               title={route.params.title}
             />
           ),
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              tintColor='#4ecca3'
+            />
+          ),
           headerTitleContainerStyle: {
             left: 40,
           },
@@ -54,6 +60,12 @@ const EventStack = () => {
               navigation={navigation}
               title='Team Member Profile'
               type="userProfile"
+            />
+          ),
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              tintColor='#4ecca3'
             />
           ),
           headerTitleContainerStyle: {

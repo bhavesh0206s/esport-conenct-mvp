@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteMyEvent } from "../../../Redux/actions/event";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import ConfirmModal from "../../../shared/confirmModal";
+import { color } from "react-native-reanimated";
 
 const MyEventCard = ({ item, navigation, deleteEvent}) => {
   const [imageUri, setImageUri] = useState("sd");
@@ -98,11 +99,12 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 8,
     // marginBottom: 10
+    borderWidth: 0
   },
   content :{
     flexDirection: "row", 
     justifyContent: "space-around",
-    backgroundColor:'rgba(0,0,0,0.4)',
+    backgroundColor:'rgba(57, 62, 70,0.9)',
     borderRadius: 20
   },
   image: {
@@ -115,7 +117,8 @@ const styles = StyleSheet.create({
     borderRadius: 20
   },
   mainTitle:{
-    fontSize: 25
+    fontSize: 25,
+    color: '#eeeeee'
   },
   btnStyle:{
     borderRadius: 0,
@@ -124,7 +127,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 5
   },
   btnStyleDelete:{
-    backgroundColor: 'red',
+    backgroundColor: '#d9534f',
     borderRadius: 0,
     marginBottom: 20,
     borderBottomLeftRadius: 5,
@@ -135,12 +138,12 @@ const styles = StyleSheet.create({
     borderColor: "#dbdbdb",
   },
   fieldTitle:{
-    color: '#fff'
+    color: '#95bdb5',
   },
   field:{
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#fff'
+    color: '#eeeeee'
   },
   
 })

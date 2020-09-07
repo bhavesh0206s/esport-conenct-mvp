@@ -76,7 +76,7 @@ const ConfirmEvent = ({route}) => {
           <Text style={styles.field}>{contact}</Text>
         </View>
         <View style={styles.btnView}>
-          <Button buttonStyle={{...styles.btnStyle, backgroundColor: 'red'}} onPress={() =>{ dispatch(modal(true)); navigation.goBack()}} title='Cancel' />
+          <Button buttonStyle={{...styles.btnStyle, backgroundColor: '#d9534f'}} onPress={() =>{ dispatch(modal(true)); navigation.goBack()}} title='Cancel' />
           <Button buttonStyle={styles.btnStyle} onPress={handleSubmit} title='Submit' />
         </View>
         <VerifyModel openPopUp={openPopUp} navigation={navigation} setOpenPopUp={setOpenPopUp}/>
@@ -98,13 +98,14 @@ const styles = StyleSheet.create({
     margin: 25
   },
   title: {
-    color: 'grey',
+    color: '#95bdb5',
     fontSize: 16,
     marginTop: 10,
   },
   field: {
     padding: 5,
-    fontSize: 17
+    fontSize: 17,
+    color: '#eeeeee'
   }
 })
 

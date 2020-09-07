@@ -30,7 +30,6 @@ const EditProfile = ({ route, navigation }) => {
         {(formikprops) => (
           <View>
             <Input
-              style={styles.input}
               multiline
               placeholder={bio ? bio : 'Your Bio'}
               onChangeText={formikprops.handleChange('bio')}
