@@ -34,17 +34,21 @@ const AddEvent = ({ setModalOpen }) => {
     day: '',
   });
 
-  // useEffect(() => {
-  //   let list = moment().format('YYYY-MM-DD').split('-');
+  useEffect(() => {
+    let date = new Date();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let day = date.getDate();
 
-  //   setCurrentDateInfo({
-  //     ...currentdateinfo,
-  //     year: list[0],
-  //     month: list[1],
-  //     day: list[2],
-  //   });
-  // }, [currentdateinfo]);
+    setCurrentDateInfo({
+      ...currentdateinfo,
+      year,
+      month,
+      day,
+    });
+  }, []);
 
+  const [showsubmit, setShowSubmit] = useState(true);
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -54,33 +58,34 @@ const AddEvent = ({ setModalOpen }) => {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
-    setDate(currentDate);
     let hour = currentDate.getHours();
     let min = currentDate.getMinutes();
-    let month = currentDate.getMonth();
+    let month = currentDate.getMonth() + 1;
     let year = currentDate.getFullYear();
     let day = currentDate.getDate();
     if (year < currentdateinfo.year) {
       alert(
         "You cannot organize event in past, time machine haven't invented yet"
       );
-      setDate('');
+      setShowSubmit(false);
     } else if (year === currentdateinfo.year && month < currentdateinfo.month) {
       alert(
         "You cannot organize event in past, time machine hasn't invented yet"
       );
-      setDate('');
+      setShowSubmit(false);
     } else if (
       year === currentdateinfo.year &&
       month === currentdateinfo.month &&
-      (day === currentdateinfo.day || day === currentdateinfo.day + 1)
+      (day <= currentdateinfo.day || day === currentdateinfo.day + 1)
     ) {
       alert(
         'Player should get 1 or 2 day to know about your tournament, so change the date'
       );
-      setDate('');
+      setShowSubmit(false);
     } else {
-      setTheRealTime(`${day}-${month + 1}-${year} ${hour}:${min}:00`);
+      setDate(currentDate);
+      setTheRealTime(`${day}-${month}-${year} ${hour}:${min}:00`);
+      setShowSubmit(true);
     }
   };
 
@@ -243,7 +248,7 @@ const AddEvent = ({ setModalOpen }) => {
                 formikprops.touched.contact && formikprops.errors.contact
               }
             />
-            {date && (
+            {showsubmit && (
               <Button
                 onPress={formikprops.handleSubmit}
                 title="Submit For Verification"
@@ -262,7 +267,7 @@ const AddEvent = ({ setModalOpen }) => {
           onChange={onChange}
         />
       )}
-      {!date && (
+      {!showsubmit && (
         <View>
           <Text>
             Seems like you haven't set the date correctly,set it and then you
