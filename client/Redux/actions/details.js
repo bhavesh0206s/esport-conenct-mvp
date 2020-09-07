@@ -6,6 +6,7 @@ export const sendToEventCardDetails = (details, navigation) =>{
   navigation.setParams({
     title: details.eventdetails.title
   })
+
   return {
     type: SEND_EVENT_DETAILS,
     payload: details,

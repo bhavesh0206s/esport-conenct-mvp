@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Feather } from '@expo/vector-icons';
-import { View, StyleSheet, Image } from 'react-native';
-import { Text } from 'react-native-elements';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Text, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { getProfiles } from '../Redux/actions/profile';
 import SearchBar from './searchbar';
@@ -22,7 +22,7 @@ const Header = ({ navigation, title, type }) => {
   if (type === 'Search' ) {
     return (
       <View style={styles.header}>
-        <SearchBar focusTextInput={focusTextInput} textInput={textInput} />
+        <SearchBar textInput={textInput} />
       </View>
     );
   }
@@ -66,7 +66,7 @@ const Header = ({ navigation, title, type }) => {
     <View style={styles.header}>
       <Feather name="menu" size={29} onPress={openMenu} />
       <View style={{ flex: 1,flexDirection: 'row', justifyContent:'space-between' }}>
-        {type === 'home' ? (
+        {type === 'home' || type === 'home-host' ? (
           <View style={styles.imageContainer}>
             <Image style={styles.stretch} source={require('../assets/splash.png')}/>
           </View>
@@ -74,15 +74,14 @@ const Header = ({ navigation, title, type }) => {
           <Text style={styles.headerText}>{title}</Text>
         )}
         {type === 'home' && (
-          <View>
+          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
             <AntDesign
               name="search1"
               style={styles.searchIcon}
               size={24}
               color="black"
-              onPress={() => navigation.navigate('Search')}
             />
-          </View>
+          </TouchableOpacity>
         )}
       </View>
     </View>

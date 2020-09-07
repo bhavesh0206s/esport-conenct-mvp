@@ -27,41 +27,37 @@ const EventCard = ({ item, navigation, route }) => {
   
   return (
     <>
-      <Card
-        titleStyle={styles.mainTitle}
-        title={item.title}
-        imageStyle={styles.cardImage}
-        containerStyle={styles.container}
-        image={imageUri}
-      >
-        <View style={styles.content}>
-          <View style={{ flexDirection: 'column' }}>
-            <View style={styles.fieldView}>
-              <Text style={styles.fieldTitle}>Game: </Text>
-              <Text style={styles.field}>{item.game}</Text>
+      <Card containerStyle={styles.container} >
+        <Card.Title style={styles.mainTitle}>{item.title}</Card.Title>
+        <Card.Image source={imageUri} style={styles.cardImage} />
+          <View style={styles.content}>
+            <View style={{ flexDirection: 'column' }}>
+              <View style={styles.fieldView}>
+                <Text style={styles.fieldTitle}>Game: </Text>
+                <Text style={styles.field}>{item.game}</Text>
+              </View>
+              <View style={styles.fieldView}>
+                <Text style={styles.fieldTitle}>Entryfee: </Text>
+                <Text style={styles.field}>{item.entryFee}</Text>
+              </View>
+              <View style={styles.fieldView}>
+                <Text style={styles.fieldTitle}>Date&Time: </Text>
+                <Text style={styles.field}>
+                  {moment(item.time).format('Do MMMM YYYY, h:mm a')}
+                </Text>
+              </View>
             </View>
-            <View style={styles.fieldView}>
-              <Text style={styles.fieldTitle}>Entryfee: </Text>
-              <Text style={styles.field}>{item.entryFee}</Text>
-            </View>
-            <View style={styles.fieldView}>
-              <Text style={styles.fieldTitle}>Date&Time: </Text>
-              <Text style={styles.field}>
-                {moment(item.time).format('Do MMMM YYYY, h:mm a')}
-              </Text>
-            </View>
-          </View>
-          <View style={{ flexDirection: 'column' }}>
-            <View style={styles.fieldView}>
-              <Text style={styles.fieldTitle}>Teamsize: </Text>
-              <Text style={styles.field}>{item.teamsize}</Text>
-            </View>
-            <View style={styles.fieldView}>
-              <Text style={styles.fieldTitle}>Prize-pool: </Text>
-              <Text style={styles.field}>{item.prizepool}</Text>
+            <View style={{ flexDirection: 'column' }}>
+              <View style={styles.fieldView}>
+                <Text style={styles.fieldTitle}>Teamsize: </Text>
+                <Text style={styles.field}>{item.teamsize}</Text>
+              </View>
+              <View style={styles.fieldView}>
+                <Text style={styles.fieldTitle}>Prize-pool: </Text>
+                <Text style={styles.field}>{item.prizepool}</Text>
+              </View>
             </View>
           </View>
-        </View>
       </Card>
       <View>
         <Button
@@ -98,6 +94,7 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     borderRadius: 20,
+    marginBottom: 10,
   },
   mainTitle: {
     fontSize: 25,

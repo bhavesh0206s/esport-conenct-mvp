@@ -120,7 +120,7 @@ const HomeStack = () => {
       <Stack.Screen
         name="Home"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} type='home' />,
+          headerTitle: () => <Header navigation={navigation} type='home-host' />,
           drawerLockMode: 'locked-closed',
         })}
         component={Home}

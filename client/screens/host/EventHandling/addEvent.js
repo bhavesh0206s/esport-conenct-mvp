@@ -65,7 +65,7 @@ const AddEvent = ({ setModalOpen }) => {
     let day = currentDate.getDate();
     if (year < currentdateinfo.year) {
       alert(
-        "You cannot organize event in past, time machine hasn't invented yet"
+        "You cannot organize event in past, time machine haven't invented yet"
       );
       setShowSubmit(false);
     } else if (year === currentdateinfo.year && month < currentdateinfo.month) {

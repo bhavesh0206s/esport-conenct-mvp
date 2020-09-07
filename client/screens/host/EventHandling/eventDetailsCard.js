@@ -77,13 +77,9 @@ const EventDetailsCard = ({ navigation }) => {
           modalOpen={removeModalOpen} 
           handleOk={handleHostEventRemove}
         />
-        <Card
-          title={title}
-          image={imageUri}
-          titleStyle={styles.mainTitle}
-          containerStyle={styles.container}
-          imageStyle={styles.cardImage}
-        >
+        <Card containerStyle={styles.container} >
+          <Card.Title style={styles.mainTitle}>{title}</Card.Title>
+          <Card.Image source={imageUri} style={styles.cardImage} />
           <Button
             icon={<Icon name="delete" color="#ffffff" />}
             buttonStyle={styles.btnStyleDelete}
@@ -129,18 +125,18 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   cardView:{
-    paddingHorizontal: 13
+    paddingHorizontal: 10
   },  
   cardImage: {
     margin: 10,
-    marginHorizontal: 13,
+    marginHorizontal: 10,
     borderRadius: 20,
   },
   btnStyleDelete: {
     backgroundColor: 'red',
     borderRadius: 5,
     marginBottom: 20,
-    marginHorizontal: 13
+    marginHorizontal: 10
     // borderBottomLeftRadius: 50,
     // borderBottomRightRadius: 50,
   },

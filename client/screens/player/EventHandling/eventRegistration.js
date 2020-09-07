@@ -115,7 +115,8 @@ const EventRegistration = ({ route, navigation }) => {
             )}
           />
         </View>
-        <Card containerStyle={styles.card}  title="TEAM MEMBERS">
+        <Card containerStyle={styles.card} >
+        <Card.Title>TEAM MEMBERS</Card.Title>
           <View style={styles.cardView}>
             <FlatList
               data={teamMember}

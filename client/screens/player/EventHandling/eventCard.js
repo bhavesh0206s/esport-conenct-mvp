@@ -27,13 +27,9 @@ const EventCard = ({ item, navigation }) => {
 
   return (
     <>
-      <Card
-        titleStyle={styles.mainTitle}
-        title={item.title}
-        imageStyle={styles.cardImage}
-        containerStyle={styles.container}
-        image={imageUri}
-      >
+      <Card containerStyle={styles.container} >
+        <Card.Title style={styles.mainTitle}>{item.title}</Card.Title>
+        <Card.Image source={imageUri} style={styles.cardImage} />
         <View style={styles.content}>
           <View style={{ flexDirection: 'column' }}>
             <View style={styles.fieldView}>
@@ -95,6 +91,7 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     borderRadius: 20,
+    margin: 10
   },
   mainTitle: {
     fontSize: 25,
