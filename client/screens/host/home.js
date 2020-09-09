@@ -15,8 +15,8 @@ import { getCurrentProfile, getHostCurrentProfile } from '../../Redux/actions/pr
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { hostProfile, loading } = useSelector((state) => ({
-    hostProfile: state.profile.userProfile,
+  const { hostedEvent, loading } = useSelector((state) => ({
+    hostedEvent: state.profile.hostedEvent,
     loading: state.loading
   }));
 
@@ -51,8 +51,8 @@ const Home = ({ navigation }) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          extraData={hostProfile.myhostedevents}
-          data={hostProfile.myhostedevents}
+          extraData={hostedEvent}
+          data={hostedEvent}
           onEndReachedThreshold={0.5}
           initialNumToRender={6}
           keyExtractor={item => item._id}

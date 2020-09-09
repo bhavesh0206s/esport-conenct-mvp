@@ -20,6 +20,7 @@ const initialState = {
   particularUser: {},
   profiles: [],
   loading: true,
+  hostedEvent: [],
   error: {},
 };
 
@@ -33,6 +34,7 @@ export default (state = initialState, action) => {
         return {
           ...state,
           userProfile: payload,
+          hostedEvent: payload.myhostedevents,
           loading: false,
       };
     case GET_PROFILE:

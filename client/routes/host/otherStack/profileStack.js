@@ -10,18 +10,7 @@ const Stack = createStackNavigator();
 
 const ProfileStack = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        gestureEnabled: true,
-        gestureDirection: 'horizontal',
-        transitionSpec:{
-          open: animationConfig,
-          close: animationConfig
-        },
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
-      }}
-      headerMode='screen'
-    >
+    <Stack.Navigator>
       <Stack.Screen
         name="Profile"
         options={({ navigation, route }) => ({

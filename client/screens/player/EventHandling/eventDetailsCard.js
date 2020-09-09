@@ -94,7 +94,7 @@ const EventDetailsCard = ({ route, navigation }) => {
       title
     })
     dispatch(getHostProfileById(hostedById, navigation, false));
-    console.log(hostProfile)
+
   },[])
 
   if (loading) {
