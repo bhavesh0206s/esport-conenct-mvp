@@ -32,7 +32,7 @@ export default UploadPostModal = ({navigation}) => {
           <Button onPress={() => setVisible(true)}
             buttonStyle={styles.buttonStyle}
             icon={
-              <AntDesign name="pluscircle" size={30} color='gray' />
+              <AntDesign name="pluscircle" size={30} color='#eeeeee' />
             }
           />
           <View style={styles.container}>

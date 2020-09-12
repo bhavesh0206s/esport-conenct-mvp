@@ -28,7 +28,7 @@ const Profile = ({ navigation }) => {
 
   useEffect(() => {
     navigation.setParams({title: 'Profile'})
-    dispatch(getHostCurrentProfile());
+    // dispatch(getHostCurrentProfile());
   },[])
 
   if (loading) {
@@ -52,7 +52,7 @@ const Profile = ({ navigation }) => {
               <Avatar
                 size={80}
                 rounded
-                overlayContainerStyle={{ backgroundColor: "black" }}
+                overlayContainerStyle={{ backgroundColor: "#eeeeee" }}
                 icon={{ name: "user", type: "font-awesome-5", color:'#fff' }}
                 activeOpacity={1}
                 containerStyle={styles.avatar}

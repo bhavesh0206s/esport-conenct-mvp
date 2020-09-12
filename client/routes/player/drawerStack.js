@@ -71,7 +71,12 @@ const LogoutContentComponent = (props) => {
             );
           }}
         />
-        <DrawerItemList activeBackgroundColor='#4ecca3' {...props} />
+        <DrawerItemList 
+          activeTintColor='white' 
+          labelStyle={{fontWeight: 'bold'}} 
+          activeBackgroundColor='#4ecca3' 
+          {...props} 
+        />
         <DrawerItem
           style={{ marginHorizontal: 70 }}
           label=""
