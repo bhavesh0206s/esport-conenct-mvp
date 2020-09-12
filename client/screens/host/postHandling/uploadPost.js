@@ -57,7 +57,7 @@ export default UploadPostModal = ({navigation}) => {
 }
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: 'white',
+    backgroundColor: '#232931',
     padding: 22,
     justifyContent: 'center',
     alignItems: 'center',

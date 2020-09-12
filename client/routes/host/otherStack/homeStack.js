@@ -3,6 +3,7 @@ import {
   createStackNavigator,
   TransitionPresets,
   CardStyleInterpolators,
+  HeaderBackButton
 } from '@react-navigation/stack';
 import Home from '../../../screens/host/home';
 import Header from '../../../shared/header';
@@ -65,7 +66,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
             fontSize: 20,
             textAlign: 'center',
             padding: 10,
-            backgroundColor: '#839690'
+            backgroundColor: '#839690',
+            color: '#eeeeee'
           }
         })
 
@@ -94,7 +96,6 @@ const MyTabs = () =>{
       tabBarOptions={{
         labelStyle: { fontSize: 20 },
         tabStyle: { width: 100 },
-        style: { backgroundColor: 'powderblue' },
       }}
       tabBar={props => <MyTabBar {...props} />}
     >
@@ -134,6 +135,12 @@ const HomeStack = () => {
               navigation={navigation}
               title='Event'
               type="EventDetailsCard"
+            />
+          ),
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              tintColor='#4ecca3'
             />
           ),
           headerTitleContainerStyle: {

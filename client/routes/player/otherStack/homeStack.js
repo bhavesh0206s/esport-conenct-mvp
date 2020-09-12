@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  createStackNavigator,
-  TransitionPresets,
-  CardStyleInterpolators,
-} from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators, HeaderBackButton} from '@react-navigation/stack';
 import Home from '../../../screens/player/home';
 import Header from '../../../shared/header';
 import EventDetailsCard from '../../../screens/player/EventHandling/eventDetailsCard';
@@ -46,6 +42,12 @@ const HomeStack = () => {
           headerTitle: () => (
             <Header navigation={navigation} title="Search" type="Search" />
           ),
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              tintColor='#4ecca3'
+            />
+          ),
           headerTitleContainerStyle: {
             left: 40,
           },
@@ -63,6 +65,12 @@ const HomeStack = () => {
               type="EventDetailsCard"
             />
           ),
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              tintColor='#4ecca3'
+            />
+          ),
           headerTitleContainerStyle: {
             left: 40,
           },
@@ -74,6 +82,12 @@ const HomeStack = () => {
         options={({ navigation, route }) => ({
           headerTitle: () => (
             <Header navigation={navigation} title="Register" type="register" />
+          ),
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              tintColor='#4ecca3'
+            />
           ),
           headerTitleContainerStyle: {
             left: 40,
@@ -91,6 +105,12 @@ const HomeStack = () => {
               type="userProfile"
             />
           ),
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              tintColor='#4ecca3'
+            />
+          ),
           headerTitleContainerStyle: {
             left: 40,
           },
@@ -105,6 +125,12 @@ const HomeStack = () => {
               navigation={navigation}
               title="Hosted Event Details "
               type="EventDetailsCard"
+            />
+          ),
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              tintColor='#4ecca3'
             />
           ),
           headerTitleContainerStyle: {

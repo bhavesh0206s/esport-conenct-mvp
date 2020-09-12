@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators, HeaderBackButton } from '@react-navigation/stack';
 import Search from '../../../screens/player/search';
 import Header from '../../../shared/header';
 import EventDetailsCard from '../../../screens/player/EventHandling/eventDetailsCard';
@@ -40,25 +40,18 @@ const SearchStack = () => {
               type="EventDetailsCard"
             />
           ),
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              tintColor='#4ecca3'
+            />
+          ),
           headerTitleContainerStyle: {
             left: 40,
           },
         })}
         component={EventDetailsCard}
       />
-      {/* <Stack.Screen
-        name="Userprofile"
-        options={({ navigation, route }) => ({
-          headerTitle: () => (
-            <Header
-              navigation={navigation}
-              title="Userprofile"
-              type="Userprofile"
-            />
-          ),
-        })}
-        component={SearchedUserProfile}
-      /> */}
     </Stack.Navigator>
   );
 };

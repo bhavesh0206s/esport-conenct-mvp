@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import moment from 'moment';
 import * as yup from 'yup';
-import { View, Platform, Text, StyleSheet } from 'react-native';
-import { Input, Button } from 'react-native-elements';
+import { View, Platform,  StyleSheet } from 'react-native';
+import { Input, Button, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddMyEvent } from '../../../Redux/actions/event';
 import RNPickerSelect from 'react-native-picker-select';
@@ -143,10 +143,11 @@ const AddEvent = ({ setModalOpen }) => {
                 formikprops.setFieldValue('game', value)
               }
               items={[
-                { label: 'PUBG', value: 'PUBG' },
+                { label: 'PUBG', value: 'PUBG'},
                 { label: 'COD', value: 'COD' },
                 { label: 'Clash Royale', value: 'Clash Royale' },
               ]}
+              style={{...pickerSelectStyles}}
               placeholder={{
                 label: 'Select a Game...',
                 value: null,
@@ -196,6 +197,7 @@ const AddEvent = ({ setModalOpen }) => {
                 { label: 'FREE', value: 'FREE' },
                 { label: 'PAID', value: 'Paid' },
               ]}
+              style={{...pickerSelectStyles}}
               placeholder={{
                 label: 'Type of Tournament...',
                 value: null,
@@ -232,6 +234,7 @@ const AddEvent = ({ setModalOpen }) => {
                 { label: '3', value: '3' },
                 { label: '4', value: '4' },
               ]}
+              style={{...pickerSelectStyles}}
               placeholder={{
                 label: 'Team Size...',
                 value: null,
@@ -291,6 +294,30 @@ const styles = StyleSheet.create({
   },
   btnStyle: {
     backgroundColor: 'grey',
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    color: '#eeeeee',
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: 'purple',
+    borderRadius: 8,
+    color: '#eeeeee',
+    paddingRight: 30,
+     // to ensure the text is never behind the icon
   },
 });
 

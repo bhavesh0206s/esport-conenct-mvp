@@ -110,7 +110,7 @@ const EventDetailsCard = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   title: {
-    color: 'grey',
+    color: '#95bdb5',
   },
   field: {
     fontSize: 18,
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     fontSize: 25,
+    color: '#eeeeee'
   },
   cardView:{
     paddingHorizontal: 10
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   btnStyleDelete: {
-    backgroundColor: 'red',
+    backgroundColor: '#d9534f',
     borderRadius: 5,
     marginBottom: 20,
     marginHorizontal: 10

@@ -33,7 +33,7 @@ const LogoutContentComponent = (props) => {
   } else {
     return (
       <DrawerContentScrollView {...props}>
-        <ConfirmModal 
+        <ConfirmModal
           text='Do you really want to Sign Out...' 
           setModalOpen={setModalOpen} 
           modalOpen={modalOpen} 
@@ -56,14 +56,14 @@ const LogoutContentComponent = (props) => {
                   <Avatar
                     size={50}
                     rounded
-                    overlayContainerStyle={{ backgroundColor: 'black' }}
+                    overlayContainerStyle={{ backgroundColor: 'gray' }}
                     icon={{ name: 'user', type: 'font-awesome-5' }}
                     activeOpacity={1}
                     containerStyle={{
                       margin: 5,
                     }}
                   />
-                  <Text style={{ fontSize: 17, paddingLeft: 4 }}>
+                  <Text style={{ fontSize: 17, paddingLeft: 4, color:'#eeeeee' }}>
                     {profileInfo.userProfile.name || ''}
                   </Text>
                 </View>
@@ -71,7 +71,7 @@ const LogoutContentComponent = (props) => {
             );
           }}
         />
-        <DrawerItemList {...props} />
+        <DrawerItemList activeBackgroundColor='#4ecca3' {...props} />
         <DrawerItem
           style={{ marginHorizontal: 70 }}
           label=""
@@ -101,10 +101,22 @@ const LogoutContentComponent = (props) => {
   }
 };
 
+const MyTheme = {
+  dark: false,
+  colors: {
+    primary: '#232931',
+    background: '#393e46',
+    card: '#232931',
+    text: '#eeeeee',
+    border: '#232931',
+    notification: '#232931',
+  },
+};
 
-export default function PlayerDrawerStack({fromHost}) {
+
+export default function HostDrawerStack() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme} >
       <Drawer.Navigator
         drawerContent={(props) => <LogoutContentComponent {...props} />}
       >

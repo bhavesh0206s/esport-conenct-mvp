@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
+import { View, FlatLis, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, ListItem, Icon, BottomSheet, Avatar } from 'react-native-elements';
+import { Card, ListItem, Icon, BottomSheet, Avatar, Text, Button  } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 
@@ -48,14 +48,14 @@ const Participants = () => {
                 {team.teamMembers.map(({name, username, email}, i) =>(
                   <>
                     <TouchableOpacity onPress={() => handlePlayeInfo(username, email, name)} >
-                      <ListItem bottomDivider key={i}>
+                      <ListItem containerStyle={styles.listContainer} bottomDivider key={i}>
                       <Avatar
                         size="small"
                         rounded
-                        icon={{ name: "user", type: "font-awesome-5", color:'black' }}
+                        icon={{ name: "user", type: "font-awesome-5", color:'white' }}
                       />
                         <ListItem.Content>
-                          <ListItem.Title>{name}</ListItem.Title>
+                          <ListItem.Title >{name}</ListItem.Title>
                         </ListItem.Content>
                       </ListItem>
                     </TouchableOpacity>
@@ -69,20 +69,24 @@ const Participants = () => {
               swipeDirection={['left', 'right', 'down']}
               isVisible={openPlayerInfo}
               onBackButtonPress={toggleModal}
-              style={styles.overLay}
               onBackdropPress={toggleModal}
               style={styles.contentView}
             >
               <View style={styles.content}>
-                <Text>Name: {name}</Text>
-                <Text>Username: {username}</Text>
-                <Text>Email: {email}</Text>
-                <ListItem containerStyle={{ backgroundColor: 'red' }} onPress={() =>setOpenPlayerInfo(!openPlayerInfo)}>
-                  <ListItem.Content>
-                    <ListItem.Title  style={{ color: 'white' }}>Cancel</ListItem.Title>
-                  </ListItem.Content>
-                </ListItem>
+                <Text style={styles.title}>Name: </Text>
+                <Text style={styles.field}>{name}</Text>
+                <Text style={styles.title}>Username: </Text>
+                <Text style={styles.field}>{username}</Text>
+                <Text style={styles.title}>Email: </Text>
+                <Text style={styles.field}>{email}</Text>
               </View>
+              <Button 
+                titleStyle={{color: 'grey'}}  
+                buttonStyle={styles.btnCancel}
+                title='CANCEL'
+                titleStyle={{color: '#eeeeee'}}
+                onPress={() => setOpenPlayerInfo(!openPlayerInfo)}   
+              />
             </Modal>
           </View>
       )}
@@ -95,13 +99,13 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     marginBottom: 5,
-    backgroundColor: '#fff',
     borderRadius: 12,
+    backgroundColor: '#232931',
     elevation: 4,
-    shadowColor: '#666666',
+    shadowColor: '#4ecca3',
   },
   content: {
-    backgroundColor: 'white',
+    backgroundColor: '#232931',
     padding: 22,
     justifyContent: 'center',
     alignItems: 'center',
@@ -111,6 +115,21 @@ const styles = StyleSheet.create({
   contentView: {
     justifyContent: 'flex-end',
     margin: 0,
+  },
+  listContainer: {
+    backgroundColor: '#232931'
+  },
+  btnCancel:{
+    borderRadius: 0,
+    backgroundColor: '#d9534f',
+    color: '#eeeeee'
+  },
+  title: {
+    color: '#95bdb5',
+  },
+  field: {
+    fontSize: 18,
+    marginBottom: 10,
   },
 })
   

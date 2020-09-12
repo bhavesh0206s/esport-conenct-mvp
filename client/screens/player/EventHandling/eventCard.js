@@ -82,7 +82,8 @@ const EventCard = ({ item, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     margin: 0,
-    padding: 8,
+    borderColor: '#393e46'
+    // padding: 8,
     // marginBottom: 10
   },
   content: {
@@ -91,19 +92,13 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     borderRadius: 20,
-    margin: 10
+    marginBottom: 10,
   },
   mainTitle: {
     fontSize: 25,
+    color: '#eeeeee'
   },
   btnStyle: {
-    borderRadius: 0,
-    marginBottom: 20,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-  },
-  btnStyleDelete: {
-    backgroundColor: 'red',
     borderRadius: 0,
     marginBottom: 20,
     borderBottomLeftRadius: 5,
@@ -114,12 +109,11 @@ const styles = StyleSheet.create({
     borderColor: '#dbdbdb',
   },
   fieldTitle: {
-    color: 'grey',
+    color: '#95bdb5',
   },
   field: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#666666',
   },
 });
 

@@ -64,7 +64,7 @@ const Header = ({ navigation, title, type }) => {
 
   return (
     <View style={styles.header}>
-      <Feather name="menu" size={29} onPress={openMenu} />
+      <Feather name="menu" size={29} onPress={openMenu} color='#4ecca3' />
       <View style={{ flex: 1,flexDirection: 'row', justifyContent:'space-between' }}>
         {type === 'home' || type === 'home-host' ? (
           <View style={styles.imageContainer}>
@@ -79,7 +79,7 @@ const Header = ({ navigation, title, type }) => {
               name="search1"
               style={styles.searchIcon}
               size={24}
-              color="black"
+              color="#4ecca3"
             />
           </TouchableOpacity>
         )}
@@ -97,12 +97,12 @@ const styles = StyleSheet.create({
   headerText: {
     fontWeight: '700',
     fontSize: 21,
-    color: 'black',
+    color: '#4ecca3',
     letterSpacing: 1,
     paddingLeft: 17,
   },
   icon: {
-    color: 'black',
+    color: '#4ecca3',
   },
   logo: {
     width: 26,

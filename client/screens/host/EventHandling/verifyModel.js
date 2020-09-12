@@ -36,7 +36,7 @@ const VerifyModel = ({openPopUp, setOpenPopUp, navigation}) => {
 }
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: 'white',
+    backgroundColor: '#232931',
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
