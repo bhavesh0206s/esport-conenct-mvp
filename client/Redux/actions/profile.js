@@ -12,7 +12,7 @@ import {
   UPDATE_PROFILE,
   UPADTE_MYPROFILE,
   GET_PROFILE,
-  GET_HOST_PROFILE
+  GET_HOST_PROFILE,
 } from './types';
 import { ipAddress } from '../ipaddress';
 import axios from 'axios';
@@ -156,7 +156,7 @@ export const upadteProfile = (formData) => async (dispatch) => {
 // Get all profiles
 // will bring bunch of users searched in input
 export const getProfile = (username) => async (dispatch) => {
-  dispatch(loading(true))
+  dispatch(loading(true));
   try {
     const res = await axios.get(
       `http://${ipAddress}/api/profile/userbyname/${username}`
@@ -166,11 +166,11 @@ export const getProfile = (username) => async (dispatch) => {
       type: GET_PROFILE,
       payload: res.data,
     });
-    
-    dispatch(loading(false))
+
+    dispatch(loading(false));
   } catch (err) {
     console.log('error from getProfiles : ', err.message);
-    dispatch(loading(false))
+    dispatch(loading(false));
   }
 };
 
@@ -184,7 +184,6 @@ export const getProfiles = (username) => async (dispatch) => {
       type: GET_PROFILES,
       payload: res.data,
     });
-
   } catch (err) {
     console.log('error from getProfiles : ', err.message);
   }
@@ -193,7 +192,7 @@ export const getProfiles = (username) => async (dispatch) => {
 // Get profile by ID
 // get info about a particular user
 export const getProfileById = (user_id, navigation) => async (dispatch) => {
-  dispatch(loading(true))
+  dispatch(loading(true));
   try {
     const res = await axios.get(
       `http://${ipAddress}/api/profile/userbyid/${user_id}`
@@ -203,16 +202,20 @@ export const getProfileById = (user_id, navigation) => async (dispatch) => {
       type: GETPARTICULARUSER,
       payload: res.data,
     });
-    navigation.setParams({HostProfileTitle: res.data.name})
-    dispatch(loading(false))
+    navigation.setParams({ HostProfileTitle: res.data.name });
+    dispatch(loading(false));
   } catch (err) {
     console.log('error from getProfileById : ', err.message);
-    dispatch(loading(false))
+    dispatch(loading(false));
   }
 };
 
-export const getHostProfileById = (host_id, navigation, allowNav = true) => async (dispatch) => {
-  dispatch(loading(true))
+export const getHostProfileById = (
+  host_id,
+  navigation,
+  allowNav = true
+) => async (dispatch) => {
+  dispatch(loading(true));
   try {
     const res = await axios.get(
       `http://${ipAddress}/api/profile/host-by-id/${host_id}`
@@ -222,18 +225,17 @@ export const getHostProfileById = (host_id, navigation, allowNav = true) => asyn
       type: GETPARTICULARUSER,
       payload: res.data,
     });
-    if(allowNav){
-      navigation.setParams({HostProfileTitle: res.data.name})
+    if (allowNav) {
+      navigation.setParams({ HostProfileTitle: res.data.name });
     }
-    dispatch(loading(false))
+    dispatch(loading(false));
   } catch (err) {
     console.log('error from getProfileById : ', err.message);
-    dispatch(loading(false))
+    dispatch(loading(false));
   }
 };
 
 // Register user/team in an event
-
 
 // // Delete account & profile
 // export const deleteAccount = () => async (dispatch) => {
