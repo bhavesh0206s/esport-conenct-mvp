@@ -25,7 +25,7 @@ module.exports = (app) => {
     }
   });
 
-  app.post('/api/profile/update/me', verify, async (req, res) => {
+  app.post('/api/profile/update/host', verify, async (req, res) => {
     let { bio } = req.body;
 
     let profileFields = {};
@@ -33,16 +33,16 @@ module.exports = (app) => {
 
     try {
       // Using upsert option (creates new doc if no match is found):
-      let profile = await Profile.findOneAndUpdate(
+      let profile = await HostProfile.findOneAndUpdate(
         { user: req.user.id },
         { $set: profileFields },
         { new: true, upsert: true }
       );
-      console.log('updating new profile....');
+      console.log('updating new host profile....');
       res.json(profile);
     } catch (err) {
       res.status(500).send('Server Error');
-      console.error('error from upadteProfile API: ', err.message);
+      console.error('error from upadteHostProfile API: ', err.message);
     }
   });
 

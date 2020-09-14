@@ -153,6 +153,37 @@ export const upadteProfile = (formData) => async (dispatch) => {
     console.log('error from upadteProfile: ', err.message);
   }
 };
+
+export const upadteHostProfile = (formData) => async (dispatch) => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Auth-Token': token,
+      },
+    };
+    console.log('upadating host profile.........');
+
+    const res = await axios.post(
+      `http://${ipAddress}/api/profile/update/host`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: UPADTE_MYPROFILE,
+      payload: res.data,
+    });
+    dispatch(getCurrentProfile());
+    console.log('host profile Updated');
+  } catch (err) {
+    // const errors = err.response.data.errors;
+    console.log('error from upadteHostProfile: ', err.message);
+  }
+};
+
 // Get all profiles
 // will bring bunch of users searched in input
 export const getProfile = (username) => async (dispatch) => {
