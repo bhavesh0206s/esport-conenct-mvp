@@ -80,6 +80,7 @@ const LogoutContentComponent = (props) => {
           labelStyle={{ fontWeight: 'bold' }}
           activeBackgroundColor="#4ecca3"
           {...props}
+
         />
         <DrawerItem
           style={{ marginHorizontal: 70 }}

@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProfile, getCurrentProfile, upadteProfile } from '../../../Redux/actions/profile';
+import { upadteHostProfile } from '../../../Redux/actions/profile';
 import { Button, Input } from 'react-native-elements';
 
 const profileSchema = yup.object({
@@ -23,7 +23,7 @@ const EditProfile = ({ route, navigation }) => {
         initialValues={{ bio }}
         validationSchema={profileSchema}
         onSubmit={(values) => {
-          dispatch(upadteProfile(values));
+          dispatch(upadteHostProfile(values));
           navigation.goBack();
         }}
       >

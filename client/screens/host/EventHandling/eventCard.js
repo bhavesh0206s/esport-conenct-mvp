@@ -84,6 +84,7 @@ const EventCard = ({ item, navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
+    borderWidth: 0,
     margin: 0,
     borderColor: '#232931'
     // padding: 8,

@@ -25,9 +25,12 @@ module.exports = (app) => {
     }
   });
 
-  app.post('/api/profile/update/host', verify, async (req, res) => {
-    let { bio } = req.body;
-
+  app.post('/api/profile/update/host', verify, async (req, res) =>{
+    
+    let {
+      bio
+    } = req.body;
+  
     let profileFields = {};
     profileFields.bio = bio;
 
@@ -43,6 +46,7 @@ module.exports = (app) => {
     } catch (err) {
       res.status(500).send('Server Error');
       console.error('error from upadteHostProfile API: ', err.message);
+
     }
   });
 
