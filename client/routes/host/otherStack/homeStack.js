@@ -3,7 +3,7 @@ import {
   createStackNavigator,
   TransitionPresets,
   CardStyleInterpolators,
-  HeaderBackButton
+  HeaderBackButton,
 } from '@react-navigation/stack';
 import Home from '../../../screens/host/home';
 import Header from '../../../shared/header';
@@ -58,18 +58,18 @@ function MyTabBar({ state, descriptors, navigation, position }) {
         const inputRange = state.routes.map((_, i) => i);
         const opacity = Animated.interpolate(position, {
           inputRange,
-          outputRange: inputRange.map(i => (i === index ? 1 : .3)),
+          outputRange: inputRange.map((i) => (i === index ? 1 : 0.3)),
         });
 
         const styles = StyleSheet.create({
-          tabBar:{
+          tabBar: {
             fontSize: 20,
             textAlign: 'center',
             padding: 10,
             backgroundColor: '#839690',
-            color: '#eeeeee'
-          }
-        })
+            color: '#eeeeee',
+          },
+        });
 
         return (
           <TouchableOpacity
@@ -81,7 +81,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
             onLongPress={onLongPress}
             style={{ flex: 1 }}
           >
-            <Animated.Text style={{ opacity,...styles.tabBar }}>
+            <Animated.Text style={{ opacity, ...styles.tabBar }}>
               {label}
             </Animated.Text>
           </TouchableOpacity>
@@ -90,20 +90,20 @@ function MyTabBar({ state, descriptors, navigation, position }) {
     </View>
   );
 }
-const MyTabs = () =>{
+const MyTabs = () => {
   return (
-    <Tab.Navigator 
+    <Tab.Navigator
       tabBarOptions={{
         labelStyle: { fontSize: 20 },
         tabStyle: { width: 100 },
       }}
-      tabBar={props => <MyTabBar {...props} />}
+      tabBar={(props) => <MyTabBar {...props} />}
     >
       <Tab.Screen name="Event Details" component={EventDetailsTopNavStack} />
       <Tab.Screen name="Participants" component={ParticipantsTopNavStack} />
     </Tab.Navigator>
   );
-}
+};
 
 const HomeStack = () => {
   return (
@@ -121,7 +121,9 @@ const HomeStack = () => {
       <Stack.Screen
         name="Home"
         options={({ navigation, route }) => ({
-          headerTitle: () => <Header navigation={navigation} type='home-host' />,
+          headerTitle: () => (
+            <Header navigation={navigation} type="home-host" />
+          ),
           drawerLockMode: 'locked-closed',
         })}
         component={Home}
@@ -133,15 +135,12 @@ const HomeStack = () => {
             <Header
               {...props}
               navigation={navigation}
-              title='Event'
+              title="Event"
               type="EventDetailsCard"
             />
           ),
           headerLeft: (props) => (
-            <HeaderBackButton
-              {...props}
-              tintColor='#4ecca3'
-            />
+            <HeaderBackButton {...props} tintColor="#4ecca3" />
           ),
           headerTitleContainerStyle: {
             left: 40,

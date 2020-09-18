@@ -13,7 +13,6 @@ const Tab = createBottomTabNavigator();
 const UploadPostComponent = () => null;
 
 export default function TabStack() {
-  
   const showTabIcons = (route, focused, color, size) => {
     if (route.name === 'Home') {
       return (
@@ -42,7 +41,7 @@ export default function TabStack() {
           size={30}
           color={focused ? '#4ecca3' : 'gray'}
         />
-      )
+      );
     }
   };
 
@@ -57,17 +56,17 @@ export default function TabStack() {
         inactiveTintColor: 'gray',
         showLabel: false,
         style: {
-          backgroundColor: '#232931'
-        }
+          backgroundColor: '#232931',
+        },
       }}
     >
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen 
-        name="Upload" 
+      <Tab.Screen
+        name="Upload"
         options={({ navigation, route }) => ({
-          tabBarIcon: () => (<UploadPostModal navigation={navigation} />),
+          tabBarIcon: () => <UploadPostModal navigation={navigation} />,
         })}
-        component={UploadPostComponent} 
+        component={UploadPostComponent}
       />
       <Tab.Screen name="Profile" component={ProfileStack} />
     </Tab.Navigator>
