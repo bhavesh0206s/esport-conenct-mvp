@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Button, Platform } from "react-native";
-import { Image, Text } from "react-native-elements";
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
+import React, { useState, useEffect, useRef } from "react";
+import { Text, View, Button, Platform } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { upadteProfile } from "../../../Redux/actions/profile";
+import { upadteHostProfile } from "../../Redux/actions/profile";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -15,7 +14,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const Notification = () => {
+const Pushnotification = () => {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -68,7 +67,17 @@ const Notification = () => {
       token = (await Notifications.getExpoPushTokenAsync()).data;
       console.log(token);
 
-      dispatch(upadteProfile({ mypntoken: token }));
+      dispatch(upadteHostProfile({ mypntoken: token }));
+
+      // Notifications.scheduleNotificationAsync({
+      //   content: {
+      //     title: "Scheduled notification",
+      //     body: "Scheduled notification hai ye",
+      //   },
+      //   trigger: {
+      //     seconds: 60,
+      //   },
+      // });
     } else {
       alert("Must use physical device for Push Notifications");
     }
@@ -81,16 +90,6 @@ const Notification = () => {
         lightColor: "#FF231F7C",
       });
     }
-
-    Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Registration for pushnotificaiton successful",
-        body: "Bhai ka kaam ho gaya ab koi notificaiton miss nahi karega",
-      },
-      trigger: {
-        seconds: 60,
-      },
-    });
 
     return token;
   };
@@ -154,4 +153,4 @@ const sendPushNotification = async (expoPushToken) => {
   });
 };
 
-export default Notification;
+export default Pushnotification;

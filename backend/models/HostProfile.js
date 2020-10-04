@@ -1,34 +1,39 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const hostProfileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'Host',
+    ref: "Host",
   },
   email: {
     type: String,
     unique: true,
-    default: '',
+    default: "",
   },
   name: {
     type: String,
-    default: '',
+    default: "",
   },
   bio: {
     type: String,
-    default: '',
+    default: "",
   },
   username: {
     type: String,
     unique: true,
-    default: '',
+    default: "",
+  },
+  // mypntoken - mypushnotificationtoken
+  mypntoken: {
+    type: String,
+    default: "",
   },
   myhostedevents: [
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'Host',
+        ref: "Host",
       },
       game: {
         type: String,
@@ -105,6 +110,6 @@ const hostProfileSchema = new Schema({
   },
 });
 
-const HostProfile = mongoose.model('hostProfile', hostProfileSchema);
+const HostProfile = mongoose.model("hostProfile", hostProfileSchema);
 
 module.exports = HostProfile;

@@ -1,14 +1,18 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const profileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
   email: String,
   DOB: Date,
-  
+  // mypntoken - mypushnotificationtoken
+  mypntoken: {
+    type: String,
+    default: "",
+  },
   myevents: [
     {
       game: {
@@ -49,16 +53,16 @@ const profileSchema = new Schema({
   // },
   name: {
     type: String,
-    default: '',
+    default: "",
   },
   bio: {
     type: String,
-    default: '',
+    default: "",
   },
   username: {
     type: String,
     unique: true,
-    default: '',
+    default: "",
   },
   // numoffollowers:{type:Number},
   // numoffollowing:{type:Number},
@@ -136,6 +140,6 @@ const profileSchema = new Schema({
   },
 });
 
-const Profile = mongoose.model('profile', profileSchema);
+const Profile = mongoose.model("profile", profileSchema);
 
 module.exports = Profile;
