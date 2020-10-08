@@ -28,6 +28,7 @@ const MyEvent = ({ navigation }) => {
     setRefreshing(false);
   };
   
+  
   if (loading) {
     return <Loading />;
   } else {

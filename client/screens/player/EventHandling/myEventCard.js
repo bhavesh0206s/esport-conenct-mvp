@@ -4,16 +4,18 @@ import { Text, Card, Button, Icon, Image } from "react-native-elements";
 import { gameImage } from "../../../shared/gameImage";
 import moment from 'moment';
 import { useSelector, useDispatch } from "react-redux";
-import { deleteMyEvent } from "../../../Redux/actions/event";
+import { deleteMyEvent, fetchEventDetails } from "../../../Redux/actions/event";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import ConfirmModal from "../../../shared/confirmModal";
-import { color } from "react-native-reanimated";
 
 const MyEventCard = ({ item, navigation, deleteEvent}) => {
   const [imageUri, setImageUri] = useState("sd");
   const [modalOpen, setModalOpen] = useState(false);
 
-  const currentUserUsername = useSelector(state => state.profile.userProfile.username)
+  const {currentUserUsername, eventDetail} = useSelector((state) => ({
+    currentUserUsername: state.profile.userProfile.username,
+    eventDetail: state.event.eventDetail
+  }))
   const dispatch = useDispatch()
 
   const handleSubmit = () => {
@@ -21,10 +23,11 @@ const MyEventCard = ({ item, navigation, deleteEvent}) => {
   }
 
   const showDetails = () => {
-    navigation.navigate('My Event Details', {item: item})
+    navigation.navigate('My Event Details', { item, eventDetail })
   }
 
   useEffect(() => {
+    
     if (item.game === "PUBG") {
       setImageUri(gameImage.pubg.uri);
     } else if (item.game === "COD") {

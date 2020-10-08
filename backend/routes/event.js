@@ -22,7 +22,6 @@ module.exports = (app) => {
   app.get('/api/event/details/:eventId', verify, async (req, res) => {
     try {
       const eventId = req.params.eventId
-      console.log(eventId)
       const eventDetails = await Event.findById({_id: eventId})
       res.json(eventDetails);
     } catch (err) {
@@ -299,40 +298,39 @@ module.exports = (app) => {
     } = req.body;
 
     try {
+      
       let event = await Event.findById(eventId);
-      let eventHost = await HostProfile.findOne({ user: hostId });
-
-      // Pull out the event
+      let eventHost = await HostProfile.findOne({ user: eventdetails.hostedById });
       let hostedevent = eventHost.myhostedevents.find(
         (event) => event.id === eventId
       );
-
+  
       if (teamsize === 1) {
         event.registeredplayerinfo.push(registerinfo);
-
+  
         hostedevent.registeredplayerinfo.push(registerinfo);
-
+  
         await eventHost.save();
-
+  
         await event.save();
-
+  
         let playerprofile = await Profile.findOne({
           user: registerinfo.user,
         });
-
+  
         playerprofile.myevents.push(eventdetails);
-
+  
         await playerprofile.save();
-
+  
         res.json({ playerevents: playerprofile.myevents, event });
       } else {
         let teamsInfo = event.registeredteaminfo;
-        ////deleting from profile
+       
         if (teamsInfo.length > 0) {
           let registeredPlayerUsername = registerinfo.teammembersinfo.map(
             (item) => item.username
           );
-
+  
           let alreadyRegisterPlayer = [];
           for (let useritem of teamsInfo) {
             for (let item of useritem.teammembersinfo) {
@@ -341,7 +339,7 @@ module.exports = (app) => {
               }
             }
           }
-
+  
           if (alreadyRegisterPlayer.length > 0) {
             return res.status(404).json({
               errors: [
@@ -352,35 +350,35 @@ module.exports = (app) => {
             });
           }
         }
-
+  
         event.registeredteaminfo.push({
           teamname: registerinfo.teamname,
           teammembersinfo: registerinfo.teammembersinfo,
         });
-
+  
         hostedevent.registeredteaminfo.push({
           teamname: registerinfo.teamname,
           teammembersinfo: registerinfo.teammembersinfo,
         });
-
+  
         await event.save();
-
+  
         await eventHost.save();
-
+  
         registerinfo.teammembersinfo.forEach(async (useritem) => {
           try {
             let playerprofile = await Profile.findOne({
               user: useritem.user,
             });
-
+  
             playerprofile.myevents.push(eventdetails);
-
+  
             await playerprofile.save();
           } catch (err) {
             console.error(err.message);
           }
         });
-
+  
         res.json({ event });
       }
     } catch (err) {

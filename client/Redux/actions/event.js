@@ -34,7 +34,6 @@ export const fetchallEvents = () => async (dispatch) => {
 export const fetchEventDetails = (eventId) => async (dispatch) => {
   try {
     dispatch(loading(true))
-    console.log(eventId)
     const res = await axios.get(`http://${ipAddress}/api/event/details/${eventId}`);
     dispatch({
       type: FETCH_EVENT_DETAIL,
