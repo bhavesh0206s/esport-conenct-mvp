@@ -10,7 +10,7 @@ import moment from 'moment';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHostProfileById } from '../../../Redux/actions/profile';
-import { eventRegistration } from '../../../Redux/actions/event';
+import { eventRegistration, fetchEventDetails } from '../../../Redux/actions/event';
 import Loading from '../../../shared/loading';
 import { CLEARPARTICULARUSER } from '../../../Redux/actions/types';
 import ConfirmModal from '../../../shared/confirmModal';
@@ -29,9 +29,6 @@ const EventDetailsCard = ({ route, navigation }) => {
   );
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [removeModalOpen, setRemoveModalOpen] = useState(false);
-
-  const { name } = route;
   
   const {
     title,
@@ -82,17 +79,16 @@ const EventDetailsCard = ({ route, navigation }) => {
       });
     }
   }
-  
   const showHostProfile = () => {
     dispatch({ type: CLEARPARTICULARUSER });
     dispatch(getHostProfileById(hostedById, navigation));
     navigation.navigate('Userprofile',{isHostProfile: true});
   }
-
   useEffect(() => {
     navigation.setParams({ 
       title
     })
+    // dispatch(fetchEventDetails(eventId[0]))
     dispatch(getHostProfileById(hostedById, navigation, false));
 
   },[])

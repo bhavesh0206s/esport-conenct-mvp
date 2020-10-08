@@ -10,8 +10,8 @@ module.exports = (app) => {
   app.get('/api/event/allevents', verify, async (req, res) => {
     try {
       const events = await Event.find().sort({date: -1})
-        // .select('-registeredteaminfo -registeredplayerinfo')
-        // .sort({ date: -1 });
+        .select('-registeredteaminfo -registeredplayerinfo')
+        .sort({ date: -1 });
       res.json(events);
     } catch (err) {
       console.error('fetchError: ', err.message);
@@ -21,10 +21,9 @@ module.exports = (app) => {
 
   app.get('/api/event/details/:eventId', verify, async (req, res) => {
     try {
-      const eventId = req.body.params
+      const eventId = req.params.eventId
+      console.log(eventId)
       const eventDetails = await Event.findById({_id: eventId})
-        // .select('-registeredteaminfo -registeredplayerinfo')
-        // .sort({ date: -1 });
       res.json(eventDetails);
     } catch (err) {
       console.error('fetchError: ', err.message);
