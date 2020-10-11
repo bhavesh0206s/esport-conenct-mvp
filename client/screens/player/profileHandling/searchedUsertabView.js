@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import AchivementCard from './achivementCard';
+import EventHostedCard from './evnetHostedcard';
+import { useNavigation } from '@react-navigation/native';
 
 const achivementData = [
   {
@@ -27,10 +30,14 @@ const renderTabBar = (props) => (
 );
 
 const SearchedUserTabView = () => {
+  const profileInfo = useSelector((state) => state.profile.particularUser);
+  const myEvents = profileInfo.myhostedevents;
+  const navigation = useNavigation();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'first', title: 'Achivements' },
+    { key: 'second', title: 'Hosted Events' },
   ]);
 
   const achivements = () => (
@@ -43,8 +50,28 @@ const SearchedUserTabView = () => {
     </View>
   );
 
+  const hostedEvents = () => {
+    return (
+      <View>
+        {myEvents !== null || myEvents ? (
+          <FlatList
+            data={myEvents}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => (
+              <EventHostedCard
+                navigation={navigation}
+                item={item}
+                type='SearchedUserEventHostedCard'
+              />
+            )}
+          />
+        ) : null}
+      </View>
+    );
+  };
   const renderScene = SceneMap({
     first: achivements,
+    second: hostedEvents,
   });
 
   return (
