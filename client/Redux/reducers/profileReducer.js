@@ -12,8 +12,8 @@ import {
   PARTICULARUSER_ERROR,
   GETPARTICULARUSER,
   UPADTE_MYPROFILE,
-  GET_PROFILE,
-} from "../actions/types";
+  GET_PROFILE
+} from '../actions/types';
 
 const initialState = {
   userProfile: {},
@@ -21,7 +21,6 @@ const initialState = {
   profiles: [],
   loading: true,
   hostedEvent: [],
-  mypntoken: "",
   error: {},
 };
 
@@ -30,34 +29,31 @@ export default (state = initialState, action) => {
 
   switch (type) {
     case GET_MYPROFILE:
-    case UPDATE_PROFILE:
-      console.log("GETMYPROFILE-SUCCESSFULL");
-      return {
-        ...state,
-        userProfile: payload,
-        hostedEvent: payload.myhostedevents,
-        mypntoken: payload.mypntoken,
-        loading: false,
+      case UPDATE_PROFILE:
+        console.log('GETMYPROFILE-SUCCESSFULL');
+        return {
+          ...state,
+          userProfile: payload,
+          hostedEvent: payload.myhostedevents,
+          loading: false,
       };
     case GET_PROFILE:
       return {
         ...state,
         particularUser: payload,
-        mypntoken: payload.mypntoken,
         loading: false,
       };
-    case GET_PROFILES:
-      return {
-        ...state,
-        profiles: payload,
-        loading: false,
-      };
+      case GET_PROFILES:
+        return {
+          ...state,
+          profiles: payload,
+          loading: false,
+        };
     case UPADTE_MYPROFILE:
-      console.log("UPADTE_MYPROFILE-SUCCESSFULL");
+      console.log('UPADTE_MYPROFILE-SUCCESSFULL');
       return {
         ...state,
         userProfile: payload,
-        mypntoken: payload.mypntoken,
         loading: false,
       };
     case SETPARTICULARUSER:
@@ -88,7 +84,7 @@ export default (state = initialState, action) => {
     //     profiles: [],
     //   };
     case CLEAR_MYPROFILE:
-      console.log("CLEARMYPROFILE - SUCCESSFULL");
+      console.log('CLEARMYPROFILE - SUCCESSFULL');
       return {
         ...state,
         userProfile: null,
