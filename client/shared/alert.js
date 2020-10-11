@@ -55,7 +55,7 @@ const Alert = () => {
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: 'white',
+    backgroundColor: '#393e46',
     borderTopStartRadius: 5,
     borderTopEndRadius: 5,
     borderBottomStartRadius: 5,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   btnOk:{
     paddingHorizontal: 139.5,
     borderRadius: 0,
-    backgroundColor: '#3297fc'
+    backgroundColor: '#4ecca3'
   },
 });
 

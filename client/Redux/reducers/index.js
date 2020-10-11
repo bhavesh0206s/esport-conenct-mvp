@@ -7,6 +7,7 @@ import eventReducer from './eventReducer';
 import modalReducer from './modalReducer';
 import searchEventReducer from './searchEventReducer';
 import detailsReducer from './detailsReducer';
+import userEventReducer from './userEventReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   event: eventReducer,
   modal: modalReducer,
   searchEvent: searchEventReducer,
-  details: detailsReducer
+  details: detailsReducer,
+  userEventInfo: userEventReducer
 });

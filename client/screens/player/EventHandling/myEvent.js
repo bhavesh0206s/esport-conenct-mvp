@@ -5,14 +5,13 @@ import {
   FlatList,
   StyleSheet,
   RefreshControl,
-  Text
 } from 'react-native';
 import {useSelector, useDispatch } from 'react-redux';
 import MyEventCard from './myEventCard';
 import Loading from '../../../shared/loading';
 import { getCurrentProfile } from '../../../Redux/actions/profile';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Button } from 'react-native-elements';
+import { Button, Text } from 'react-native-elements';
 
 const MyEvent = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -28,6 +27,7 @@ const MyEvent = ({ navigation }) => {
     dispatch(getCurrentProfile());
     setRefreshing(false);
   };
+  
   
   if (loading) {
     return <Loading />;

@@ -117,7 +117,8 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   listContainer: {
-    backgroundColor: '#232931'
+    backgroundColor: '#232931',
+    padding: 5
   },
   btnCancel:{
     borderRadius: 0,

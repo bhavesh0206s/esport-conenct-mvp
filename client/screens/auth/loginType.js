@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { signInAsync } from '../../Redux/actions/googleAuth';
-import { SocialIcon, Button, Text} from 'react-native-elements';
-import { loading } from '../../Redux/actions/loading';
+import { useDispatch } from 'react-redux';
+import { Button, Text} from 'react-native-elements';
 
 const LoginType = ({ title, navigation }) => {
   
