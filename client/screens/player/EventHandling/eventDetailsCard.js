@@ -24,20 +24,6 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
-  View,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
-import { Text, Card, Button, Icon } from 'react-native-elements';
-import { ScrollView } from 'react-native-gesture-handler';
-import moment from 'moment';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getHostProfileById } from '../../../Redux/actions/profile';
-import { eventRegistration, fetchEventDetails } from '../../../Redux/actions/event';
-import Loading from '../../../shared/loading';
-import { CLEARPARTICULARUSER } from '../../../Redux/actions/types';
-import ConfirmModal from '../../../shared/confirmModal';
 
 const EventDetailsCard = ({ route, navigation }) => {
   const dispatch = useDispatch();
