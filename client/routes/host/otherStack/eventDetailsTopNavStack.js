@@ -2,8 +2,7 @@ import React from 'react';
 import { createStackNavigator, CardStyleInterpolators  } from '@react-navigation/stack';
 import Header from '../../../shared/header';
 import { animationConfig } from '../../../shared/routeAnimationConfig';
-import EventDetailsCard from '../../../screens/host/EventHandling/eventDetailsCard';
-import Participants from '../../../screens/host/EventHandling/participants';
+import EventDetails from '../../../screens/host/EventHandling/eventDetails';
 
 const Stack = createStackNavigator();
 
@@ -25,7 +24,7 @@ const EventDetailsTopNavStack = () => {
         options={({ navigation, route }) => ({
           headerTitle: () => <Header navigation={navigation} title="Event Details" />,
         })}
-        component={EventDetailsCard}
+        component={EventDetails}
       />
     </Stack.Navigator>
   );

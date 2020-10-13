@@ -2,12 +2,11 @@ import React from 'react';
 import { createStackNavigator, CardStyleInterpolators, HeaderBackButton} from '@react-navigation/stack';
 import Home from '../../../screens/player/home';
 import Header from '../../../shared/header';
-import EventDetailsCard from '../../../screens/player/EventHandling/eventDetailsCard';
-import { Easing } from 'react-native';
 import { animationConfig } from '../../../shared/routeAnimationConfig';
 import EventRegistration from '../../../screens/player/EventHandling/eventRegistration';
 import SearchedProfile from '../../../screens/player/profileHandling/searchedProfile';
 import SearchStack from './searchStack';
+import EventDetails from '../../../screens/player/EventHandling/eventDetails';
 
 const Stack = createStackNavigator();
 
@@ -55,7 +54,7 @@ const HomeStack = () => {
         component={SearchStack}
       />
       <Stack.Screen
-        name="EventDetailsCard"
+        name="EventDetails"
         options={({ navigation, route }) => ({
           headerTitle: (props) => (
             <Header
@@ -75,7 +74,7 @@ const HomeStack = () => {
             left: 40,
           },
         })}
-        component={EventDetailsCard}
+        component={EventDetails}
       />
       <Stack.Screen
         name="Register"
@@ -137,7 +136,7 @@ const HomeStack = () => {
             left: 40,
           },
         })}
-        component={EventDetailsCard}
+        component={EventDetails}
       />
     </Stack.Navigator>
   );

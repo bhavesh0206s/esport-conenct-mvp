@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, ImageBackground } from "react-native";
 import { Avatar, Button, Text } from "react-native-elements";
-import { loading } from "../../Redux/actions/loading";
+import { loading } from "../Redux/actions/loading";
 import { AntDesign } from "@expo/vector-icons";
 
 const CommonProfile = ({ navigation, bio, username, myevents, name }) => {
@@ -9,7 +9,7 @@ const CommonProfile = ({ navigation, bio, username, myevents, name }) => {
     <>
       <View style={styles.container}>
         <ImageBackground
-          source={require("../../assets/coverProfile.jpg")}
+          source={require("../assets/coverProfile.jpg")}
           style={styles.image}
         >
           <View style={styles.content}>

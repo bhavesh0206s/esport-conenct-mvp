@@ -4,7 +4,7 @@ import Loading from "../../../shared/loading";
 import { getCurrentProfile } from "../../../Redux/actions/profile";
 import ProfileTabView from "./tabView";
 import { loading } from "../../../Redux/actions/loading";
-import CommonProfile from "../../../components/profilehandling/commonprofile";
+import CommonProfile from "../../../components/commonprofile";
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();

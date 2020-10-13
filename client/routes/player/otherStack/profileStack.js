@@ -2,9 +2,8 @@ import React from 'react';
 import { createStackNavigator, CardStyleInterpolators, HeaderBackButton } from '@react-navigation/stack';
 import Profile from '../../../screens/player/profileHandling/profile';
 import Header from '../../../shared/header';
-import EventDetailsCard from '../../../screens/player/EventHandling/eventDetailsCard';
-import { animationConfig } from '../../../shared/routeAnimationConfig';
 import EditProfile from '../../../screens/player/profileHandling/editProfile';
+import EventDetails from '../../../screens/player/EventHandling/eventDetails';
 
 const Stack = createStackNavigator();
 
@@ -61,7 +60,7 @@ const ProfileStack = () => {
             left: 40,
           },
         })}
-        component={EventDetailsCard}
+        component={EventDetails}
       />
     </Stack.Navigator>
   );

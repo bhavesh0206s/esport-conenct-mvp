@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator, CardStyleInterpolators  } from '@react-navigation/stack';
 import Header from '../../../shared/header';
 import { animationConfig } from '../../../shared/routeAnimationConfig';
-import EventDetailsCard from '../../../screens/host/EventHandling/eventDetailsCard';
 import Participants from '../../../screens/host/EventHandling/participants';
 
 const Stack = createStackNavigator();

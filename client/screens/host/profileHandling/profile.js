@@ -6,7 +6,7 @@ import {
   getHostCurrentProfile,
 } from "../../../Redux/actions/profile";
 import { loading } from "../../../Redux/actions/loading";
-import CommonProfile from "../../../components/profilehandling/commonprofile";
+import CommonProfile from "../../../components/commonprofile";
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
