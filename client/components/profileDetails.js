@@ -1,10 +1,14 @@
 import React from "react";
 import { View, StyleSheet, ImageBackground } from "react-native";
 import { Avatar, Button, Text } from "react-native-elements";
-import { loading } from "../Redux/actions/loading";
 import { AntDesign } from "@expo/vector-icons";
 
-const CommonProfile = ({ navigation, bio, username, myevents, name }) => {
+const ProfileDetails = ({
+  bio,
+  username,
+  name,
+  handleEdit,
+}) => {
   return (
     <>
       <View style={styles.container}>
@@ -17,10 +21,7 @@ const CommonProfile = ({ navigation, bio, username, myevents, name }) => {
               <Button
                 icon={<AntDesign name="edit" size={24} color="white" />}
                 buttonStyle={{ marginBottom: 10, paddingHorizontal: 10 }}
-                onPress={
-                  console.log("pressed")
-                  // handleEdit
-                }
+                onPress={handleEdit}
               />
             </View>
             <Avatar
@@ -86,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CommonProfile;
+export default ProfileDetails;

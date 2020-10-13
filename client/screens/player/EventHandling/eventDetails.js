@@ -8,12 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getHostProfileById } from "../../../Redux/actions/profile";
 import {
   eventRegistration,
-  fetchEventDetails,
 } from "../../../Redux/actions/event";
 import Loading from "../../../shared/loading";
 import { CLEARPARTICULARUSER } from "../../../Redux/actions/types";
 import ConfirmModal from "../../../shared/confirmModal";
-import EventDetailsCard from "../../../components/eventDetialsCard";
+import EventDetailsCard from "../../../components/eventDetailsCard";
 
 const EventDetails = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -124,6 +123,7 @@ const EventDetails = ({ route, navigation }) => {
     viewingProfile,
     imageUri,
     eventTime,
+    isHost: true,
     btnTitle: 'REGISTRATION',
   }
 

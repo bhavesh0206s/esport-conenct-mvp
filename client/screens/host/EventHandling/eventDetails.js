@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
-import { Text, Card, Button, Icon } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../shared/loading";
 import ConfirmModal from "../../../shared/confirmModal";
 import { deleteHostedEvent } from "../../../Redux/actions/event";
-import { useRoute } from "@react-navigation/native";
-import EventHostedCard from "../../player/profileHandling/evnetHostedcard";
-import EventDetailsCard from "../../../components/eventDetialsCard";
+import EventDetailsCard from "../../../components/eventDetailsCard";
 
 const EventDetails = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -66,7 +62,8 @@ const EventDetails = ({ navigation }) => {
     viewingProfile,
     imageUri,
     eventTime,
-    BtnTitle: 'REMOVE',
+    isHost: false,
+    btnTitle: 'REMOVE',
     btnStyle: {backgroundColor: '#d9534f'},
   }
 

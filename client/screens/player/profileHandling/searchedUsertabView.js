@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import AchivementCard from './achivementCard';
+import AchivementCard from '../../../components/achivementCard';
 
 const achivementData = [
   {

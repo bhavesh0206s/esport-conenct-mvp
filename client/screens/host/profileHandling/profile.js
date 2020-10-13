@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../shared/loading";
-import {
-  getCurrentProfile,
-  getHostCurrentProfile,
-} from "../../../Redux/actions/profile";
-import { loading } from "../../../Redux/actions/loading";
-import CommonProfile from "../../../components/commonprofile";
+import ProfileDetails from "../../../components/profileDetails";
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -29,12 +24,13 @@ const Profile = ({ navigation }) => {
   } else {
     return (
       <>
-        <CommonProfile
+        <ProfileDetails
           navigation={navigation}
           bio={bio}
           name={name}
           myevents={myevents}
           username={username}
+          handleEdit={handleEdit}
         />
       </>
     );

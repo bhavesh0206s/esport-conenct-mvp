@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Text, Card, Button, Icon } from "react-native-elements";
 
-const EventDetailsCard = ({viewingProfile, btnStyle ,btnTitle, imageUri, handleOnPress, game, teamsize, entryFee, prizepool, eventTime, contact, description, renderHostDetails }) => {
+const EventDetailsCard = ({viewingProfile, isHost, title, btnStyle ,btnTitle, imageUri, handleOnPress, game, teamsize, entryFee, prizepool, eventTime, contact, description, renderHostDetails }) => {
   
     return (
       <Card containerStyle={styles.container}>
@@ -31,7 +31,7 @@ const EventDetailsCard = ({viewingProfile, btnStyle ,btnTitle, imageUri, handleO
           <Text style={styles.field}>{contact}</Text>
           <Text style={styles.title}>Description:-</Text>
           <Text style={styles.field}>{description}</Text>
-          {renderHostDetails()}
+          {isHost && renderHostDetails()}
         </View>
       </Card>
     );

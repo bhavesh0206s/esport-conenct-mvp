@@ -4,9 +4,9 @@ import Home from '../../../screens/player/home';
 import Header from '../../../shared/header';
 import { animationConfig } from '../../../shared/routeAnimationConfig';
 import EventRegistration from '../../../screens/player/EventHandling/eventRegistration';
-import SearchedProfile from '../../../screens/player/profileHandling/searchedProfile';
 import SearchStack from './searchStack';
 import EventDetails from '../../../screens/player/EventHandling/eventDetails';
+import SearchedUserProfile from '../../../screens/player/profileHandling/searchedUserProfile';
 
 const Stack = createStackNavigator();
 
@@ -114,7 +114,7 @@ const HomeStack = () => {
             left: 40,
           },
         })}
-        component={SearchedProfile}
+        component={SearchedUserProfile}
       />
       <Stack.Screen
         name="EventDetailsProfile"

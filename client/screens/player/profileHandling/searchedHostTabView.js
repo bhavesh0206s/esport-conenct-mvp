@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, FlatList, } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import AchivementCard from './achivementCard';
-import EventHostedCard from './evnetHostedcard';
+import AchivementCard from '../../../components/achivementCard';
+import EventHostedCard from '../../../components/eventHostedCard';
 import { useNavigation } from '@react-navigation/native';
 import { Text } from 'react-native-elements';
 
