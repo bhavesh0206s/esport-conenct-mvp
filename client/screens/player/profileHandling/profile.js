@@ -32,6 +32,7 @@ const Profile = ({ navigation }) => {
           name={name}
           myevents={myevents}
           username={username}
+          handleEdit={handleEdit}
         />
         <ProfileTabView />
       </>

@@ -105,19 +105,18 @@ const EventDetailsCard = ({ route, navigation }) => {
           modalOpen={modalOpen}
           handleOk={handleRegistration}
         />
-
         <Card containerStyle={styles.container}>
-          {viewingProfile && (
-            <Card.Title style={styles.mainTitle}>{title}</Card.Title>
-          )}
+          <Card.Title style={styles.mainTitle}>{title}</Card.Title>
           <Card.Image source={imageUri} style={styles.cardImage} />
           <View style={styles.cardView}>
-            <Button
-              icon={<Icon name="form" type="antdesign" color="#ffffff" />}
-              buttonStyle={styles.btnStyle}
-              onPress={handleSubmit}
-              title="Registration"
-            />
+            {!viewingProfile && (
+              <Button
+                icon={<Icon name="form" type="antdesign" color="#ffffff" />}
+                buttonStyle={styles.btnStyle}
+                onPress={handleSubmit}
+                title="Registration"
+              />
+            )}
             <Text style={styles.title}>Game: </Text>
             <Text style={styles.field}>{game}</Text>
             <Text style={styles.title}>Teamsize: </Text>
