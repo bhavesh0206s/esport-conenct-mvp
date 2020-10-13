@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, Card, Button, Icon } from "react-native-elements";
+import { ScrollView } from "react-native-gesture-handler";
+import moment from "moment";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getHostProfileById } from "../../../Redux/actions/profile";
 import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
-import { Text, Card, Button, Icon } from 'react-native-elements';
-import { ScrollView } from 'react-native-gesture-handler';
-import moment from 'moment';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getHostProfileById } from '../../../Redux/actions/profile';
-import { eventRegistration, fetchEventDetails } from '../../../Redux/actions/event';
-import Loading from '../../../shared/loading';
-import { CLEARPARTICULARUSER } from '../../../Redux/actions/types';
-import ConfirmModal from '../../../shared/confirmModal';
+  eventRegistration,
+  fetchEventDetails,
+} from "../../../Redux/actions/event";
+import Loading from "../../../shared/loading";
+import { CLEARPARTICULARUSER } from "../../../Redux/actions/types";
+import ConfirmModal from "../../../shared/confirmModal";
 
 const EventDetailsCard = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -25,11 +24,10 @@ const EventDetailsCard = ({ route, navigation }) => {
   const [eventId] = useState(userProfile.myevents.map((item) => item._id));
   const { eventdetails, imageUri, viewingProfile, showhostBy } = route.params;
   const [eventTime, setEventTime] = useState(
-    moment(eventdetails.time).format('dddd, MMMM Do YYYY, h:mm:ss a')
+    moment(eventdetails.time).format("dddd, MMMM Do YYYY, h:mm:ss a")
   );
 
   const [modalOpen, setModalOpen] = useState(false);
-  
   const {
     title,
     description,
@@ -60,38 +58,37 @@ const EventDetailsCard = ({ route, navigation }) => {
         teamsize,
       })
     );
-    setModalOpen(false)
-    navigation.navigate('Event');
+    setModalOpen(false);
+    navigation.navigate("Event");
   };
 
-  const handleSubmit = () =>{
+  const handleSubmit = () => {
     if (userProfile.email === hostProfile.email) {
       alert("Host of the Event, can't Register!");
     } else if (eventId.indexOf(_id) !== -1) {
-      alert('Already Registered!!');
-    } else if(teamsize === 1){
-      setModalOpen(true)
+      alert("Already Registered!!");
+    } else if (teamsize === 1) {
+      setModalOpen(true);
     } else {
-      navigation.navigate('Register', {
+      navigation.navigate("Register", {
         navigation,
         eventdetails,
         userProfile,
       });
     }
-  }
+  };
   const showHostProfile = () => {
     dispatch({ type: CLEARPARTICULARUSER });
     dispatch(getHostProfileById(hostedById, navigation));
-    navigation.navigate('Userprofile',{isHostProfile: true});
-  }
+    navigation.navigate("Userprofile", { isHostProfile: true });
+  };
   useEffect(() => {
-    navigation.setParams({ 
-      title
-    })
+    navigation.setParams({
+      title,
+    });
     // dispatch(fetchEventDetails(eventId[0]))
     dispatch(getHostProfileById(hostedById, navigation, false));
-
-  },[])
+  }, []);
 
   if (loading) {
     return (
@@ -102,14 +99,14 @@ const EventDetailsCard = ({ route, navigation }) => {
   } else {
     return (
       <ScrollView>
-        <ConfirmModal 
-          text='Complete Registration For Single Player Event!' 
-          setModalOpen={setModalOpen} 
-          modalOpen={modalOpen} 
+        <ConfirmModal
+          text="Complete Registration For Single Player Event!"
+          setModalOpen={setModalOpen}
+          modalOpen={modalOpen}
           handleOk={handleRegistration}
         />
 
-        <Card containerStyle={styles.container} >
+        <Card containerStyle={styles.container}>
           {viewingProfile && (
             <Card.Title style={styles.mainTitle}>{title}</Card.Title>
           )}
@@ -138,12 +135,14 @@ const EventDetailsCard = ({ route, navigation }) => {
             {showhostBy && (
               <View>
                 <Text style={styles.title}>Hosted by: </Text>
-                <TouchableOpacity onPress={showHostProfile} >
-                  <View style={{flexDirection: 'row'}}>
-                    <Text style={{fontSize: 18}}>{hostProfile.name} </Text>
-                    <Text style={{...styles.title, fontSize: 18}}>({hostedBy})</Text>
+                <TouchableOpacity onPress={showHostProfile}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 18 }}>{hostProfile.name} </Text>
+                    <Text style={{ ...styles.title, fontSize: 18 }}>
+                      ({hostedBy})
+                    </Text>
                   </View>
-                  <Text style={{color: '#4ecca3'}}>View Profile</Text>
+                  <Text style={{ color: "#4ecca3" }}>View Profile</Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -156,7 +155,7 @@ const EventDetailsCard = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   title: {
-    color: '#95bdb5',
+    color: "#95bdb5",
   },
   field: {
     fontSize: 18,
@@ -169,20 +168,19 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     fontSize: 25,
-    color: '#eeeeee'
+    color: "#eeeeee",
   },
-  cardView:{
-    paddingHorizontal: 10
-  },  
+  cardView: {
+    paddingHorizontal: 10,
+  },
   cardImage: {
     borderRadius: 20,
-    margin: 10
+    margin: 10,
   },
   btnStyle: {
     borderRadius: 5,
     marginBottom: 20,
   },
-  
 });
 
 export default EventDetailsCard;
