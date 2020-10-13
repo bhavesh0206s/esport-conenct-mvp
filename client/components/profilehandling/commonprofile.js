@@ -1,24 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, StyleSheet, ImageBackground } from "react-native";
 import { Avatar, Button, Text } from "react-native-elements";
-import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../shared/loading";
-import { getCurrentProfile } from "../../Redux/actions/profile";
 import { loading } from "../../Redux/actions/loading";
 import { AntDesign } from "@expo/vector-icons";
 
-const CommonProfile = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const { userProfileInfo, loading } = useSelector((state) => ({
-    userProfileInfo: state.profile.userProfile,
-    loading: state.loading,
-  }));
-  const { bio, name, myevents, username } = userProfileInfo;
-
-  const handleEdit = () => {
-    navigation.navigate("EditProfile");
-  };
-
+const CommonProfile = ({ navigation, bio, username, myevents, name }) => {
   return (
     <>
       <View style={styles.container}>
@@ -31,7 +17,10 @@ const CommonProfile = ({ navigation }) => {
               <Button
                 icon={<AntDesign name="edit" size={24} color="white" />}
                 buttonStyle={{ marginBottom: 10, paddingHorizontal: 10 }}
-                onPress={handleEdit}
+                onPress={
+                  console.log("pressed")
+                  // handleEdit
+                }
               />
             </View>
             <Avatar

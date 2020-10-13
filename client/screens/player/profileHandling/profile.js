@@ -1,25 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, ImageBackground } from "react-native";
-import { Avatar, Button, Text } from "react-native-elements";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../shared/loading";
 import { getCurrentProfile } from "../../../Redux/actions/profile";
 import ProfileTabView from "./tabView";
 import { loading } from "../../../Redux/actions/loading";
-import { AntDesign } from "@expo/vector-icons";
 import CommonProfile from "../../../components/profilehandling/commonprofile";
 
 const Profile = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const { userProfileInfo, loading } = useSelector((state) => ({
+    userProfileInfo: state.profile.userProfile,
+    loading: state.loading,
+  }));
+  const { bio, name, myevents, username } = userProfileInfo;
+
+  const handleEdit = () => {
+    navigation.navigate("EditProfile");
+  };
+
   useEffect(() => {
     navigation.setParams({ title: "Profile" });
   }, []);
-
-  return (
-    <>
-      <CommonProfile navigation={navigation} />
-      <ProfileTabView />
-    </>
-  );
+  if (loading) {
+    return <Loading />;
+  } else {
+    return (
+      <>
+        <CommonProfile
+          navigation={navigation}
+          bio={bio}
+          name={name}
+          myevents={myevents}
+          username={username}
+        />
+        <ProfileTabView />
+      </>
+    );
+  }
 };
 
 export default Profile;
