@@ -1,39 +1,30 @@
-import React, { useEffect } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
-import { Text, Card, Button, Icon } from 'react-native-elements';
-import { ScrollView } from 'react-native-gesture-handler';
-import moment from 'moment';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { eventRegistration, getProfileById } from '../../../Redux/actions/profile';
-import Loading from '../../../shared/loading';
-import { CLEARPARTICULARUSER } from '../../../Redux/actions/types';
-import ConfirmModal from '../../../shared/confirmModal';
-import { deleteHostedEvent } from '../../../Redux/actions/event';
-import { useRoute } from '@react-navigation/native';
+import React, { useEffect, useState } from "react";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, Card, Button, Icon } from "react-native-elements";
+import { ScrollView } from "react-native-gesture-handler";
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "../../../shared/loading";
+import ConfirmModal from "../../../shared/confirmModal";
+import { deleteHostedEvent } from "../../../Redux/actions/event";
+import { useRoute } from "@react-navigation/native";
 
 const EventDetailsCard = ({ navigation }) => {
-
   const dispatch = useDispatch();
-  const { hostProfile, loading,eventInfo } = useSelector((state) => ({
+  const { hostProfile, loading, eventInfo } = useSelector((state) => ({
     hostProfile: state.profile.userProfile,
     loading: state.loading,
-    eventInfo: state.details
+    eventInfo: state.details,
   }));
-  console.log(eventInfo)
+  console.log(eventInfo);
   const { eventdetails, imageUri, viewingProfile, showhostBy } = eventInfo;
   const [eventTime, setEventTime] = useState(
-    moment(eventdetails.time).format('dddd, MMMM Do YYYY, h:mm:ss a')
+    moment(eventdetails.time).format("dddd, MMMM Do YYYY, h:mm:ss a")
   );
 
   const [modalOpen, setModalOpen] = useState(false);
   const [removeModalOpen, setRemoveModalOpen] = useState(false);
 
-  
   const {
     title,
     description,
@@ -45,22 +36,22 @@ const EventDetailsCard = ({ navigation }) => {
   } = eventdetails;
 
   const handleRegistration = () => {
-    setModalOpen(false)
-    navigation.navigate('Event');
+    setModalOpen(false);
+    navigation.navigate("Event");
   };
 
   const handleHostEventRemove = () => {
     let hostedBy = hostProfile.username;
-    console.log(hostedBy)
-    dispatch(deleteHostedEvent(eventdetails, hostedBy))
-    navigation.navigate('Home');
+    console.log(hostedBy);
+    dispatch(deleteHostedEvent(eventdetails, hostedBy));
+    navigation.navigate("Home");
   };
 
   useEffect(() => {
-    navigation.setParams({ 
-      title
-    })
-  },[])
+    navigation.setParams({
+      title,
+    });
+  }, []);
 
   if (loading) {
     return (
@@ -71,13 +62,13 @@ const EventDetailsCard = ({ navigation }) => {
   } else {
     return (
       <ScrollView>
-        <ConfirmModal 
-          text='Are You Sure?' 
-          setModalOpen={setRemoveModalOpen} 
-          modalOpen={removeModalOpen} 
+        <ConfirmModal
+          text="Are You Sure?"
+          setModalOpen={setRemoveModalOpen}
+          modalOpen={removeModalOpen}
           handleOk={handleHostEventRemove}
         />
-        <Card containerStyle={styles.container} >
+        <Card containerStyle={styles.container}>
           <Card.Title style={styles.mainTitle}>{title}</Card.Title>
           <Card.Image source={imageUri} style={styles.cardImage} />
           <Button
@@ -110,7 +101,7 @@ const EventDetailsCard = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   title: {
-    color: '#95bdb5',
+    color: "#95bdb5",
   },
   field: {
     fontSize: 18,
@@ -123,21 +114,21 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     fontSize: 25,
-    color: '#eeeeee'
+    color: "#eeeeee",
   },
-  cardView:{
-    paddingHorizontal: 10
-  },  
+  cardView: {
+    paddingHorizontal: 10,
+  },
   cardImage: {
     margin: 10,
     marginHorizontal: 10,
     borderRadius: 20,
   },
   btnStyleDelete: {
-    backgroundColor: '#d9534f',
+    backgroundColor: "#d9534f",
     borderRadius: 5,
     marginBottom: 20,
-    marginHorizontal: 10
+    marginHorizontal: 10,
     // borderBottomLeftRadius: 50,
     // borderBottomRightRadius: 50,
   },

@@ -34,16 +34,18 @@ const LogoutContentComponent = (props) => {
     return (
       <DrawerContentScrollView {...props}>
         <ConfirmModal
-          text='Do you really want to Sign Out...' 
-          setModalOpen={setModalOpen} 
-          modalOpen={modalOpen} 
+          text="Do you really want to Sign Out..."
+          setModalOpen={setModalOpen}
+          modalOpen={modalOpen}
           handleOk={() => dispatch(logout())}
         />
         <DrawerItem
           label=""
           icon={() => {
             return (
-              <TouchableOpacity onPress={() => props.navigation.navigate('Profile')}>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate('Profile')}
+              >
                 <View
                   style={{
                     flexDirection: 'row',
@@ -63,7 +65,9 @@ const LogoutContentComponent = (props) => {
                       margin: 5,
                     }}
                   />
-                  <Text style={{ fontSize: 17, paddingLeft: 4, color:'#eeeeee' }}>
+                  <Text
+                    style={{ fontSize: 17, paddingLeft: 4, color: '#eeeeee' }}
+                  >
                     {profileInfo.userProfile.name || ''}
                   </Text>
                 </View>
@@ -71,11 +75,12 @@ const LogoutContentComponent = (props) => {
             );
           }}
         />
-        <DrawerItemList 
-          activeTintColor='white' 
-          labelStyle={{fontWeight: 'bold'}} 
-          activeBackgroundColor='#4ecca3' 
-          {...props} 
+        <DrawerItemList
+          activeTintColor="white"
+          labelStyle={{ fontWeight: 'bold' }}
+          activeBackgroundColor="#4ecca3"
+          {...props}
+
         />
         <DrawerItem
           style={{ marginHorizontal: 70 }}
@@ -96,7 +101,7 @@ const LogoutContentComponent = (props) => {
               buttonStyle={{ padding: 10, paddingHorizontal: 20 }}
               title="Sign Out"
               onPress={() => {
-                setModalOpen(true)
+                setModalOpen(true);
               }}
             />
           )}
@@ -118,10 +123,9 @@ const MyTheme = {
   },
 };
 
-
 export default function HostDrawerStack() {
   return (
-    <NavigationContainer theme={MyTheme} >
+    <NavigationContainer theme={MyTheme}>
       <Drawer.Navigator
         drawerContent={(props) => <LogoutContentComponent {...props} />}
       >

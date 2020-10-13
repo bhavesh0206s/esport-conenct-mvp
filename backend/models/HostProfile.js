@@ -108,4 +108,3 @@ const hostProfileSchema = new Schema({
 const HostProfile = mongoose.model('hostProfile', hostProfileSchema);
 
 module.exports = HostProfile;
-
