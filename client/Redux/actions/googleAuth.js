@@ -27,7 +27,6 @@ export const signInAsync = (navigation, fromHost = false) => async (
     let googleAccessToken;
     if (result.type === 'success') {
       googleAccessToken = result.accessToken;
-      console.log(result.user)
     } else {
       return { cancelled: true };
     }
@@ -36,12 +35,12 @@ export const signInAsync = (navigation, fromHost = false) => async (
       `http://${ipAddress}/api/google/login`,
       result.user
     );
-
+    console.log(resServer.data)
     await AsyncStorage.setItem('token', resServer.data.token);
 
     const authType = resServer.data.auth;
 
-    dispatch({ type: GOOGLE_LOGIN, payload: [res.data.email, authType, fromHost] });
+    dispatch({ type: GOOGLE_LOGIN, payload: [result.user.email, authType, fromHost] });
 
     const token = await AsyncStorage.getItem('token');
 
@@ -50,7 +49,7 @@ export const signInAsync = (navigation, fromHost = false) => async (
     if (token) {
       try {
         if (authType === 'signup') {
-          dispatch(createProfile({ name: res.data.name }));
+          dispatch(createProfile({ name: result.user.name }));
         }
         dispatch(getCurrentProfile());
       } catch (e) {
@@ -92,14 +91,14 @@ export const signInHostAsync = (navigation, fromHost = true) => async (
 
     let resServer = await axios.post(
       `http://${ipAddress}/api/google/host/login`,
-      res.data
+      result.user
     );
 
     await AsyncStorage.setItem('token', resServer.data.token);
 
     const authType = resServer.data.auth;
     
-    dispatch({ type: GOOGLE_LOGIN, payload: [res.data.email, authType, fromHost] });
+    dispatch({ type: GOOGLE_LOGIN, payload: [result.user.email, authType, fromHost] });
 
     const token = await AsyncStorage.getItem('token');
 
@@ -108,7 +107,7 @@ export const signInHostAsync = (navigation, fromHost = true) => async (
     if (token) {
       try {
         if (authType === 'signup') {
-          dispatch(createHostProfile({ name: res.data.name }));
+          dispatch(createHostProfile({ name: result.user.name }));
         }
         dispatch(getHostCurrentProfile());
       } catch (e) {

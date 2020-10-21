@@ -29,7 +29,7 @@ const UserName = ({route}) => {
           }}
           validationSchema={userNameSchema}
           onSubmit={(values) => {
-            dispatch(username(values.userName, values.bio, email));
+            dispatch(username(values.userName, values.bio, email, cocTag));
           }}
         >
           {(formikprops) => (
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
-    backgroundColor: '#fff',
+    backgroundColor: '#232931',
     justifyContent: 'center',
     alignContent: 'center',
   },

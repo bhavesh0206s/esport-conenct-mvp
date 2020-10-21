@@ -13,12 +13,13 @@ const Host = require('../../models/Host');
 module.exports = (app) => {
 
   app.post('/api/signup/:email/:username', async (req ,res)=>{
+    let user;
     try{
       const {fromHost} = req.body;
       const username = req.params.username;
       const email = req.params.email;
-      console.log(req.body, username)
-      let user;
+      console.log(req.body, username, email)
+      // let user;
       if(fromHost){
         user = await Host.findOne({ username });
       }else{
@@ -46,6 +47,7 @@ module.exports = (app) => {
       }
     }catch(e){
       res.status(500).send('Server Error');
+      console.log(user)
       console.error('login error username signup server: ', e.message);
     }
   });

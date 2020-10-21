@@ -45,10 +45,9 @@ export const loadUser = () => async (dispatch) => {
     });
   }
 };
-export const username = (username, bio, email, fromHost) => async (dispatch) =>{
+export const username = (username, bio, email, cocTag, fromHost) => async (dispatch) =>{
   dispatch(loading(true))
   try {
-
     const res = await axios.post(
       `http://${ipAddress}/api/signup/${email}/${username}`,
       {fromHost}
@@ -60,13 +59,14 @@ export const username = (username, bio, email, fromHost) => async (dispatch) =>{
     });
 
     let argu = {username,bio};
+    let arguPlayer = {username,bio, cocTag};
+    
     console.log('username succes');
     if(fromHost){
-      console.log(argu)
       dispatch(createHostProfile(argu))
       dispatch(loadUser());
     }else{
-      dispatch(createProfile(argu));
+      dispatch(createProfile(arguPlayer));
       dispatch(loadUser());
     }
 

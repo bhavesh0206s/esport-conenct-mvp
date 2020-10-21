@@ -68,11 +68,13 @@ module.exports = (app) => {
       // facebook,
       // platformname,
       // link,
+      cocTag,
       name,
       username,
       // tag,
     } = req.body;
     // build profile object
+    console.log(req.body)
     console.log('createProfile: ',req.user.email)
     let profileFields = {};
     profileFields.email = req.user.email;
@@ -83,6 +85,7 @@ module.exports = (app) => {
     // profileFields.otherlinks = [];
     profileFields.bio = bio;
     profileFields.username = username;
+    profileFields.cocTag = cocTag;
     // profileFields.followers = followers;
     // profileFields.following = following;
     // if (location) profileFields.location = location;

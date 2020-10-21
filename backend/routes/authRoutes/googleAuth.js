@@ -75,7 +75,7 @@ module.exports = (app) => {
     let auth ;
     try {
       let { name, email } = req.body;
-      console.log(name, email)
+
       let host = await Host.findOne({ email });
       // See if user exits
       if (host) {
