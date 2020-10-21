@@ -33,7 +33,7 @@ const GoogleUsername = ({route}) => {
           }}
           validationSchema={userNameSchema}
           onSubmit={(values) => {
-            dispatch(username(values.userName, values.bio, emailGoogle, values.cocTag, fromHost));
+            dispatch(username(values.userName.trim(), values.bio, emailGoogle, values.cocTag.trim(), fromHost));
           }}
         >
           {(formikprops) => (

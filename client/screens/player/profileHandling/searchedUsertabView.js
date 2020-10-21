@@ -6,15 +6,19 @@ import AchivementCard from '../../../components/achivementCard';
 const achivementData = [
   {
     id: '4561232',
-    title: 'Pubg Winner',
+    title: 'PUBG',
   },
   {
     id: '7894654',
-    title: 'COD Winner',
+    title: 'Call of Duty',
   },
   {
     id: '7989878',
     title: 'Clash Royale',
+  },
+  {
+    id: '7989878',
+    title: 'Clash of Clans',
   },
 ];
 

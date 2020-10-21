@@ -6,9 +6,9 @@ const AchivementCard = ({title}) => {
   return (
     <Card containerStyle={styles.card} >
       <Card.Title style={{color: '#eeeeee'}}>{title}</Card.Title>
-      <Card.Image source={require("../assets/cr.jpg")} />
-      <Text>
-        Idhar achivement ka description hoga
+      {/* <Card.Image source={require("../assets/cr.jpg")} /> */}
+      <Text style={{textAlign: 'center',color: 'grey'}}>
+        NO ACHIVEMENT
       </Text>
     </Card>
   );

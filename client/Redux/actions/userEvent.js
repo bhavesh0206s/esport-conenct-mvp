@@ -25,7 +25,7 @@ export const getUserEventInfo = (username, eventId) => async (dispatch) => {
     }).filter(item => item !== undefined);
     
     let players = playersDetails[0].map((item, i) => ({name: item.name, username: item.username, key: i, teamLeader: item.teamLeader}));
-    console.log(players)
+
     dispatch({
       type: USER_EVENT_INFO,
       payload: players

@@ -27,9 +27,9 @@ export const loadUser = () => async (dispatch) => {
   const token = await AsyncStorage.getItem('token');
   if (token !== null) {
     setAuthToken(token);
-    console.log('token set successfull');
+    // console.log('token set successfull');
   } else {
-    console.log('notoken');
+    // console.log('notoken');
   }
 
   try {
@@ -136,7 +136,7 @@ export const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
 
   try {
-    console.log('wait logging in......');
+    // console.log('wait logging in......');
     const res = await axios.post(
       `http://${ipAddress}/api/login`,
       body,
@@ -155,7 +155,7 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch(getCurrentProfile());
     dispatch(loading(false))
-    console.log('logged in succesfull......');
+    // console.log('logged in succesfull......');
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
     // that we setted as errors.array

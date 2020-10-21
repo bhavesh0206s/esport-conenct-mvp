@@ -142,7 +142,7 @@ module.exports = (app) => {
   app.get('/api/profiles/usersbyname/:username', async (req, res) => {
     try {
       const profiles = await Profile.find({
-        username: { $regex: '^' + req.params.username, $options: 'i' },
+        name: { $regex: '^' + req.params.username, $options: 'i' },
       })
         .sort({ followers: -1 })
         .limit(10);

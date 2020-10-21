@@ -127,7 +127,6 @@ const AddEvent = ({ setModalOpen }) => {
         onSubmit={(values, actions) => {
           let currentDatetime = moment(therealtime, 'DD-MM-YYYY hh:mm:ss');
           values.time = currentDatetime;
-          console.log(hostProfile);
           values.hostedBy = hostProfile.username;
           values.hostedById = hostProfile.user;
           if (!values.entryFee) {
@@ -277,12 +276,12 @@ const AddEvent = ({ setModalOpen }) => {
           onChange={onChange}
         />
       )}
-        <View>
+        {/* <View>
           <Text>
             Seems like you haven't set the date correctly,set it and then you
             can submit for verification
           </Text>
-        </View>
+        </View> */}
     </View>
   );
 };

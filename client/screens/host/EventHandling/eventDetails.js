@@ -14,7 +14,6 @@ const EventDetails = ({ navigation }) => {
     loading: state.loading,
     eventInfo: state.details,
   }));
-  console.log(eventInfo);
   const { eventdetails, imageUri, viewingProfile, showhostBy } = eventInfo;
   const [eventTime, setEventTime] = useState(
     moment(eventdetails.time).format("dddd, MMMM Do YYYY, h:mm:ss a")
@@ -40,7 +39,6 @@ const EventDetails = ({ navigation }) => {
 
   const handleHostEventRemove = () => {
     let hostedBy = hostProfile.username;
-    console.log(hostedBy);
     dispatch(deleteHostedEvent(eventdetails, hostedBy));
     navigation.navigate("Home");
   };

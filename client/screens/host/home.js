@@ -30,7 +30,7 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     const loadHome = async () => {
-      console.log('Home Page refreshed');
+      // console.log('Home Page refreshed');
       const token = await AsyncStorage.getItem('token');
       if (token !== null) {
         setAuthToken(token);

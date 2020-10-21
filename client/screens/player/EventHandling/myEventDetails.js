@@ -53,6 +53,11 @@ const MyEventDetails = ({ item, navigation, deleteEvent}) => {
       />
       <View>
         <Button
+          buttonStyle={styles.btnStyle}
+          onPress={showDetails}
+          title="TEAM INFO"
+        />
+        <Button
           buttonStyle={styles.btnStyleDelete}
           icon={<MaterialCommunityIcons name="cancel" size={15} color='#fff' />}
           onPress={() => setModalOpen(true)}
@@ -68,6 +73,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#d9534f',
     borderRadius: 0,
     marginBottom: 20,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5
+  },
+  btnStyle:{
+    borderRadius: 0,
+    // marginBottom: 20,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5
   },
