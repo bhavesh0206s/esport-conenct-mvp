@@ -8,12 +8,14 @@ const EventHostedCard = ({ item, navigation, type }) => {
   const [imageUri, setImageUri] = useState("sd");
   
   useEffect(() => {
-    if (item.game === "PUBG") {
+    if (item.game === 'PUBG') {
       setImageUri(gameImage.pubg.uri);
-    } else if (item.game === "COD") {
+    } else if (item.game === 'COD') {
       setImageUri(gameImage.cod.uri);
-    } else {
+    } else if (item.game === 'Clash Royale') {
       setImageUri(gameImage.clashRoyale.uri);
+    } else{
+      setImageUri(gameImage.coc.uri)
     }
   }, []);
 

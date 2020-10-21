@@ -29,7 +29,7 @@ const SearchedHostTabView = () => {
 
   const reviews = () => (
     <View>
-      <Text>Idar Review Aahe Ge</Text>
+      <Text style={{fontSize: 20, textAlign: 'center'}}>No reviews</Text>
     </View>
   );
 
