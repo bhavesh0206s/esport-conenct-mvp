@@ -1,9 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import * as AppAuth from 'expo-app-auth';
-import { GOOGLE_LOGIN, GOOGLE_LOGOUT, GET_CACHED_AUTH_ASYNC } from './types';
+import { GOOGLE_LOGIN } from './types';
 import axios from 'axios';
 import { ipAddress } from '../ipaddress';
-import { loadUser } from './auth';
 import { setAlert } from './alert';
 import {
   getCurrentProfile,
@@ -13,26 +11,30 @@ import {
 } from './profile';
 import { loading } from './loading';
 
-let config = {
-  issuer: 'https://accounts.google.com',
-  scopes: ['profile', 'email'],
-  clientId:
-    '467702790820-h5khac5p024mdudn3956thvg0jns445i.apps.googleusercontent.com',
-};
+import * as Google from "expo-google-app-auth";
+
 
 export const signInAsync = (navigation, fromHost = false) => async (
   dispatch
 ) => {
   try {
     dispatch(loading(true));
-    let authState = await AppAuth.authAsync(config);
-    let res = await axios.get(
-      `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${authState.accessToken}`
-    );
+    const result = await Google.logInAsync({
+      androidClientId: "360005122700-75e1422nmjkgmqeosg7oca3olhps9ea0.apps.googleusercontent.com",
+      androidStandaloneAppClientId: "360005122700-9rqhfuk9tvsicq0sfb1p50docfvtg7pd.apps.googleusercontent.com",
+      scopes: ['profile', 'email'],
+    });
+    let googleAccessToken;
+    if (result.type === 'success') {
+      googleAccessToken = result.accessToken;
+      console.log(result.user)
+    } else {
+      return { cancelled: true };
+    }
 
     let resServer = await axios.post(
       `http://${ipAddress}/api/google/login`,
-      res.data
+      result.user
     );
 
     await AsyncStorage.setItem('token', resServer.data.token);
@@ -56,7 +58,7 @@ export const signInAsync = (navigation, fromHost = false) => async (
       }
     }
     dispatch(loading(false));
-  } catch (e) {
+  }catch (e) {
     const errors = e.response.data.errors;
     // this errors are the errors send form the backend
     if (errors) {
@@ -69,15 +71,24 @@ export const signInAsync = (navigation, fromHost = false) => async (
   }
 };
 
+
 export const signInHostAsync = (navigation, fromHost = true) => async (
   dispatch
 ) => {
   try {
     dispatch(loading(true));
-    let authState = await AppAuth.authAsync(config);
-    let res = await axios.get(
-      `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${authState.accessToken}`
-    );
+    const result = await Google.logInAsync({
+      androidClientId: "360005122700-75e1422nmjkgmqeosg7oca3olhps9ea0.apps.googleusercontent.com",
+      androidStandaloneAppClientId: "360005122700-9rqhfuk9tvsicq0sfb1p50docfvtg7pd.apps.googleusercontent.com",
+      scopes: ['profile', 'email'],
+    });
+    let googleAccessToken;
+    if (result.type === 'success') {
+      googleAccessToken = result.accessToken;
+      console.log(result.user)
+    } else {
+      return { cancelled: true };
+    }
 
     let resServer = await axios.post(
       `http://${ipAddress}/api/google/host/login`,

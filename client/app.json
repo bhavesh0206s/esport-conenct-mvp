@@ -27,7 +27,8 @@
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
-      "useNextNotificationsApi": true
+      "useNextNotificationsApi": true,
+      "package": "com.bhavesh123.ebind"
     },
     "description": "We rule the Esport Industry"
   }
