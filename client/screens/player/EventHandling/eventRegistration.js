@@ -43,7 +43,7 @@ const EventRegistration = ({ route, navigation }) => {
   const handlingTeamMember = (memberDetail) => {
     if (memberDetail.username === eventdetails.hostedBy) {
       alert("You can't add Host of the Event.");
-    } else if (!memberDetail.gameIds[eventdetails.game]) {
+    } else if (memberDetail.gameIds[eventdetails.game] !== "") {
       alert(`${memberDetail.name} has not provided ${eventdetails.game} Id!`);
     } else {
       memberDetail = {

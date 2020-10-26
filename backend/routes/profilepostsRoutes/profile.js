@@ -31,7 +31,7 @@ module.exports = (app) => {
     let {
       bio,
       gameIds: {
-        pubg,
+        PUBG,
         coc,
         cr,
         cod,
@@ -42,7 +42,7 @@ module.exports = (app) => {
 
     let profileFields = {};
     profileFields.bio = bio;
-    profileFields.gameIds.pubg = pubg;
+    profileFields.gameIds.PUBG = PUBG;
     profileFields.gameIds.coc = coc;
     profileFields.gameIds.cr = cr;
     profileFields.gameIds.cod = cod;
