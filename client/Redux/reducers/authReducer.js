@@ -8,6 +8,7 @@ import {
   LOGOUT,
   GOOGLE_LOGIN,
   CREATE_USERNAME,
+  USER_LOADED_NO_USERNAME,
   // ACCOUNT_DELETED,
 } from '../actions/types';
 
@@ -61,6 +62,11 @@ export default (state = initialState, action) => {
         user: payload.user,
         fromHost: payload.fromHost,
         isUserNameVerified: true,
+      };
+    case USER_LOADED_NO_USERNAME:
+      console.log('USER_LOADED_NO_USERNAME-SUCCESSFULL');
+      return {
+        ...state,
       };
     case LOGIN_FAIL:
     case REGISTER_FAIL:
