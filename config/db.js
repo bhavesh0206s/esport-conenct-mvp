@@ -1,15 +1,15 @@
-const mongoose = require('mongoose');
-const keys = require('./keys')
+const mongoose = require("mongoose");
+const keys = require("./keys");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(keys.mongoURI_pro, {
+    await mongoose.connect(keys.mongoURI_dev, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false,
     });
-    console.log('Database connected...');
+    console.log("Database connected...");
   } catch (err) {
     console.error(err.message);
     //  Exit process with failure
