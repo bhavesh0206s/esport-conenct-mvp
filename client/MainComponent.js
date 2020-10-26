@@ -1,56 +1,62 @@
-{
-  "main": "node_modules/expo/AppEntry.js",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject"
-  },
-  "dependencies": {
-    "@react-native-community/async-storage": "~1.12.0",
-    "@react-native-community/datetimepicker": "3.0.0",
-    "@react-native-community/masked-view": "0.1.10",
-    "@react-native-community/picker": "1.6.6",
-    "@react-navigation/bottom-tabs": "^5.4.5",
-    "@react-navigation/drawer": "^5.7.4",
-    "@react-navigation/material-top-tabs": "^5.2.16",
-    "@react-navigation/native": "^5.3.2",
-    "@react-navigation/stack": "^5.3.5",
-    "axios": "^0.19.2",
-    "expo": "^39.0.0",
-    "expo-font": "~8.3.0",
-    "expo-google-app-auth": "^8.1.3",
-    "expo-linear-gradient": "~8.3.0",
-    "expo-notifications": "~0.7.2",
-    "formik": "^2.1.4",
-    "moment": "^2.27.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
-    "react-native-elements": "^2.3.2",
-    "react-native-gesture-handler": "~1.7.0",
-    "react-native-material-ripple": "^0.9.1",
-    "react-native-modal": "^11.5.6",
-    "react-native-paper": "^3.10.1",
-    "react-native-picker-select": "^7.0.0",
-    "react-native-reanimated": "~1.13.0",
-    "react-native-safe-area-context": "3.1.4",
-    "react-native-screens": "~2.10.1",
-    "react-native-svg": "12.1.0",
-    "react-native-tab-view": "^2.15.1",
-    "react-native-web": "~0.13.7",
-    "react-native-webview": "10.7.0",
-    "react-navigation-transitions": "^1.0.12",
-    "react-redux": "^7.2.0",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "yup": "^0.28.5"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.8.6",
-    "babel-preset-expo": "^8.3.0",
-    "redux-devtools-extension": "^2.13.8"
-  },
-  "private": true
-}
+import React, { useEffect, useState } from 'react';
+import { AppLoading } from 'expo';
+import { ThemeProvider } from 'react-native-elements';
+import { theme } from './styles/theme';
+import { View, Platform, KeyboardAvoidingView} from 'react-native';
+import AuthStack from './routes/authStack';
+import { globalStyles } from './styles/global';
+import { useSelector, useDispatch } from 'react-redux';
+import PlayerDrawerStack from './routes/player/drawerStack';
+import HostDrawerStack from './routes/host/drawerStack';
+import Alert from './shared/alert';
+import AsyncStorage from '@react-native-community/async-storage';
+import setAuthToken from './Redux/setAuthToken';
+import { loadUser, logout } from './Redux/actions/auth';
+import { getCurrentProfile, getHostCurrentProfile } from './Redux/actions/profile';
+
+const MainComponent = () => {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const isAuthenticated = auth.isAuthenticated;
+  const isUserNameVerified = auth.isUserNameVerified;
+  const fromHost = auth.fromHost;
+  
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const userLoad = async () => {
+      const token = await AsyncStorage.getItem('token');
+      if (token !== null) {
+        dispatch(loadUser());
+        dispatch(getHostCurrentProfile());
+        dispatch(getCurrentProfile());
+      }
+      setTimeout(() => {
+        setIsReady(true);
+      }, 300);
+      // await AsyncStorage.removeItem('token');
+    };
+    userLoad();
+    console.log('Maincomponent page refreshed');
+  }, []);
+
+  if (!isReady) {
+    return <AppLoading />;
+  } else {
+    return (
+      <ThemeProvider theme={theme} >
+        <View style={globalStyles.container}>
+          <Alert />
+          {(!isAuthenticated && !isUserNameVerified )? 
+            (
+              <AuthStack />
+            ) : fromHost ? <HostDrawerStack /> : <PlayerDrawerStack/>
+            }
+          {/* <Button title='LogOut' onPress={() => dispatch(logout())} /> */}
+        </View>
+      </ThemeProvider>
+    );
+  }
+};
+
+export default MainComponent;
