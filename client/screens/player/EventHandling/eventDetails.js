@@ -6,9 +6,7 @@ import moment from "moment";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getHostProfileById } from "../../../Redux/actions/profile";
-import {
-  eventRegistration,
-} from "../../../Redux/actions/event";
+import { eventRegistration } from "../../../Redux/actions/event";
 import Loading from "../../../shared/loading";
 import { CLEARPARTICULARUSER } from "../../../Redux/actions/types";
 import ConfirmModal from "../../../shared/confirmModal";
@@ -44,23 +42,27 @@ const EventDetails = ({ route, navigation }) => {
   } = eventdetails;
 
   const handleRegistration = () => {
-    dispatch(
-      eventRegistration({
-        registerinfo: {
-          email: userProfile.email,
-          name: userProfile.name,
-          contact: userProfile.contact,
-          username: userProfile.username,
-          user: userProfile.user,
-        },
-        eventdetails,
-        eventId: _id,
-        usereventId: user,
-        teamsize,
-      })
-    );
-    setModalOpen(false);
-    navigation.navigate("Event");
+    if (userProfile.gameIds[game]) {
+      dispatch(
+        eventRegistration({
+          registerinfo: {
+            email: userProfile.email,
+            name: userProfile.name,
+            contact: userProfile.contact,
+            username: userProfile.username,
+            user: userProfile.user,
+          },
+          eventdetails,
+          eventId: _id,
+          usereventId: user,
+          teamsize,
+        })
+      );
+      setModalOpen(false);
+      navigation.navigate("Event");
+    } else {
+      alert(`Your ${game} Id is not provided`);
+    }
   };
 
   const handleSubmit = () => {
@@ -68,6 +70,8 @@ const EventDetails = ({ route, navigation }) => {
       alert("Host of the Event, can't Register!");
     } else if (eventId.indexOf(_id) !== -1) {
       alert("Already Registered!!");
+    } else if (userProfile.gameIds[game]) {
+      alert(`Your ${game} Id is not provided`);
     } else if (teamsize === 1) {
       setModalOpen(true);
     } else {
@@ -89,7 +93,7 @@ const EventDetails = ({ route, navigation }) => {
       <>
         {showhostBy && (
           <View>
-            <Text style={{color: "#95bdb5"}}>Hosted by: </Text>
+            <Text style={{ color: "#95bdb5" }}>Hosted by: </Text>
             <TouchableOpacity onPress={showHostProfile}>
               <View style={{ flexDirection: "row" }}>
                 <Text style={{ fontSize: 18 }}>{hostProfile.name} </Text>
@@ -102,8 +106,8 @@ const EventDetails = ({ route, navigation }) => {
           </View>
         )}
       </>
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     navigation.setParams({
@@ -124,8 +128,8 @@ const EventDetails = ({ route, navigation }) => {
     imageUri,
     eventTime,
     isHost: true,
-    btnTitle: 'REGISTRATION',
-  }
+    btnTitle: "REGISTRATION",
+  };
 
   if (loading) {
     return (
@@ -142,7 +146,7 @@ const EventDetails = ({ route, navigation }) => {
           modalOpen={modalOpen}
           handleOk={handleRegistration}
         />
-        <EventDetailsCard 
+        <EventDetailsCard
           {...props}
           handleOnPress={handleSubmit}
           renderHostDetails={renderHostDetails}

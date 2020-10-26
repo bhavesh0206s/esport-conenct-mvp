@@ -1,14 +1,14 @@
-const express = require('express');
-const verify = require('../../verifytokenmw/verify_mv');
+const express = require("express");
+const verify = require("../../verifytokenmw/verify_mv");
 // const { check, validationResult } = require('express-validator');
-const User = require('../../models/User');
-const Profile = require('../../models/Profile');
+const User = require("../../models/User");
+const Profile = require("../../models/Profile");
 
 module.exports = (app) => {
   // Note:--
   // req.user.id comes from the token
 
-  app.get('/api/profile/me', verify, async (req, res) => {
+  app.get("/api/profile/me", verify, async (req, res) => {
     try {
       const profile = await Profile.findOne({
         user: req.user.id,
@@ -17,25 +17,41 @@ module.exports = (app) => {
       if (!profile) {
         return res
           .status(400)
-          .json({ msg: 'There is no profile for this user' });
+          .json({ msg: "There is no profile for this user" });
       }
 
       res.json(profile);
     } catch (err) {
-      console.error('error from profile: ', err.message);
-      res.status(500).send('Server Error');
+      console.error("error from profile: ", err.message);
+      res.status(500).send("Server Error");
     }
   });
 
-  app.post('/api/profile/update/me', verify, async (req, res) =>{
-    
+  app.post("/api/profile/update/me", verify, async (req, res) => {
     let {
-      bio
+      bio,
+      gameIds: {
+        pubg,
+        coc,
+        cr,
+        cod,
+        freefire,
+        valorant: { riotId, tagline },
+      },
     } = req.body;
-  
+
     let profileFields = {};
     profileFields.bio = bio;
-    
+    profileFields.gameIds.pubg = pubg;
+    profileFields.gameIds.coc = coc;
+    profileFields.gameIds.cr = cr;
+    profileFields.gameIds.cod = cod;
+    profileFields.gameIds.freefire = freefire;
+    profileFields.gameIds.valorant = {
+      riotId,
+      tagline,
+    };
+
     try {
       // Using upsert option (creates new doc if no match is found):
       let profile = await Profile.findOneAndUpdate(
@@ -43,15 +59,15 @@ module.exports = (app) => {
         { $set: profileFields },
         { new: true, upsert: true }
       );
-      console.log('updating new profile....');
+      console.log("updating new profile....");
       res.json(profile);
     } catch (err) {
-      res.status(500).send('Server Error');
-      console.error('error from upadteProfile API: ',err.message);
+      res.status(500).send("Server Error");
+      console.error("error from upadteProfile API: ", err.message);
     }
   });
 
-  app.post('/api/profile/me', verify, async (req, res) => {
+  app.post("/api/profile/me", verify, async (req, res) => {
     let {
       bio,
       gameinterest,
@@ -68,14 +84,14 @@ module.exports = (app) => {
       // facebook,
       // platformname,
       // link,
-      cocTag,
+
       name,
       username,
       // tag,
     } = req.body;
     // build profile object
-    console.log(req.body)
-    console.log('createProfile: ',req.user.email)
+    console.log(req.body);
+    console.log("createProfile: ", req.user.email);
     let profileFields = {};
     profileFields.email = req.user.email;
     profileFields.user = req.user.id;
@@ -85,7 +101,6 @@ module.exports = (app) => {
     // profileFields.otherlinks = [];
     profileFields.bio = bio;
     profileFields.username = username;
-    profileFields.cocTag = cocTag;
     // profileFields.followers = followers;
     // profileFields.following = following;
     // if (location) profileFields.location = location;
@@ -94,7 +109,7 @@ module.exports = (app) => {
     // if (platformname && link)
     //   profileFields.otherlinks.push({ platformname, link });
     if (gameinterest) {
-      let arr = gameinterest.split(',').map((str) => {
+      let arr = gameinterest.split(",").map((str) => {
         return str.trim();
       });
       profileFields.gameinterest = arr;
@@ -112,10 +127,10 @@ module.exports = (app) => {
         { $set: profileFields },
         { new: true, upsert: true }
       );
-      
+
       res.json(profile);
     } catch (err) {
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
       console.error(err.message);
     }
   });
@@ -125,24 +140,24 @@ module.exports = (app) => {
   // access Public
   // This is not for specific user because it returns multiple users almost matching with same name
   // This will be helpfull when someone searches for another player or organization
-  app.get('/api/profile/userbyname/:username', async (req, res) => {
+  app.get("/api/profile/userbyname/:username", async (req, res) => {
     try {
       const profile = await Profile.findOne({
-        username: req.params.username
-      })
+        username: req.params.username,
+      });
       // This {{followers: -1}} means that users with the highest followers will be shown first
 
       res.json(profile);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   });
 
-  app.get('/api/profiles/usersbyname/:username', async (req, res) => {
+  app.get("/api/profiles/usersbyname/:username", async (req, res) => {
     try {
       const profiles = await Profile.find({
-        name: { $regex: '^' + req.params.username, $options: 'i' },
+        name: { $regex: "^" + req.params.username, $options: "i" },
       })
         .sort({ followers: -1 })
         .limit(10);
@@ -150,7 +165,7 @@ module.exports = (app) => {
       res.json(profiles);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   });
 
@@ -158,19 +173,19 @@ module.exports = (app) => {
   // @desc     Get profile by user ID
   // @access   Public
   // This is for specific user searched
-  app.get('/api/profile/userbyid/:user_id', async (req, res) => {
+  app.get("/api/profile/userbyid/:user_id", async (req, res) => {
     try {
       const profile = await Profile.findOne({
         user: req.params.user_id,
       });
       // .populate('user', ['name']);
 
-      if (!profile) return res.status(400).json({ msg: 'Profile not found' });
+      if (!profile) return res.status(400).json({ msg: "Profile not found" });
 
       res.json(profile);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   });
 
@@ -178,7 +193,7 @@ module.exports = (app) => {
   // @desc     Follow a user
   // @access   Private
   //  This is if user want to follow someone
-  app.put('/api/profile/followhandle/:id', verify, async (req, res) => {
+  app.put("/api/profile/followhandle/:id", verify, async (req, res) => {
     try {
       const profile = await Profile.findById(req.params.id); // This is the profile of the person
       // to whom we are going to follow
@@ -194,7 +209,7 @@ module.exports = (app) => {
         // Here follow.user.toString === me in the list of followers of the profile of the guy i am
         // looking to follow
       ) {
-        return res.status(400).json({ msg: 'You are already following' });
+        return res.status(400).json({ msg: "You are already following" });
       }
 
       // This will push into my list of following
@@ -213,7 +228,7 @@ module.exports = (app) => {
       });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   });
 
@@ -221,7 +236,7 @@ module.exports = (app) => {
   // @desc     Unfollow a user
   // @access   Private
   //  This is if user want to unfollow someone
-  app.put('/api/profile/unfollowhandle/:id', verify, async (req, res) => {
+  app.put("/api/profile/unfollowhandle/:id", verify, async (req, res) => {
     try {
       const profile = await Profile.findById(req.params.id); // This is the profile of the person
       // to whom we are going to unfollow
@@ -266,7 +281,7 @@ module.exports = (app) => {
       });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   });
 

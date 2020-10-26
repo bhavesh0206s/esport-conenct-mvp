@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const keys = require('./keys')
+const mongoose = require("mongoose");
+const keys = require("./keys");
 
 const connectDB = async () => {
   try {
@@ -9,7 +9,7 @@ const connectDB = async () => {
       useCreateIndex: true,
       useFindAndModify: false,
     });
-    console.log('Database connected...');
+    console.log("Database connected...");
   } catch (err) {
     console.error(err.message);
     //  Exit process with failure

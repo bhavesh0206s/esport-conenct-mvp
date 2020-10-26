@@ -1,14 +1,45 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const profileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
   email: String,
   DOB: Date,
-  cocTag: String,
+  gameIds: {
+    PUBG: {
+      type: String,
+      default: "",
+    },
+    coc: {
+      type: String,
+      default: "",
+    },
+    cr: {
+      type: String,
+      default: "",
+    },
+    cod: {
+      type: String,
+      default: "",
+    },
+    freefire: {
+      type: String,
+      default: "",
+    },
+    valorant: {
+      riotId: {
+        type: String,
+        default: "",
+      },
+      tagline: {
+        type: String,
+        default: "",
+      },
+    },
+  },
   myevents: [
     {
       game: {
@@ -49,16 +80,16 @@ const profileSchema = new Schema({
   // },
   name: {
     type: String,
-    default: '',
+    default: "",
   },
   bio: {
     type: String,
-    default: '',
+    default: "",
   },
   username: {
     type: String,
     unique: true,
-    default: '',
+    default: "",
   },
   // numoffollowers:{type:Number},
   // numoffollowing:{type:Number},
@@ -136,6 +167,6 @@ const profileSchema = new Schema({
   },
 });
 
-const Profile = mongoose.model('profile', profileSchema);
+const Profile = mongoose.model("profile", profileSchema);
 
 module.exports = Profile;
