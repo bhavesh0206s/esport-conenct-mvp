@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { Avatar, Icon, Text } from "react-native-elements";
+import { gameImage } from "../shared/gameImage";
 
-const CommonEventHostedCard = ({ item, navigation, type, imageUri }) => {
+const EventHostedCard = ({ item, navigation, type }) => {
+
+  const [imageUri, setImageUri] = useState("sd");
+  
+  useEffect(() => {
+    if (item.game === 'PUBG') {
+      setImageUri(gameImage.pubg.uri);
+    } else if (item.game === 'COD') {
+      setImageUri(gameImage.cod.uri);
+    } else if (item.game === 'Clash Royale') {
+      setImageUri(gameImage.clashRoyale.uri);
+    } else{
+      setImageUri(gameImage.coc.uri)
+    }
+  }, []);
+
   return (
     <View style={styles.card}>
       <TouchableOpacity
@@ -54,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CommonEventHostedCard;
+export default EventHostedCard;

@@ -1,18 +1,14 @@
 import React from 'react';
 import {
   createStackNavigator,
-  TransitionPresets,
   CardStyleInterpolators,
   HeaderBackButton,
 } from '@react-navigation/stack';
 import Home from '../../../screens/host/home';
 import Header from '../../../shared/header';
-import EventTabView from '../../../screens/host/EventHandling/eventTabView';
 import { Easing, StyleSheet } from 'react-native';
 import { animationConfig } from '../../../shared/routeAnimationConfig';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import EventDetailsCard from '../../../screens/host/EventHandling/eventDetailsCard';
-import Participants from '../../../screens/host/EventHandling/participants';
 import Animated from 'react-native-reanimated';
 import { View, TouchableOpacity } from 'react-native';
 import EventDetailsTopNavStack from './eventDetailsTopNavStack';

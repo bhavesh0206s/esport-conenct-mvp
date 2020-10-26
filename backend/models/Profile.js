@@ -8,7 +8,7 @@ const profileSchema = new Schema({
   },
   email: String,
   DOB: Date,
-  
+  cocTag: String,
   myevents: [
     {
       game: {

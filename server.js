@@ -25,10 +25,10 @@ require('./backend/routes/profilepostsRoutes/post')(app);
 require('./backend/routes/event')(app);
 require('./backend/routes/hostProfileRoutes/hostProfile')(app);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () => {
-  console.log('Listen to Port to 3000');
+  console.log('Listen to Port to 5000');
 });
 
 

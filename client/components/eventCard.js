@@ -1,30 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
-import { Text, Card, Button, Icon, Image } from 'react-native-elements';
-import { gameImage } from '../../../shared/gameImage';
 import moment from 'moment';
-import { useSelector, useDispatch } from 'react-redux';
-import { deleteMyEvent } from '../../../Redux/actions/event';
+import { View, StyleSheet } from 'react-native';
+import { Text, Card, Button, Icon, Image } from 'react-native-elements';
 
-const EventCard = ({ item, navigation }) => {
-  const [imageUri, setImageUri] = useState('sd');
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (item.game === 'PUBG') {
-      setImageUri(gameImage.pubg.uri);
-    } else if (item.game === 'COD') {
-      setImageUri(gameImage.cod.uri);
-    } else {
-      setImageUri(gameImage.clashRoyale.uri);
-    }
-  }, []);
-
+const EventCard = ({ item, handleSubmit, imageUri }) => {
   return (
     <>
       <Card containerStyle={styles.container} >
@@ -64,14 +43,7 @@ const EventCard = ({ item, navigation }) => {
           icon={<Icon name="description" color="#ffffff" />}
           buttonStyle={styles.btnStyle}
           containerStyle={styles.btnContainer}
-          onPress={() => {
-            navigation.navigate('EventDetailsCard', {
-              eventdetails: item,
-              imageUri,
-              viewingProfile: false,
-              showhostBy: true,
-            });
-          }}
+          onPress={handleSubmit}
           title="DETAILS"
         />
       </View>

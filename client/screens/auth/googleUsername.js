@@ -10,6 +10,7 @@ import Loading from '../../shared/loading';
 const userNameSchema = yup.object({
   userName: yup.string().required().min(3),
   bio: yup.string().required(),
+  cocTag: yup.string().required(),
 });
 
 const GoogleUsername = ({route}) => {
@@ -32,14 +33,13 @@ const GoogleUsername = ({route}) => {
           }}
           validationSchema={userNameSchema}
           onSubmit={(values) => {
-            dispatch(username(values.userName, values.bio, emailGoogle, fromHost));
+            dispatch(username(values.userName.trim(), values.bio, emailGoogle, values.cocTag.trim(), fromHost));
           }}
         >
           {(formikprops) => (
             <View>
               <Input
                 leftIcon={<Icon name="face" size={24} color="#4ecca3" />}
-                style={styles.input}
                 placeholder={'Unique Username...'}
                 onChangeText={formikprops.handleChange('userName')}
                 value={formikprops.values.userName}
@@ -49,13 +49,20 @@ const GoogleUsername = ({route}) => {
                 }
               />
               <Input
-                style={styles.input}
                 multiline
                 placeholder={'Tell Us About You...'}
                 onChangeText={formikprops.handleChange('bio')}
                 value={formikprops.values.bio}
                 onBlur={formikprops.handleBlur('bio')}
                 errorMessage={formikprops.touched.bio && formikprops.errors.bio}
+              />
+              <Input
+                multiline
+                placeholder={'Clash of Clan Player Tag...'}
+                onChangeText={formikprops.handleChange('cocTag')}
+                value={formikprops.values.cocTag}
+                onBlur={formikprops.handleBlur('cocTag')}
+                errorMessage={formikprops.touched.cocTag && formikprops.errors.cocTag}
               />
               <Button buttonStyle={styles.button} onPress={formikprops.handleSubmit} title="Submit" />
             </View>
@@ -70,7 +77,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
-    backgroundColor: '#fff',
+    backgroundColor: '#232931',
     justifyContent: 'center',
     alignContent: 'center',
   },

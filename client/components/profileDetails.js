@@ -1,18 +1,29 @@
 import React from "react";
 import { View, StyleSheet, ImageBackground } from "react-native";
 import { Avatar, Button, Text } from "react-native-elements";
-import SearchedUserTabView from "../../screens/player/profileHandling/searchedUsertabView";
-import SearchedHostTabView from "../../screens/player/profileHandling/searchedHostTabView ";
+import { AntDesign } from "@expo/vector-icons";
 
-const CommonSearchedProfile = ({ isHostProfile, particularUser }) => {
+const ProfileDetails = ({
+  bio,
+  username,
+  name,
+  handleEdit,
+}) => {
   return (
     <>
       <View style={styles.container}>
         <ImageBackground
-          source={require("../../assets/coverProfile.jpg")}
+          source={require("../assets/coverProfile.jpg")}
           style={styles.image}
         >
           <View style={styles.content}>
+            <View style={styles.edit}>
+              <Button
+                icon={<AntDesign name="edit" size={24} color="white" />}
+                buttonStyle={{ marginBottom: 10, paddingHorizontal: 10 }}
+                onPress={handleEdit}
+              />
+            </View>
             <Avatar
               size={80}
               rounded
@@ -23,26 +34,21 @@ const CommonSearchedProfile = ({ isHostProfile, particularUser }) => {
             />
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontSize: 15, color: "#95bdb5" }}>
-                ( {particularUser.username ? particularUser.username : ""} )
+                ( {username ? username : ""} )
               </Text>
             </View>
             <View style={{ alignItems: "center" }}>
-              <Text style={{ fontSize: 25, fontWeight: "bold" }}>
-                {particularUser.name}
-              </Text>
+              <Text style={{ fontSize: 25, fontWeight: "bold" }}>{name}</Text>
             </View>
           </View>
         </ImageBackground>
         <View style={styles.about}>
           <Text style={{ fontSize: 14, color: "gray" }}>About: </Text>
           <Text style={{ fontSize: 16, color: "#95bdb5" }}>
-            {particularUser.bio
-              ? particularUser.bio
-              : "Please fill this pepole want to know about you"}
+            {bio ? bio : "Please fill this pepole want to know about you"}
           </Text>
         </View>
       </View>
-      {isHostProfile ? <SearchedHostTabView /> : <SearchedUserTabView />}
     </>
   );
 };
@@ -81,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CommonSearchedProfile;
+export default ProfileDetails;

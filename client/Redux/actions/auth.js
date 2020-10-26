@@ -27,9 +27,9 @@ export const loadUser = () => async (dispatch) => {
   const token = await AsyncStorage.getItem('token');
   if (token !== null) {
     setAuthToken(token);
-    console.log('token set successfull');
+    // console.log('token set successfull');
   } else {
-    console.log('notoken');
+    // console.log('notoken');
   }
 
   try {
@@ -45,10 +45,9 @@ export const loadUser = () => async (dispatch) => {
     });
   }
 };
-export const username = (username, bio, email, fromHost) => async (dispatch) =>{
+export const username = (username, bio, email, cocTag, fromHost) => async (dispatch) =>{
   dispatch(loading(true))
   try {
-
     const res = await axios.post(
       `http://${ipAddress}/api/signup/${email}/${username}`,
       {fromHost}
@@ -60,13 +59,14 @@ export const username = (username, bio, email, fromHost) => async (dispatch) =>{
     });
 
     let argu = {username,bio};
+    let arguPlayer = {username,bio, cocTag};
+    
     console.log('username succes');
     if(fromHost){
-      console.log(argu)
       dispatch(createHostProfile(argu))
       dispatch(loadUser());
     }else{
-      dispatch(createProfile(argu));
+      dispatch(createProfile(arguPlayer));
       dispatch(loadUser());
     }
 
@@ -136,7 +136,7 @@ export const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
 
   try {
-    console.log('wait logging in......');
+    // console.log('wait logging in......');
     const res = await axios.post(
       `http://${ipAddress}/api/login`,
       body,
@@ -155,7 +155,7 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch(getCurrentProfile());
     dispatch(loading(false))
-    console.log('logged in succesfull......');
+    // console.log('logged in succesfull......');
   } catch (err) {
     const errors = err.response.data.errors; // This errors will come from backend
     // that we setted as errors.array

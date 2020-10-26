@@ -2,8 +2,8 @@ import React from 'react';
 import { createStackNavigator, CardStyleInterpolators, HeaderBackButton } from '@react-navigation/stack';
 import Search from '../../../screens/player/search';
 import Header from '../../../shared/header';
-import EventDetailsCard from '../../../screens/player/EventHandling/eventDetailsCard';
 import { animationConfig } from '../../../shared/routeAnimationConfig';
+import EventDetails from '../../../screens/player/EventHandling/eventDetails';
 
 const Stack = createStackNavigator();
 
@@ -50,7 +50,7 @@ const SearchStack = () => {
             left: 40,
           },
         })}
-        component={EventDetailsCard}
+        component={EventDetails}
       />
     </Stack.Navigator>
   );

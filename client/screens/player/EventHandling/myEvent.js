@@ -7,11 +7,11 @@ import {
   RefreshControl,
 } from 'react-native';
 import {useSelector, useDispatch } from 'react-redux';
-import MyEventCard from './myEventCard';
 import Loading from '../../../shared/loading';
 import { getCurrentProfile } from '../../../Redux/actions/profile';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button, Text } from 'react-native-elements';
+import MyEventDetails from './myEventDetails';
 
 const MyEvent = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const MyEvent = ({ navigation }) => {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => <MyEventCard navigation={navigation} deleteEvent={true} item={item} />}
+            renderItem={({ item }) => <MyEventDetails navigation={navigation} deleteEvent={true} item={item} />}
           />
         ) : (
           <ScrollView

@@ -7,7 +7,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../shared/loading';
 import { fetchallEvents } from '../../Redux/actions/event';
-import EventCard from './EventHandling/eventCard';
+import Event from './EventHandling/event';
 import setAuthToken from '../../Redux/setAuthToken';
 import AsyncStorage from '@react-native-community/async-storage';
 import { getCurrentProfile, getHostCurrentProfile } from '../../Redux/actions/profile';
@@ -30,7 +30,7 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     const loadHome = async () => {
-      console.log('Home Page refreshed');
+      // console.log('Home Page refreshed');
       const token = await AsyncStorage.getItem('token');
       if (token !== null) {
         setAuthToken(token);
@@ -57,7 +57,7 @@ const Home = ({ navigation }) => {
           initialNumToRender={6}
           keyExtractor={item => item._id}
           renderItem={({ item }) => (
-            <EventCard item={item} navigation={navigation} />
+            <Event item={item} navigation={navigation} />
           )}
         />
       </View>

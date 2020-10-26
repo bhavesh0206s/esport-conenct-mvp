@@ -19,7 +19,6 @@ const ConfirmEvent = ({route}) => {
   const handleSubmit = () =>{
     setOpenPopUp(true)
     dispatch(AddMyEvent(info))
-    console.log('event Added..........')
   }
 
   useLayoutEffect(() => {

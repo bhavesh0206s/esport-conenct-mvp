@@ -10,5 +10,9 @@ export const gameImage = {
   clashRoyale :{
     name: 'Clash Royale',
     uri: require('../assets/cr.jpg')
+  },
+  coc :{
+    name: 'Clash of Clans',
+    uri: require('../assets/coc.jpg')
   }
 }
