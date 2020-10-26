@@ -1,5 +1,5 @@
 //Bhavesh
-// export const ipAddress = '192.168.0.103:5000';
+export const ipAddress = '192.168.0.103:5000';
 
 // export const ipAddress = 'bhavesh0206s-esport-conenct-mvp-1.glitch.me'
 // export const ipAddress = 'coctournament.glitch.me'
