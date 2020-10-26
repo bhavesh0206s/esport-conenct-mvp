@@ -30,10 +30,5 @@ const GoogleSignin = ({ title, fromHost, navigation, googleBtnStyle }) => {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 40,
-  },
-});
 
 export default GoogleSignin;

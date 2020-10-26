@@ -22,8 +22,11 @@ module.exports = (app) => {
             email,
           },
         };
-
-        auth = 'signin'
+        if(user.username.length === 0 ){
+          auth = 'signup';
+        }else{
+          auth = 'signin'
+        }
 
         jwt.sign(
           payload,
@@ -86,8 +89,12 @@ module.exports = (app) => {
             email,
           },
         };
-
-        auth = 'signin'
+        
+        if(host.username.length === 0 ){
+          auth = 'signup';
+        }else{
+          auth = 'signin'
+        }
 
         jwt.sign(
           payload,

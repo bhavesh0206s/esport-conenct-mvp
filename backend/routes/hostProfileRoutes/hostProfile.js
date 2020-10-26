@@ -18,7 +18,6 @@ module.exports = (app) => {
           .status(400)
           .json({ msg: 'There is no profile for this user' });
       }
-
       res.json(hostProfile);
     } catch (err) {
       console.error('error from host profile: ', err.message);

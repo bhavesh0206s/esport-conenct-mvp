@@ -14,7 +14,6 @@ import setAuthToken from './Redux/setAuthToken';
 import { loadUser, logout } from './Redux/actions/auth';
 import { getCurrentProfile, getHostCurrentProfile } from './Redux/actions/profile';
 
-
 const MainComponent = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -28,7 +27,6 @@ const MainComponent = () => {
     const userLoad = async () => {
       const token = await AsyncStorage.getItem('token');
       if (token !== null) {
-        setAuthToken(token)
         dispatch(loadUser());
         dispatch(getHostCurrentProfile());
         dispatch(getCurrentProfile());

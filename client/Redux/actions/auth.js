@@ -11,6 +11,7 @@ import {
   CLEAR_PROFILES,
   CLEAR_GLOBAL_POSTS,
   CLEARSEARCHEDEVENTS,
+  USER_LOADED_NO_USERNAME,
   CREATE_USERNAME,
 } from './types';
 import axios from 'axios';
@@ -22,8 +23,9 @@ import { setAlert } from './alert';
 import { loading } from './loading';
 
 //  Load User
-export const loadUser = () => async (dispatch) => {
+export const loadUser = (navigation) => async (dispatch) => {
   // set header
+  dispatch(loading(true))
   const token = await AsyncStorage.getItem('token');
   if (token !== null) {
     setAuthToken(token);
@@ -31,18 +33,28 @@ export const loadUser = () => async (dispatch) => {
   } else {
     // console.log('notoken');
   }
-
+  
   try {
     let res = await axios.get(`http://${ipAddress}/api/login`);
-    dispatch({
-      type: USER_LOADED,
-      payload: {user: res.data.user, fromHost: res.data.fromHost},
-    });
+    console.log(res.data)
+    if(res.data.user.username.length === 0){
+      dispatch({
+        type: USER_LOADED_NO_USERNAME,
+        payload: {},
+      });
+    }else{
+      dispatch({
+        type: USER_LOADED,
+        payload: {user: res.data.user, fromHost: res.data.fromHost},
+      });
+    }
+    dispatch(loading(false))
   } catch (err) {
     console.log('error from loaduser: ', err)
     dispatch({
       type: AUTH_ERROR,
     });
+    dispatch(loading(false))
   }
 };
 export const username = (username, bio, email, cocTag, fromHost) => async (dispatch) =>{
@@ -57,6 +69,7 @@ export const username = (username, bio, email, cocTag, fromHost) => async (dispa
       type: CREATE_USERNAME,
       payload: res.data,
     });
+
 
     let argu = {username,bio};
     let arguPlayer = {username,bio, cocTag};

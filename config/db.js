@@ -3,7 +3,7 @@ const keys = require('./keys')
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(keys.mongoURI_pro, {
+    await mongoose.connect(keys.mongoURI_dev, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
