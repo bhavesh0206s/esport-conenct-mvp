@@ -4,6 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import { Text, Card, Button, Icon, Image } from 'react-native-elements';
 
 const EventCard = ({ item, handleSubmit, imageUri }) => {
+
   return (
     <>
       <Card containerStyle={styles.container} >
