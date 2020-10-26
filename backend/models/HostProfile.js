@@ -51,6 +51,7 @@ const hostProfileSchema = new Schema({
       teamsize: Number,
       title: String,
       gamelink: String,
+      time: Date,
       registeredteaminfo: [
         {
           teammembersinfo: [
