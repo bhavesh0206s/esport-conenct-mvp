@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { store } from './Redux/store';
 import MainComponent from './MainComponent';
 import { enableScreens } from 'react-native-screens';
@@ -10,6 +10,7 @@ if(!__DEV__){
 }
 
 const App = () => {
+
   return (
     <Provider store={store}>
       <MainComponent />
