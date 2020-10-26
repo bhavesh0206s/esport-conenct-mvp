@@ -35,7 +35,7 @@ export const signInAsync = (navigation, fromHost = false) => async (
       `http://${ipAddress}/api/google/login`,
       result.user
     );
-    console.log(resServer.data)
+
     await AsyncStorage.setItem('token', resServer.data.token);
 
     const authType = resServer.data.auth;
