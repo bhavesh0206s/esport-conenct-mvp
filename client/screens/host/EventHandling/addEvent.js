@@ -5,7 +5,6 @@ import * as yup from 'yup';
 import { View, Platform,  StyleSheet } from 'react-native';
 import { Input, Button, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddMyEvent } from '../../../Redux/actions/event';
 import RNPickerSelect from 'react-native-picker-select';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -28,27 +27,6 @@ const AddEvent = ({ setModalOpen }) => {
   const [typeTourn, setTypeTourn] = useState('');
 
   //  For the current date
-  const [currentdateinfo, setCurrentDateInfo] = useState({
-    year: '',
-    month: '',
-    day: '',
-  });
-
-  useEffect(() => {
-    let date = new Date();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let day = date.getDate();
-
-    setCurrentDateInfo({
-      ...currentdateinfo,
-      year,
-      month,
-      day,
-    });
-  }, []);
-
-  // const [showsubmit, setShowSubmit] = useState(true);
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -58,37 +36,13 @@ const AddEvent = ({ setModalOpen }) => {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
+    setDate(currentDate);
     let hour = currentDate.getHours();
     let min = currentDate.getMinutes();
-    let month = currentDate.getMonth() + 1;
+    let month = currentDate.getMonth();
     let year = currentDate.getFullYear();
     let day = currentDate.getDate();
-    // if (year < currentdateinfo.year) {
-    //   alert(
-    //     "You cannot organize event in past, time machine haven't invented yet"
-    //   );
-    //   setShowSubmit(false);
-    // } else if (year === currentdateinfo.year && month < currentdateinfo.month) {
-    //   alert(
-    //     "You cannot organize event in past, time machine hasn't invented yet"
-    //   );
-    //   setShowSubmit(false);
-    // } else if (
-    //   year === currentdateinfo.year &&
-    //   month === currentdateinfo.month &&
-    //   (day <= currentdateinfo.day || day === currentdateinfo.day + 1)
-    // ) {
-    //   alert(
-    //     'Player should get 1 or 2 day to know about your tournament, so change the date'
-    //   );
-    //   setShowSubmit(false);
-    // } else {
-    //   setDate(currentDate);
-    //   setTheRealTime(`${day}-${month}-${year} ${hour}:${min}:00`);
-    //   setShowSubmit(true);
-    // }
-      setTheRealTime(`${day}-${month}-${year} ${hour}:${min}:00`);
-    
+    setTheRealTime(`${day}-${month + 1}-${year} ${hour}:${min}:00`);
   };
 
   const showMode = (currentMode) => {
