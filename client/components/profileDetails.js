@@ -8,6 +8,14 @@ const ProfileDetails = ({
   username,
   name,
   handleEdit,
+  gameIds: {
+    PUBG,
+    coc,
+    cr,
+    cod,
+    freefire,
+    valorant: { riotId, tagline },
+  },
 }) => {
   return (
     <>

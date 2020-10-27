@@ -13,19 +13,19 @@ import {
   UPADTE_MYPROFILE,
   GET_PROFILE,
   GET_HOST_PROFILE,
-} from './types';
-import { ipAddress } from '../ipaddress';
-import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
-import { loading } from './loading';
-import { setAlert } from './alert';
-import { fetchallEvents } from './event';
+} from "./types";
+import { ipAddress } from "../ipaddress";
+import axios from "axios";
+import AsyncStorage from "@react-native-community/async-storage";
+import { loading } from "./loading";
+import { setAlert } from "./alert";
+import { fetchallEvents } from "./event";
 
 // Get current users profile
 // This will run when user will login, to save his data in store and use it
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    console.log('getting profile........');
+    console.log("getting profile........");
     dispatch(loading(true));
     const res = await axios.get(`http://${ipAddress}/api/profile/me`);
     dispatch({
@@ -33,16 +33,16 @@ export const getCurrentProfile = () => async (dispatch) => {
       payload: res.data,
     });
     dispatch(loading(false));
-    console.log('profile added.....');
+    console.log("profile added.....");
   } catch (err) {
-    console.log('error from getCurrentProfile: ', err.message);
+    console.log("error from getCurrentProfile: ", err.message);
     dispatch(loading(false));
   }
 };
 
 export const getHostCurrentProfile = () => async (dispatch) => {
   try {
-    console.log('getting host profile........');
+    console.log("getting host profile........");
     dispatch(loading(true));
     const res = await axios.get(`http://${ipAddress}/api/profile/host`);
     dispatch({
@@ -50,9 +50,9 @@ export const getHostCurrentProfile = () => async (dispatch) => {
       payload: res.data,
     });
     dispatch(loading(false));
-    console.log('host profile added.....');
+    console.log("host profile added.....");
   } catch (err) {
-    console.log('error from getHostCurrentProfile: ', err.message);
+    console.log("error from getHostCurrentProfile: ", err.message);
     dispatch(loading(false));
   }
 };
@@ -62,16 +62,16 @@ export const getHostCurrentProfile = () => async (dispatch) => {
 // in that upsert was true so if user has no profile then it will be created or update
 export const createProfile = (formData) => async (dispatch) => {
   try {
-    const token = await AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem("token");
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        'X-Auth-Token': token,
+        "Content-Type": "application/json",
+        "X-Auth-Token": token,
       },
     };
 
-    console.log('creating profile.........');
+    console.log("creating profile.........");
 
     const body = JSON.stringify(formData);
 
@@ -85,25 +85,25 @@ export const createProfile = (formData) => async (dispatch) => {
       type: GET_MYPROFILE,
       payload: res.data,
     });
-    console.log('profile created........');
+    console.log("profile created........");
   } catch (err) {
     // const errors = err.response.data.errors;
-    console.log('error from createProfile: ', err.message);
+    console.log("error from createProfile: ", err.message);
   }
 };
 
 export const createHostProfile = (formData) => async (dispatch) => {
   try {
-    const token = await AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem("token");
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        'X-Auth-Token': token,
+        "Content-Type": "application/json",
+        "X-Auth-Token": token,
       },
     };
 
-    console.log('creating host profile.........');
+    console.log("creating host profile.........");
 
     const body = JSON.stringify(formData);
 
@@ -117,28 +117,28 @@ export const createHostProfile = (formData) => async (dispatch) => {
       type: GET_MYPROFILE,
       payload: res.data,
     });
-    console.log('host profile created........');
+    console.log("host profile created........");
   } catch (err) {
     // const errors = err.response.data.errors;
-    console.log('error from createProfile: ', err.message);
+    console.log("error from createProfile: ", err.message);
   }
 };
 
 export const upadteProfile = (formData) => async (dispatch) => {
   try {
-    const token = await AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem("token");
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        'X-Auth-Token': token,
+        "Content-Type": "application/json",
+        "X-Auth-Token": token,
       },
     };
-    console.log('upadating profile.........');
+    console.log("upadating profile.........");
 
     const res = await axios.post(
       `http://${ipAddress}/api/profile/update/me`,
-      formData,
+      JSON.stringify(formData),
       config
     );
 
@@ -147,24 +147,24 @@ export const upadteProfile = (formData) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(getCurrentProfile());
-    console.log('profile Updated');
+    console.log("profile Updated");
   } catch (err) {
     // const errors = err.response.data.errors;
-    console.log('error from upadteProfile: ', err.message);
+    console.log("error from upadteProfile: ", err.message);
   }
 };
 
 export const upadteHostProfile = (formData) => async (dispatch) => {
   try {
-    const token = await AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem("token");
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        'X-Auth-Token': token,
+        "Content-Type": "application/json",
+        "X-Auth-Token": token,
       },
     };
-    console.log('upadating host profile.........');
+    console.log("upadating host profile.........");
 
     const res = await axios.post(
       `http://${ipAddress}/api/profile/update/host`,
@@ -177,10 +177,10 @@ export const upadteHostProfile = (formData) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(getCurrentProfile());
-    console.log('host profile Updated');
+    console.log("host profile Updated");
   } catch (err) {
     // const errors = err.response.data.errors;
-    console.log('error from upadteHostProfile: ', err.message);
+    console.log("error from upadteHostProfile: ", err.message);
   }
 };
 
@@ -200,7 +200,7 @@ export const getProfile = (username) => async (dispatch) => {
 
     dispatch(loading(false));
   } catch (err) {
-    console.log('error from getProfiles : ', err.message);
+    console.log("error from getProfiles : ", err.message);
     dispatch(loading(false));
   }
 };
@@ -216,7 +216,7 @@ export const getProfiles = (username) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    console.log('error from getProfiles : ', err.message);
+    console.log("error from getProfiles : ", err.message);
   }
 };
 
@@ -236,7 +236,7 @@ export const getProfileById = (user_id, navigation) => async (dispatch) => {
     navigation.setParams({ HostProfileTitle: res.data.name });
     dispatch(loading(false));
   } catch (err) {
-    console.log('error from getProfileById : ', err.message);
+    console.log("error from getProfileById : ", err.message);
     dispatch(loading(false));
   }
 };
@@ -261,7 +261,7 @@ export const getHostProfileById = (
     }
     dispatch(loading(false));
   } catch (err) {
-    console.log('error from getProfileById : ', err.message);
+    console.log("error from getProfileById : ", err.message);
     dispatch(loading(false));
   }
 };

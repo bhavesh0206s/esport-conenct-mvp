@@ -42,7 +42,7 @@ const EventDetails = ({ route, navigation }) => {
   } = eventdetails;
 
   const handleRegistration = () => {
-    if (userProfile.gameIds[game]) {
+    if (userProfile.gameIds[game] === "") {
       dispatch(
         eventRegistration({
           registerinfo: {
@@ -70,7 +70,7 @@ const EventDetails = ({ route, navigation }) => {
       alert("Host of the Event, can't Register!");
     } else if (eventId.indexOf(_id) !== -1) {
       alert("Already Registered!!");
-    } else if (userProfile.gameIds[game]) {
+    } else if (userProfile.gameIds[game] === "") {
       alert(`Your ${game} Id is not provided`);
     } else if (teamsize === 1) {
       setModalOpen(true);

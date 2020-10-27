@@ -10,7 +10,7 @@ const Profile = ({ navigation }) => {
     userProfileInfo: state.profile.userProfile,
     loading: state.loading,
   }));
-  const { bio, name, myevents, username } = userProfileInfo;
+  const { bio, name, myevents, username, gameIds } = userProfileInfo;
 
   const handleEdit = () => {
     navigation.navigate("EditProfile");
@@ -31,6 +31,7 @@ const Profile = ({ navigation }) => {
           myevents={myevents}
           username={username}
           handleEdit={handleEdit}
+          gameIds={gameIds}
         />
         <ProfileTabView />
       </>
