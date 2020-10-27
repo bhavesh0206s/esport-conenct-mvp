@@ -40,23 +40,14 @@ module.exports = (app) => {
       },
     } = req.body;
 
-    let profileFields = {};
-    profileFields.bio = bio;
-    profileFields.gameIds.PUBG = PUBG;
-    profileFields.gameIds.coc = coc;
-    profileFields.gameIds.cr = cr;
-    profileFields.gameIds.cod = cod;
-    profileFields.gameIds.freefire = freefire;
-    profileFields.gameIds.valorant = {
-      riotId,
-      tagline,
-    };
+    console.log(req.body);
 
+    // console.log(profileFields);
     try {
       // Using upsert option (creates new doc if no match is found):
       let profile = await Profile.findOneAndUpdate(
         { user: req.user.id },
-        { $set: profileFields },
+        { $set: req.body },
         { new: true, upsert: true }
       );
       console.log("updating new profile....");
