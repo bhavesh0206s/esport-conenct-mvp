@@ -56,16 +56,12 @@ const ProfileTabView = () => {
   const GameIds = () => (
     <View style={{ flex: 1}}>
       <ScrollView>
-       {/* <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}> */}
         <Input
           label='PUBG ID'
           disabled={true}
-          // pointerEvents="none"
           placeholder={gameIds.PUBG ? gameIds.PUBG : "No ID Provided"}
           value={gameIds.PUBG}
-          onFocus={() => console.log('Helel')}
         />
-       {/* </TouchableOpacity> */}
         <Input
           label='Clash of Clans Tag'
           disabled={true}
