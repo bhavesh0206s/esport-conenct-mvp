@@ -63,12 +63,10 @@ const EditProfile = ({ route, navigation }) => {
           <View>
             <ScrollView>
               <View style={styles.commonStyleView}>
-                <Text style={{ color: "white", fontSize: 18, paddingTop: 8 }}>
-                  Bio:
-                </Text>
                 <Input
                   multiline
                   // style={}
+                  label='Bio'
                   placeholder={bio ? bio : "Your Bio"}
                   onChangeText={formikprops.handleChange("bio")}
                   value={formikprops.values.bio}
@@ -79,12 +77,9 @@ const EditProfile = ({ route, navigation }) => {
                 />
               </View>
               <View style={styles.commonStyleView}>
-                <Text style={{ color: "white", fontSize: 18, paddingTop: 8 }}>
-                  PubgId:
-                </Text>
                 <Input
-                  multiline
-                  placeholder={PUBG ? PUBG : "Your PUBG Id"}
+                  label='PUBG ID'
+                  placeholder={PUBG ? PUBG : "Enter PUBG ID"}
                   onChangeText={formikprops.handleChange("PUBG")}
                   value={formikprops.values.PUBG}
                   onBlur={formikprops.handleBlur("PUBG")}
@@ -94,12 +89,9 @@ const EditProfile = ({ route, navigation }) => {
                 />
               </View>
               <View style={styles.commonStyleView}>
-                <Text style={{ color: "white", fontSize: 18, paddingTop: 8 }}>
-                  cocTag:
-                </Text>
                 <Input
-                  multiline
-                  placeholder={coc ? coc : "Your coc tag"}
+                  label='Clash of Clans Tag'
+                  placeholder={coc ? coc : "Enter Clash of Clans Tag"}
                   onChangeText={formikprops.handleChange("coc")}
                   value={formikprops.values.coc}
                   onBlur={formikprops.handleBlur("coc")}
@@ -109,12 +101,9 @@ const EditProfile = ({ route, navigation }) => {
                 />
               </View>
               <View style={styles.commonStyleView}>
-                <Text style={{ color: "white", fontSize: 18, paddingTop: 8 }}>
-                  cr Id:
-                </Text>
                 <Input
-                  multiline
-                  placeholder={cr ? cr : "Your cr Id"}
+                  label='Clash Royale ID'
+                  placeholder={cr ? cr : "Enter Clash Royale ID"}
                   onChangeText={formikprops.handleChange("cr")}
                   value={formikprops.values.cr}
                   onBlur={formikprops.handleBlur("cr")}
@@ -122,12 +111,9 @@ const EditProfile = ({ route, navigation }) => {
                 />
               </View>
               <View style={styles.commonStyleView}>
-                <Text style={{ color: "white", fontSize: 18, paddingTop: 8 }}>
-                  cod Id:
-                </Text>
                 <Input
-                  multiline
-                  placeholder={cod ? cod : "Your cod Id"}
+                  label='Call of Duty Mobile ID'
+                  placeholder={cod ? cod : "Enter Call of Duty Mobile ID"}
                   onChangeText={formikprops.handleChange("cod")}
                   value={formikprops.values.cod}
                   onBlur={formikprops.handleBlur("cod")}
@@ -137,12 +123,9 @@ const EditProfile = ({ route, navigation }) => {
                 />
               </View>
               <View style={styles.commonStyleView}>
-                <Text style={{ color: "white", fontSize: 18, paddingTop: 8 }}>
-                  Freefire Id:
-                </Text>
                 <Input
-                  multiline
-                  placeholder={freefire ? freefire : "Your freefire Id"}
+                  label='Fire Fire ID'
+                  placeholder={freefire ? freefire : "Enter Free Fire ID"}
                   onChangeText={formikprops.handleChange("freefire")}
                   value={formikprops.values.freefire}
                   onBlur={formikprops.handleBlur("freefire")}
@@ -152,12 +135,9 @@ const EditProfile = ({ route, navigation }) => {
                 />
               </View>
               <View style={styles.commonStyleView}>
-                <Text style={{ color: "white", fontSize: 18, paddingTop: 8 }}>
-                  riotId(valorant):
-                </Text>
                 <Input
-                  multiline
-                  placeholder={riotId ? riotId : "Your valorant riot Id"}
+                  label='Valorant - RiotID'
+                  placeholder={riotId ? riotId : "Enter Valorant - RiotID"}
                   onChangeText={formikprops.handleChange("riotId")}
                   value={formikprops.values.riotId}
                   onBlur={formikprops.handleBlur("riotId")}
@@ -167,12 +147,9 @@ const EditProfile = ({ route, navigation }) => {
                 />
               </View>
               <View style={styles.commonStyleView}>
-                <Text style={{ color: "white", fontSize: 18, paddingTop: 8 }}>
-                  tagline(valorant):
-                </Text>
                 <Input
-                  multiline
-                  placeholder={tagline ? tagline : "Your valorant tagline"}
+                  label='Valorant - Tagline'
+                  placeholder={tagline ? tagline : "Enter Valorant Tagline"}
                   onChangeText={formikprops.handleChange("tagline")}
                   value={formikprops.values.tagline}
                   onBlur={formikprops.handleBlur("tagline")}

@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import AchivementCard from "../../../components/achivementCard";
 import { useNavigation } from "@react-navigation/native";
+import { Input } from "react-native-elements";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const achivementData = [
   {
@@ -50,38 +52,56 @@ const ProfileTabView = () => {
       />
     </View>
   );
-
+  console.log(gameIds);
   const GameIds = () => (
-    <View style={{ flex: 1, backgroundColor: "coral" }}>
+    <View style={{ flex: 1}}>
       <ScrollView>
-        <View style={styles.commonViewStyle}>
-          <Text style={styles.leftTextStyle}>PUBGId:</Text>
-          <Text style={styles.rightTextStyle}>{gameIds.PUBG}</Text>
-        </View>
-        <View style={styles.commonViewStyle}>
-          <Text style={styles.leftTextStyle}>COC tag:</Text>
-          <Text style={styles.rightTextStyle}>{gameIds.coc}</Text>
-        </View>
-        <View style={styles.commonViewStyle}>
-          <Text style={styles.leftTextStyle}>CR tag:</Text>
-          <Text style={styles.rightTextStyle}>{gameIds.cr}</Text>
-        </View>
-        <View style={styles.commonViewStyle}>
-          <Text style={styles.leftTextStyle}>COD Id:</Text>
-          <Text style={styles.rightTextStyle}>{gameIds.cod}</Text>
-        </View>
-        <View style={styles.commonViewStyle}>
-          <Text style={styles.leftTextStyle}>Freefire Id:</Text>
-          <Text style={styles.rightTextStyle}>{gameIds.freefire}</Text>
-        </View>
-        <View style={styles.commonViewStyle}>
-          <Text style={styles.leftTextStyle}>Valorant(riotId):</Text>
-          <Text style={styles.rightTextStyle}>{gameIds.valorant.riotId}</Text>
-        </View>
-        <View style={styles.commonViewStyle}>
-          <Text style={styles.leftTextStyle}>Valorant(tagline):</Text>
-          <Text style={styles.rightTextStyle}>{gameIds.valorant.tagline}</Text>
-        </View>
+       {/* <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}> */}
+        <Input
+          label='PUBG ID'
+          disabled={true}
+          // pointerEvents="none"
+          placeholder={gameIds.PUBG ? gameIds.PUBG : "No ID Provided"}
+          value={gameIds.PUBG}
+          onFocus={() => console.log('Helel')}
+        />
+       {/* </TouchableOpacity> */}
+        <Input
+          label='Clash of Clans Tag'
+          disabled={true}
+          placeholder={gameIds.coc ? gameIds.coc : "No ID Provided"}
+          value={gameIds.coc}
+        />
+        <Input
+          label='Clash Royale ID'
+          disabled={true}
+          placeholder={gameIds.cr ? gameIds.cr : "No ID Provided"}
+          value={gameIds.cr}
+        />
+        <Input
+          label='Call of Duty Mobile ID'
+          disabled={true}
+          placeholder={gameIds.cod ? gameIds.cod : "No ID Provided"}
+          value={gameIds.cod}
+        />
+        <Input
+          label='Fire Fire ID'
+          disabled={true}
+          placeholder={gameIds.freefire ? gameIds.freefire : "No ID Provided"}
+          value={gameIds.freefire}
+        />
+        <Input
+          label='Valorant - RiotID'
+          disabled={true}
+          placeholder={gameIds.valorant.riotId ? gameIds.valorant.riotId : "No ID Provided"}
+          value={gameIds.valorant.riotId}
+        />
+        <Input
+          label='Valorant - Tagline'
+          disabled={true}
+          placeholder={gameIds.valorant.tagline ? gameIds.valorant.tagline : "No ID Provided"}
+          value={gameIds.valorant.tagline}
+        />
       </ScrollView>
     </View>
   );
@@ -120,7 +140,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   commonViewStyle: {
-    flexDirection: "row",
+    // flexDirection: "row",
   },
 });
 
