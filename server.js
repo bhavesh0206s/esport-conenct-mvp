@@ -23,6 +23,7 @@ require('./backend/routes/authRoutes/googleAuth')(app);
 require('./backend/routes/profilepostsRoutes/profile')(app);
 require('./backend/routes/profilepostsRoutes/post')(app);
 require('./backend/routes/event')(app);
+require('./backend/routes/notification')(app);
 require('./backend/routes/hostProfileRoutes/hostProfile')(app);
 
 const PORT = process.env.PORT || 5000;

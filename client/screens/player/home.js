@@ -10,6 +10,7 @@ import { getCurrentProfile } from "../../Redux/actions/profile";
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
+import { setNotificationToken } from "../../Redux/actions/notifcaiton";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -52,7 +53,7 @@ const Home = ({ navigation }) => {
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
+      setNotificationToken(token)
     } else {
       alert('Must use physical device for Push Notifications');
     }
