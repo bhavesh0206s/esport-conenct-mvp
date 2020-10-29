@@ -5,7 +5,7 @@ import AchivementCard from '../../../components/achivementCard';
 
 const achivementData = [
   {
-    id: '4561232',
+    id: '45612324',
     title: 'PUBG',
   },
   {

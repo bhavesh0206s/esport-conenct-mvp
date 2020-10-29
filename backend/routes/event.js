@@ -5,6 +5,8 @@ const Profile = require('../models/Profile');
 const verify = require('../verifytokenmw/verify_mv');
 const mongoose = require('mongoose');
 const HostProfile = require('../models/HostProfile');
+const User = require('../models/User');
+const { handlePushTokens } = require('../services/notification');
 
 module.exports = (app) => {
   app.get('/api/event/allevents', verify, async (req, res) => {
@@ -296,16 +298,21 @@ module.exports = (app) => {
       hostId,
       eventdetails,
     } = req.body;
-
+    let title = eventdetails.title
+    let detail = `Registration for ${eventdetails.game} event successful`;
     try {
       
       let event = await Event.findById(eventId);
       let eventHost = await HostProfile.findOne({ user: eventdetails.hostedById });
+      let notificationToken;
       let hostedevent = eventHost.myhostedevents.find(
         (event) => event.id === eventId
       );
   
       if (teamsize === 1) {
+        let user = await User.findById(req.user.id);
+        notificationToken = user.notificationToken;
+
         event.registeredplayerinfo.push(registerinfo);
   
         hostedevent.registeredplayerinfo.push(registerinfo);
@@ -321,7 +328,9 @@ module.exports = (app) => {
         playerprofile.myevents.push(eventdetails);
   
         await playerprofile.save();
-  
+
+        handlePushTokens(notificationToken, {title, detail});
+        
         res.json({ playerevents: playerprofile.myevents, event });
       } else {
         let teamsInfo = event.registeredteaminfo;
@@ -367,13 +376,17 @@ module.exports = (app) => {
   
         registerinfo.teammembersinfo.forEach(async (useritem) => {
           try {
-            let playerprofile = await Profile.findOne({
+            let playerProfile = await Profile.findOne({
               user: useritem.user,
             });
-  
-            playerprofile.myevents.push(eventdetails);
-  
-            await playerprofile.save();
+            let user = await User.findById({_id: useritem.user});
+
+            notificationToken = user.notificationToken;
+
+            playerProfile.myevents.push(eventdetails);
+            
+            await playerProfile.save();
+            handlePushTokens(notificationToken, {title, detail})
           } catch (err) {
             console.error(err.message);
           }
