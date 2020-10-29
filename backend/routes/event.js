@@ -304,13 +304,15 @@ module.exports = (app) => {
       
       let event = await Event.findById(eventId);
       let eventHost = await HostProfile.findOne({ user: eventdetails.hostedById });
-      let user = await User.findById(req.user.id);
-      let notificationToken = user.notificationToken;
+      let notificationToken;
       let hostedevent = eventHost.myhostedevents.find(
         (event) => event.id === eventId
       );
   
       if (teamsize === 1) {
+        let user = await User.findById(req.user.id);
+        notificationToken = user.notificationToken;
+
         event.registeredplayerinfo.push(registerinfo);
   
         hostedevent.registeredplayerinfo.push(registerinfo);
@@ -374,13 +376,17 @@ module.exports = (app) => {
   
         registerinfo.teammembersinfo.forEach(async (useritem) => {
           try {
-            let playerprofile = await Profile.findOne({
+            let playerProfile = await Profile.findOne({
               user: useritem.user,
             });
-  
-            playerprofile.myevents.push(eventdetails);
-  
-            await playerprofile.save();
+            let user = await User.findById({_id: useritem.user});
+
+            notificationToken = user.notificationToken;
+
+            playerProfile.myevents.push(eventdetails);
+            
+            await playerProfile.save();
+            handlePushTokens(notificationToken, {title, detail})
           } catch (err) {
             console.error(err.message);
           }
