@@ -136,7 +136,7 @@ const EventRegistration = ({ route, navigation }) => {
             <Button
               icon={<Icon name="check" color="#ffffff" />}
               buttonStyle={{
-                borderRadius: 20,
+                borderRadius: 5,
                 marginTop: 20,
                 marginLeft: 0,
                 marginRight: 0,

@@ -47,11 +47,12 @@ const MainComponent = () => {
       <ThemeProvider theme={theme} >
         <View style={globalStyles.container}>
           <Alert />
-          {(!isAuthenticated && !isUserNameVerified )? 
+          {
+            (!isAuthenticated && !isUserNameVerified )? 
             (
               <AuthStack />
             ) : fromHost ? <HostDrawerStack /> : <PlayerDrawerStack/>
-            }
+          }
           {/* <Button title='LogOut' onPress={() => dispatch(logout())} /> */}
         </View>
       </ThemeProvider>
