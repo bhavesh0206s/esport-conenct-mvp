@@ -10,7 +10,6 @@ import PlayerDrawerStack from './routes/player/drawerStack';
 import HostDrawerStack from './routes/host/drawerStack';
 import Alert from './shared/alert';
 import AsyncStorage from '@react-native-community/async-storage';
-import setAuthToken from './Redux/setAuthToken';
 import { loadUser, logout } from './Redux/actions/auth';
 import { getCurrentProfile, getHostCurrentProfile } from './Redux/actions/profile';
 
