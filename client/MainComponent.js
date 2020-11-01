@@ -58,6 +58,7 @@ const MainComponent = () => {
             <PlayerDrawerStack />
           )}
           {/* <Button title="LogOut" onPress={() => dispatch(logout())} /> */}
+
         </View>
       </ThemeProvider>
     );

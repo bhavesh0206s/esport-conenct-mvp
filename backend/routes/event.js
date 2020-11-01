@@ -224,7 +224,8 @@ module.exports = (app) => {
       if (teamsize === 1) {
         //deleting from event
 
-        if (event.registeredplayerinfo !== null) {
+        
+        if(event.registeredplayerinfo !== null){
           let playersInfo = event.registeredplayerinfo;
           let updatedPlayersInfo = [];
           playersInfo.forEach((player) => {
@@ -376,12 +377,12 @@ module.exports = (app) => {
             });
             let user = await User.findById({ _id: useritem.user });
 
-            notificationToken = user.notificationToken;
-
             playerProfile.myevents.push(eventdetails);
 
             await playerProfile.save();
-            handlePushTokens(notificationToken, { title, detail });
+
+
+            handlePushTokens(user.notificationToken, {title, detail})
           } catch (err) {
             console.error(err.message);
           }

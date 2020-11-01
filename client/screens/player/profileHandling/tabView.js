@@ -52,7 +52,7 @@ const ProfileTabView = () => {
       />
     </View>
   );
-  console.log(gameIds);
+
   const GameIds = () => (
     <View style={{ flex: 1}}>
       <ScrollView>

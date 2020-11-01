@@ -45,27 +45,23 @@ const EventDetails = ({ route, navigation }) => {
   } = eventdetails;
 
   const handleRegistration = () => {
-    if (userProfile.gameIds[game] === "") {
-      dispatch(
-        eventRegistration({
-          registerinfo: {
-            email: userProfile.email,
-            name: userProfile.name,
-            contact: userProfile.contact,
-            username: userProfile.username,
-            user: userProfile.user,
-          },
-          eventdetails,
-          eventId: _id,
-          usereventId: user,
-          teamsize,
-        })
-      );
-      setModalOpen(false);
-      navigation.navigate("Event");
-    } else {
-      alert(`Your ${game} Id is not provided`);
-    }
+    dispatch(
+      eventRegistration({
+        registerinfo: {
+          email: userProfile.email,
+          name: userProfile.name,
+          contact: userProfile.contact,
+          username: userProfile.username,
+          user: userProfile.user,
+        },
+        eventdetails,
+        eventId: _id,
+        usereventId: user,
+        teamsize,
+      })
+    );
+    setModalOpen(false);
+    navigation.navigate("Event");
   };
 
   const handleSubmit = () => {

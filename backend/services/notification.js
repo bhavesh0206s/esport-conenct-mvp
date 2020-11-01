@@ -11,6 +11,7 @@ const handlePushTokens = (pushToken ,{ title, detail }) => {
     to: pushToken,
     sound: "default",
     title: title,
+    vibrate: true,
     body: detail,
     data: { detail }
   });
