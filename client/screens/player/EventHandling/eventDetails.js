@@ -6,7 +6,7 @@ import moment from "moment";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getHostProfileById } from "../../../Redux/actions/profile";
-import { eventRegistration } from "../../../Redux/actions/event";
+import { eventRegistration, PostReview } from "../../../Redux/actions/event";
 import Loading from "../../../shared/loading";
 import { CLEARPARTICULARUSER } from "../../../Redux/actions/types";
 import ConfirmModal from "../../../shared/confirmModal";
@@ -27,6 +27,8 @@ const EventDetails = ({ route, navigation }) => {
 
   const [modalOpen, setModalOpen] = useState(false);
 
+  const [rating, setRating] = useState(0);
+
   const {
     title,
     description,
@@ -39,6 +41,7 @@ const EventDetails = ({ route, navigation }) => {
     _id,
     user,
     hostedById,
+    reviews,
   } = eventdetails;
 
   const handleRegistration = () => {
@@ -78,6 +81,15 @@ const EventDetails = ({ route, navigation }) => {
       });
     }
   };
+
+  const handleOnPressPostReview = () => {
+    navigation.navigate("Reviews", {
+      navigation,
+      eventdetails,
+      userProfile,
+    });
+  };
+
   const showHostProfile = () => {
     dispatch({ type: CLEARPARTICULARUSER });
     dispatch(getHostProfileById(hostedById, navigation));
@@ -106,6 +118,11 @@ const EventDetails = ({ route, navigation }) => {
   };
 
   useEffect(() => {
+    let sumOfRating = 0;
+    reviews.forEach((review) => {
+      sumOfRating += review.rating;
+    });
+    setRating(sumOfRating / reviews.length);
     navigation.setParams({
       title,
     });
@@ -125,6 +142,7 @@ const EventDetails = ({ route, navigation }) => {
     eventTime,
     isHost: true,
     btnTitle: "REGISTRATION",
+    rating,
   };
 
   if (loading) {
@@ -134,6 +152,7 @@ const EventDetails = ({ route, navigation }) => {
       </>
     );
   } else {
+    // console.log(eventreviews);
     return (
       <ScrollView>
         <ConfirmModal
@@ -146,6 +165,7 @@ const EventDetails = ({ route, navigation }) => {
           {...props}
           handleOnPress={handleSubmit}
           renderHostDetails={renderHostDetails}
+          handleOnPressPostReview={handleOnPressPostReview}
         />
       </ScrollView>
     );

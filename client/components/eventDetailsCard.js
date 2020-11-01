@@ -18,6 +18,8 @@ const EventDetailsCard = ({
   contact,
   description,
   renderHostDetails,
+  handleOnPressPostReview,
+  rating,
 }) => {
   return (
     <Card containerStyle={styles.container}>
@@ -32,8 +34,16 @@ const EventDetailsCard = ({
             title={btnTitle}
           />
         )}
+        <Button
+          icon={<Icon name="form" type="antdesign" color="#ffffff" />}
+          buttonStyle={{ ...btnStyle, ...styles.btnStyle }}
+          title="PostReview"
+          onPress={handleOnPressPostReview}
+        />
         <Text style={styles.title}>Game: </Text>
         <Text style={styles.field}>{game}</Text>
+        <Text style={styles.title}>Rating: </Text>
+        <Text style={styles.field}>{rating}</Text>
         <Text style={styles.title}>Teamsize: </Text>
         <Text style={styles.field}>{teamsize}</Text>
         <Text style={styles.title}>Entryfee: </Text>

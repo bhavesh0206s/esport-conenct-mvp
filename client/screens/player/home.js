@@ -7,9 +7,9 @@ import Event from "./EventHandling/event";
 import setAuthToken from "../../Redux/setAuthToken";
 import AsyncStorage from "@react-native-community/async-storage";
 import { getCurrentProfile } from "../../Redux/actions/profile";
-import Constants from 'expo-constants';
-import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions';
+import Constants from "expo-constants";
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
 import { setNotificationToken } from "../../Redux/actions/notifcaiton";
 
 Notifications.setNotificationHandler({
@@ -22,7 +22,7 @@ Notifications.setNotificationHandler({
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
-  const [expoPushToken, setExpoPushToken] = useState('');
+  const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -42,39 +42,44 @@ const Home = ({ navigation }) => {
   const registerForPushNotificationsAsync = async () => {
     let token;
     if (Constants.isDevice) {
-      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      const { status: existingStatus } = await Permissions.getAsync(
+        Permissions.NOTIFICATIONS
+      );
       let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      if (existingStatus !== "granted") {
+        const { status } = await Permissions.askAsync(
+          Permissions.NOTIFICATIONS
+        );
         finalStatus = status;
       }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      setNotificationToken(token)
+      setNotificationToken(token);
     } else {
-      alert('Must use physical device for Push Notifications');
+      alert("Must use physical device for Push Notifications");
     }
-  
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
+        lightColor: "#FF231F7C",
       });
     }
-  
+
     return token;
-  }
+  };
 
   useEffect(() => {
     (async () => {
       console.log("Home Page refreshed");
       const token = await AsyncStorage.getItem("token");
       if (token !== null) {
+        console.log(token);
         setAuthToken(token);
       }
       setTimeout(() => {
@@ -82,15 +87,21 @@ const Home = ({ navigation }) => {
         dispatch(getCurrentProfile());
       }, 100);
     })();
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
 
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
+    notificationListener.current = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        setNotification(notification);
+      }
+    );
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        console.log(response);
+      }
+    );
 
     return () => {
       Notifications.removeNotificationSubscription(notificationListener);

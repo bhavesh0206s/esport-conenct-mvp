@@ -1,12 +1,17 @@
-import React from 'react';
-import { createStackNavigator, CardStyleInterpolators, HeaderBackButton} from '@react-navigation/stack';
-import Home from '../../../screens/player/home';
-import Header from '../../../shared/header';
-import { animationConfig } from '../../../shared/routeAnimationConfig';
-import EventRegistration from '../../../screens/player/EventHandling/eventRegistration';
-import SearchStack from './searchStack';
-import EventDetails from '../../../screens/player/EventHandling/eventDetails';
-import SearchedUserProfile from '../../../screens/player/profileHandling/searchedUserProfile';
+import React from "react";
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+  HeaderBackButton,
+} from "@react-navigation/stack";
+import Home from "../../../screens/player/home";
+import Header from "../../../shared/header";
+import { animationConfig } from "../../../shared/routeAnimationConfig";
+import EventRegistration from "../../../screens/player/EventHandling/eventRegistration";
+import SearchStack from "./searchStack";
+import EventDetails from "../../../screens/player/EventHandling/eventDetails";
+import SearchedUserProfile from "../../../screens/player/profileHandling/searchedUserProfile";
+import EventReview from "../../../screens/player/EventHandling/eventReview";
 
 const Stack = createStackNavigator();
 
@@ -15,7 +20,7 @@ const HomeStack = () => {
     <Stack.Navigator
       screenOptions={{
         gestureEnabled: true,
-        gestureDirection: 'horizontal',
+        gestureDirection: "horizontal",
         transitionSpec: {
           open: animationConfig,
           close: animationConfig,
@@ -31,7 +36,7 @@ const HomeStack = () => {
           headerTitle: () => (
             <Header navigation={navigation} type="home" title="EBind" />
           ),
-          drawerLockMode: 'locked-closed',
+          drawerLockMode: "locked-closed",
         })}
         component={Home}
       />
@@ -42,10 +47,7 @@ const HomeStack = () => {
             <Header navigation={navigation} title="Search" type="Search" />
           ),
           headerLeft: (props) => (
-            <HeaderBackButton
-              {...props}
-              tintColor='#4ecca3'
-            />
+            <HeaderBackButton {...props} tintColor="#4ecca3" />
           ),
           headerTitleContainerStyle: {
             left: 40,
@@ -65,10 +67,7 @@ const HomeStack = () => {
             />
           ),
           headerLeft: (props) => (
-            <HeaderBackButton
-              {...props}
-              tintColor='#4ecca3'
-            />
+            <HeaderBackButton {...props} tintColor="#4ecca3" />
           ),
           headerTitleContainerStyle: {
             left: 40,
@@ -83,10 +82,7 @@ const HomeStack = () => {
             <Header navigation={navigation} title="Register" type="register" />
           ),
           headerLeft: (props) => (
-            <HeaderBackButton
-              {...props}
-              tintColor='#4ecca3'
-            />
+            <HeaderBackButton {...props} tintColor="#4ecca3" />
           ),
           headerTitleContainerStyle: {
             left: 40,
@@ -100,15 +96,12 @@ const HomeStack = () => {
           headerTitle: () => (
             <Header
               navigation={navigation}
-              title={route.params?.HostProfileTitle ?? 'Host Profile'}
+              title={route.params?.HostProfileTitle ?? "Host Profile"}
               type="userProfile"
             />
           ),
           headerLeft: (props) => (
-            <HeaderBackButton
-              {...props}
-              tintColor='#4ecca3'
-            />
+            <HeaderBackButton {...props} tintColor="#4ecca3" />
           ),
           headerTitleContainerStyle: {
             left: 40,
@@ -127,16 +120,28 @@ const HomeStack = () => {
             />
           ),
           headerLeft: (props) => (
-            <HeaderBackButton
-              {...props}
-              tintColor='#4ecca3'
-            />
+            <HeaderBackButton {...props} tintColor="#4ecca3" />
           ),
           headerTitleContainerStyle: {
             left: 40,
           },
         })}
         component={EventDetails}
+      />
+      <Stack.Screen
+        name="Reviews"
+        options={({ navigation, route }) => ({
+          headerTitle: () => (
+            <Header navigation={navigation} title="Reviews" type="reviews" />
+          ),
+          headerLeft: (props) => (
+            <HeaderBackButton {...props} tintColor="#4ecca3" />
+          ),
+          headerTitleContainerStyle: {
+            left: 40,
+          },
+        })}
+        component={EventReview}
       />
     </Stack.Navigator>
   );
