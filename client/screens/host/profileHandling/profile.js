@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../shared/loading";
-import ProfileDetails from "../../../components/profileDetails";
+import HostProfileDetails from "../../../components/hostProfileDetails";
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const Profile = ({ navigation }) => {
   } else {
     return (
       <>
-        <ProfileDetails
+        <HostProfileDetails
           navigation={navigation}
           bio={bio}
           name={name}

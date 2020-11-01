@@ -40,7 +40,7 @@ export const loadUser = (navigation) => async (dispatch) => {
     if(res.data.user.username.length === 0){
       dispatch({
         type: USER_LOADED_NO_USERNAME,
-        payload: {},
+        payload: {fromHost: res.data.fromHost},
       });
     }else{
       dispatch({
@@ -57,7 +57,7 @@ export const loadUser = (navigation) => async (dispatch) => {
     dispatch(loading(false))
   }
 };
-export const username = (username, bio, email, cocTag, fromHost) => async (dispatch) =>{
+export const username = (username, bio, email,fromHost) => async (dispatch) =>{
   dispatch(loading(true))
   try {
     const res = await axios.post(
@@ -71,17 +71,15 @@ export const username = (username, bio, email, cocTag, fromHost) => async (dispa
     });
 
 
-    let argu = {username,bio};
-    let arguPlayer = {username,bio, cocTag};
-    
-    console.log('username succes');
+    let info = {username,bio};
     if(fromHost){
-      dispatch(createHostProfile(argu))
+      dispatch(createHostProfile(info))
       dispatch(loadUser());
     }else{
-      dispatch(createProfile(arguPlayer));
+      dispatch(createProfile(info));
       dispatch(loadUser());
     }
+    console.log('username succes');
 
     dispatch(loading(false))
   } catch (err) {

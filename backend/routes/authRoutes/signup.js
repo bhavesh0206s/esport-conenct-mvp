@@ -18,7 +18,7 @@ module.exports = (app) => {
       const {fromHost} = req.body;
       const username = req.params.username;
       const email = req.params.email;
-      console.log(req.body, username, email)
+      console.log(username, email)
       // let user;
       if(fromHost){
         user = await Host.findOne({ username });

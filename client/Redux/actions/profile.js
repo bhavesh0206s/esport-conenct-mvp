@@ -95,7 +95,7 @@ export const createProfile = (formData) => async (dispatch) => {
 export const createHostProfile = (formData) => async (dispatch) => {
   try {
     const token = await AsyncStorage.getItem("token");
-
+    console.log('create: ',formData)
     const config = {
       headers: {
         "Content-Type": "application/json",

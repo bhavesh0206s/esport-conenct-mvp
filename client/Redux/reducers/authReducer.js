@@ -67,6 +67,7 @@ export default (state = initialState, action) => {
       console.log('USER_LOADED_NO_USERNAME-SUCCESSFULL');
       return {
         ...state,
+        fromHost: payload.fromHost,
       };
     case LOGIN_FAIL:
     case REGISTER_FAIL:

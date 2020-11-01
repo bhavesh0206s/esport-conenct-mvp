@@ -4,7 +4,7 @@ import { Button, Text} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { useDispatch } from 'react-redux';
 import { fetchallEvents } from '../../../Redux/actions/event';
-import { getCurrentProfile } from '../../../Redux/actions/profile';
+import { getCurrentProfile, getHostCurrentProfile } from '../../../Redux/actions/profile';
 
 
 const VerifyModel = ({openPopUp, setOpenPopUp, navigation}) => {
@@ -13,8 +13,7 @@ const VerifyModel = ({openPopUp, setOpenPopUp, navigation}) => {
 
   const handleSubmit  = () =>{
     setOpenPopUp(false);
-    dispatch(fetchallEvents());
-    dispatch(getCurrentProfile())
+    dispatch(getHostCurrentProfile())
     navigation.goBack()
   }
 

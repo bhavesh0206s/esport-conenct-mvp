@@ -18,6 +18,9 @@ const hostSchema = new Schema({
     type: String,
     default: ''
   },
+  notificationToken:{
+    type: String,
+  },
   date: {
     type: Date,
     default: Date.now,

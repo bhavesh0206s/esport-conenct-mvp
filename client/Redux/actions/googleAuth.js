@@ -73,37 +73,36 @@ export const signInAsync = (navigation, fromHost = false) => async (
 
 export const signInHostAsync = (navigation, fromHost = true) => async (
   dispatch
-) => {
-  try {
-    dispatch(loading(true));
-    const result = await Google.logInAsync({
-      androidClientId: "360005122700-75e1422nmjkgmqeosg7oca3olhps9ea0.apps.googleusercontent.com",
-      androidStandaloneAppClientId: "360005122700-9rqhfuk9tvsicq0sfb1p50docfvtg7pd.apps.googleusercontent.com",
-      scopes: ['profile', 'email'],
-    });
-    let googleAccessToken;
-    if (result.type === 'success') {
-      googleAccessToken = result.accessToken;
-      console.log(result.user)
-    } else {
-      return { cancelled: true };
-    }
-
-    let resServer = await axios.post(
-      `http://${ipAddress}/api/google/host/login`,
-      result.user
+  ) => {
+    try {
+      dispatch(loading(true));
+      const result = await Google.logInAsync({
+        androidClientId: "360005122700-75e1422nmjkgmqeosg7oca3olhps9ea0.apps.googleusercontent.com",
+        androidStandaloneAppClientId: "360005122700-9rqhfuk9tvsicq0sfb1p50docfvtg7pd.apps.googleusercontent.com",
+        scopes: ['profile', 'email'],
+      });
+      let googleAccessToken;
+      if (result.type === 'success') {
+        googleAccessToken = result.accessToken;
+      } else {
+        return { cancelled: true };
+      }
+      
+      let resServer = await axios.post(
+        `http://${ipAddress}/api/google/host/login`,
+        result.user
     );
-
+    
     await AsyncStorage.setItem('token', resServer.data.token);
-
+    
     const authType = resServer.data.auth;
     
     dispatch({ type: GOOGLE_LOGIN, payload: [result.user.email, authType, fromHost] });
-
+    
     const token = await AsyncStorage.getItem('token');
-
+    
     navigation.navigate('GoogleUsername', { fromHost });
-
+    
     if (token) {
       try {
         if (authType === 'signup') {

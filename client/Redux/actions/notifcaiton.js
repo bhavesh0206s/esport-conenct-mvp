@@ -28,6 +28,25 @@ export const setNotificationToken = async (token) =>{
   }
 };
 
+export const setHostNotificationToken = async (token) =>{
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const body = JSON.stringify({ token });
+
+  try {
+    const res = await axios.post(
+      `http://${ipAddress}/api/notification/host/token`,
+      body,
+      config
+    );
+  } catch(e){
+    console.log('error from setHostNotificationToken: ', e.message)
+  }
+};
+
 export const sendNotification = async (title, detail) =>{
   const config = {
     headers: {

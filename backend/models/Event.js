@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const eventSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'Host',
+    ref: "Host",
   },
   game: {
     type: String,
@@ -79,12 +79,41 @@ const eventSchema = new Schema({
     },
   ],
   contact: Number,
+  reviews: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "Host",
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      email: {
+        type: String,
+        required: true,
+        unique: true,
+      },
+      username: {
+        type: String,
+        default: "",
+      },
+      rating: {
+        type: Number,
+        default: 0,
+      },
+      text: {
+        type: String,
+        default: "",
+      },
+    },
+  ],
   date: {
     type: Date,
     default: Date.now,
   },
 });
 
-const Event = mongoose.model('event', eventSchema);
+const Event = mongoose.model("event", eventSchema);
 
 module.exports = Event;
