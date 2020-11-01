@@ -27,6 +27,8 @@ const EventDetails = ({ route, navigation }) => {
 
   const [modalOpen, setModalOpen] = useState(false);
 
+  const [rating, setRating] = useState(0);
+
   const {
     title,
     description,
@@ -120,6 +122,11 @@ const EventDetails = ({ route, navigation }) => {
   };
 
   useEffect(() => {
+    let sumOfRating = 0;
+    reviews.forEach((review) => {
+      sumOfRating += review.rating;
+    });
+    setRating(sumOfRating / reviews.length);
     navigation.setParams({
       title,
     });
@@ -139,6 +146,7 @@ const EventDetails = ({ route, navigation }) => {
     eventTime,
     isHost: true,
     btnTitle: "REGISTRATION",
+    rating,
   };
 
   if (loading) {

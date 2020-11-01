@@ -28,8 +28,6 @@ const MainComponent = () => {
 
   useEffect(() => {
     const userLoad = async () => {
-      // dispatch(logout());
-
       const token = await AsyncStorage.getItem("token");
       if (token !== null) {
         dispatch(loadUser());
