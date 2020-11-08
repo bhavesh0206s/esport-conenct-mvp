@@ -55,9 +55,9 @@ const profileSchema = new Schema({
         contentType: String,
         // required: true,
       },
-      // time: {
-      //   type: Date,
-      // },
+      time: {
+        type: Date,
+      },
       entryFee: String,
       prizepool: Number,
       teamsize: Number,

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet} from 'react-native';
 import {useSelector, useDispatch } from 'react-redux';
 import Loading from '../../../shared/loading';
+import { Rating, AirbnbRating } from 'react-native-elements'
 import { getProfile } from '../../../Redux/actions/profile';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button, ListItem, Card, Icon, Avatar } from 'react-native-elements';
@@ -48,6 +49,11 @@ const MyEventTeamDetails = ({ navigation, route }) => {
     </TouchableOpacity>
   )
 
+  const ratingCompleted = (rating)  => {
+    console.log("Rating is: " + rating);
+  }
+  
+
   useEffect(() =>{
     navigation.setParams({title: item.title});
     if(item.teamsize === 1){
@@ -65,7 +71,11 @@ const MyEventTeamDetails = ({ navigation, route }) => {
   else{
     return (
       <View>
-         <Card containerStyle={{margin: 0, borderWidth: 0}} >
+        <AirbnbRating 
+          // starStyle={}
+          ratingBackgroundColor={'green'}
+        />
+        <Card containerStyle={{margin: 0, borderWidth: 0}} >
           <Card.Title style={styles.mainTitle}>{item.teamsize !== 1 && 'TEAM MEMBERS'}</Card.Title>
           <View style={styles.card}>
             {

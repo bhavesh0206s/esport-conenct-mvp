@@ -4,7 +4,7 @@ import { Text, Card, Button, Icon, Image } from "react-native-elements";
 import { gameImage } from "../../../shared/gameImage";
 import moment from 'moment';
 import { useSelector, useDispatch } from "react-redux";
-import { deleteMyEvent, fetchEventDetails } from "../../../Redux/actions/event";
+import { deleteMyEvent } from "../../../Redux/actions/event";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import ConfirmModal from "../../../shared/confirmModal";
 import MyEventCard from "../../../components/myEventCard";
@@ -12,6 +12,7 @@ import MyEventCard from "../../../components/myEventCard";
 const MyEventDetails = ({ item, navigation, deleteEvent}) => {
   const [imageUri, setImageUri] = useState("sd");
   const [modalOpen, setModalOpen] = useState(false);
+  const [isEventOver, setIsEventOver] = useState(false)
 
   const {currentUserUsername, eventDetail} = useSelector((state) => ({
     currentUserUsername: state.profile.userProfile.username,
@@ -27,15 +28,28 @@ const MyEventDetails = ({ item, navigation, deleteEvent}) => {
     navigation.navigate('My Event Details', { item, eventDetail })
   }
 
-  useEffect(() => {
-    
-    if (item.game === "PUBG") {
-      setImageUri(gameImage.pubg.uri);
-    } else if (item.game === "COD") {
-      setImageUri(gameImage.cod.uri);
-    } else {
-      setImageUri(gameImage.clashRoyale.uri);
+  const checkDate = (eventDate) => {
+    const currentDate = new Date(); 
+    eventDate = new Date(eventDate);
+    if(currentDate.getTime() > eventDate.getTime()){
+      setIsEventOver(true)
     }
+
+  }
+
+  useEffect(() => {
+    if (item.game === 'PUBG') {
+      setImageUri(gameImage.pubg.uri);
+    } else if (item.game === 'COD') {
+      setImageUri(gameImage.cod.uri);
+    } else if (item.game === 'Clash Royale') {
+      setImageUri(gameImage.clashRoyale.uri);
+    } else{
+      setImageUri(gameImage.coc.uri)
+    }
+
+    checkDate(item.time)
+
   }, []);
 
   return (
@@ -48,6 +62,7 @@ const MyEventDetails = ({ item, navigation, deleteEvent}) => {
       />
       <MyEventCard 
         item={item}
+        isEventOver={isEventOver}
         handleSubmit={showDetails}
         imageUri={imageUri}
       />
