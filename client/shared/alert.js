@@ -36,14 +36,16 @@ const Alert = () => {
               onBackdropPress={toggleOverlay}
             >
               <View style={styles.content}>
-                <Text style={styles.contentTitle}>{alert.msg}</Text>
-                <View style={styles.btnView}>
-                  <Button
-                    buttonStyle={styles.btnOk} 
-                    icon={<AntDesign name="checkcircleo" size={24} color="#fff" />}
-                    title='OK'
-                    onPress={toggleOverlay} 
-                  />
+                <View style={styles.btnContainer}>
+                  <Text style={styles.contentTitle}>{alert.msg}</Text>
+                  <View style={styles.btnView}>
+                    <Button
+                      buttonStyle={styles.btnOk} 
+                      icon={<AntDesign name="checkcircleo" size={24} color="#fff" />}
+                      title='OK'
+                      onPress={toggleOverlay} 
+                    />
+                  </View>
                 </View>
               </View>
             </Modal>
@@ -68,12 +70,15 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
     paddingHorizontal: 5,
   },
-  btnView: {
+  btnContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnView: {
+    flex: 1,
   },
   btnOk:{
-    paddingHorizontal: 139.5,
     borderRadius: 0,
     backgroundColor: '#4ecca3'
   },

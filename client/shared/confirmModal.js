@@ -3,8 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Text, Button, Icon } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons'; 
 
 const ConfirmModal = ({text, handleOk, modalOpen, setModalOpen}) => {;
 
@@ -25,20 +24,24 @@ const ConfirmModal = ({text, handleOk, modalOpen, setModalOpen}) => {;
     >
       <View style={styles.content}>
         <Text style={styles.contentTitle}>{text}</Text>
-        <View style={styles.btnView}>
-          <Button 
-            titleStyle={{color: 'grey'}}  
-            buttonStyle={styles.btnCancel}
-            title='CANCEL'
-            icon={<MaterialCommunityIcons name="cancel" size={24} color='grey' />}
-            onPress={toggleOverlay}   
-          />
-          <Button 
-            buttonStyle={styles.btnOk} 
-            icon={<AntDesign name="checkcircleo" size={24} color="#fff" />}
-            title='OK'
-            onPress={handleOk}
-          />
+        <View style={styles.btnContainer}>
+          <View style={styles.btnView}>
+            <Button 
+              titleStyle={{color: 'grey'}}  
+              buttonStyle={styles.btnCancel}
+              title='CANCEL'
+              icon={<MaterialCommunityIcons name="cancel" size={24} color='grey' />}
+              onPress={toggleOverlay}   
+            />
+          </View>
+          <View style={styles.btnView}>
+            <Button 
+              buttonStyle={styles.btnOk} 
+              icon={<AntDesign name="checkcircleo" size={24} color="#fff" />}
+              title='OK'
+              onPress={handleOk}
+            />
+          </View>
         </View>
       </View>
     </Modal>
@@ -60,19 +63,21 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
     paddingHorizontal: 5,
   },
-  btnView: {
+  btnContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnView: {
+    flex: 1,
   },
   btnOk:{
-    paddingHorizontal: 55,
     borderRadius: 0,
     backgroundColor: '#4ecca3'
   },
   btnCancel:{
-    paddingHorizontal: 40,
     borderRadius: 0,
-    backgroundColor: 'transparent'
+    backgroundColor: '#d9534f'
   }
 });
 

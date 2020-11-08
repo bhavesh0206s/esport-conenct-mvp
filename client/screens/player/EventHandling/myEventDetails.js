@@ -66,36 +66,44 @@ const MyEventDetails = ({ item, navigation, deleteEvent}) => {
         handleSubmit={showDetails}
         imageUri={imageUri}
       />
-      <View>
-        <Button
-          buttonStyle={styles.btnStyle}
-          onPress={showDetails}
-          title="TEAM INFO"
-        />
-        <Button
-          buttonStyle={styles.btnStyleDelete}
-          icon={<MaterialCommunityIcons name="cancel" size={15} color='#fff' />}
-          onPress={() => setModalOpen(true)}
-          title="EXIT"
-        />
+      <View style={styles.mainBtnContainer}>
+        <View style={styles.buttonContainer}>
+          <Button
+            buttonStyle={styles.btnStyle}
+            onPress={showDetails}
+            title="TEAM INFO"
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            buttonStyle={styles.btnStyleDelete}
+            icon={<MaterialCommunityIcons name="cancel" size={15} color='#fff' />}
+            onPress={() => setModalOpen(true)}
+            title="EXIT"
+          />
+        </View>
       </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  mainBtnContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonContainer: {
+    flex: 1,
+  },
   btnStyleDelete:{
     backgroundColor: '#d9534f',
     borderRadius: 0,
-    marginBottom: 20,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5
   },
   btnStyle:{
     borderRadius: 0,
     // marginBottom: 20,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5
   },
 })
 

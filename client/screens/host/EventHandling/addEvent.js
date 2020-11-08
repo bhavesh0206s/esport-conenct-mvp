@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import moment from 'moment';
 import * as yup from 'yup';
-import { View, Platform,  StyleSheet } from 'react-native';
+import { View, Platform,  StyleSheet, Alert } from 'react-native';
 import { Input, Button, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import RNPickerSelect from 'react-native-picker-select';
@@ -10,12 +10,12 @@ import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const eventSchema = yup.object({
-  description: yup.string().required(),
+  description: yup.string().required('Game Description is required'),
   game: yup.string().required(),
   time: yup.string(),
-  contact: yup.string().required(),
-  title: yup.string().required(),
-  prizepool: yup.number().required(),
+  contact: yup.number().min(8).required('Phone number is required'),
+  title: yup.string().required('Title is Required'),
+  prizepool: yup.number().required('PrizePool is required'),
   entryFee: yup.number(),
 });
 
@@ -25,7 +25,7 @@ const AddEvent = ({ setModalOpen }) => {
   const navigation = useNavigation();
 
   const [typeTourn, setTypeTourn] = useState('');
-
+  const [isDateCorrect, setIsDateCorrect] = useState(false);
   //  For the current date
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
@@ -37,6 +37,7 @@ const AddEvent = ({ setModalOpen }) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
+    checkSelectedDate(currentDate);
     let hour = currentDate.getHours();
     let min = currentDate.getMinutes();
     let month = currentDate.getMonth();
@@ -57,6 +58,17 @@ const AddEvent = ({ setModalOpen }) => {
   const showTimepicker = () => {
     showMode('time');
   };
+
+  const checkSelectedDate = (eventDate) => {
+    const currentDate = new Date(); 
+    // console.log(currentDate.getTime(),  eventDate.getTime())
+    if(currentDate.getTime() > eventDate.getTime()){
+      alert('Select Proper Date!')
+      setIsDateCorrect(false)
+    }else{
+      setIsDateCorrect(true)
+    }
+  }
 
   return (
     <View
@@ -83,6 +95,7 @@ const AddEvent = ({ setModalOpen }) => {
           values.time = currentDatetime;
           values.hostedBy = hostProfile.username;
           values.hostedById = hostProfile.user;
+          values.contact = String(values.contact)
           if (!values.entryFee) {
             values.entryFee = 'FREE';
           }
@@ -99,7 +112,7 @@ const AddEvent = ({ setModalOpen }) => {
               }
               items={[
                 { label: 'PUBG', value: 'PUBG'},
-                { label: 'COD', value: 'COD' },
+                { label: 'Call of Duty', value: 'COD' },
                 { label: 'Clash Royale', value: 'Clash Royale' },
                 { label: 'Clash of Clans', value: 'Clash of Clans' },
               ]}
@@ -111,6 +124,7 @@ const AddEvent = ({ setModalOpen }) => {
               }}
             />
             <Input
+              label='Tournament Name'
               placeholder="Tournament Name"
               onChangeText={formikprops.handleChange('title')}
               value={formikprops.values.title}
@@ -121,6 +135,7 @@ const AddEvent = ({ setModalOpen }) => {
             />
             <Input
               multiline
+              label='Game Description'
               placeholder="Game Description"
               onChangeText={formikprops.handleChange('description')}
               value={formikprops.values.description}
@@ -162,7 +177,8 @@ const AddEvent = ({ setModalOpen }) => {
             />
             {typeTourn == 'Paid' ? (
               <Input
-                placeholder="Entry Fees..."
+                label='Entry Fees'
+                placeholder="Entry Fees"
                 onChangeText={formikprops.handleChange('entryFee')}
                 value={`${formikprops.values.entryFee}`}
                 onBlur={formikprops.handleBlur('entryFee')}
@@ -172,7 +188,8 @@ const AddEvent = ({ setModalOpen }) => {
               />
             ) : null}
             <Input
-              placeholder="Prizepool.."
+              label='Prizepool'
+              placeholder="Prizepool"
               onChangeText={formikprops.handleChange('prizepool')}
               value={`${formikprops.values.prizepool}`}
               onBlur={formikprops.handleBlur('prizepool')}
@@ -205,6 +222,7 @@ const AddEvent = ({ setModalOpen }) => {
             />
             <Input
               multiline
+              label='Contact'
               placeholder="Contact Number"
               onChangeText={formikprops.handleChange('contact')}
               value={formikprops.values.contact}
@@ -213,10 +231,18 @@ const AddEvent = ({ setModalOpen }) => {
                 formikprops.touched.contact && formikprops.errors.contact
               }
             />
+            {isDateCorrect ? (
               <Button
                 onPress={formikprops.handleSubmit}
                 title="Submit For Verification"
               />
+            ) : (  
+              <Button
+                onPress={formikprops.handleSubmit}
+                title="Submit For Verification"
+                disabled={true}
+              />
+            )}
           </View>
         )}
       </Formik>
@@ -230,12 +256,6 @@ const AddEvent = ({ setModalOpen }) => {
           onChange={onChange}
         />
       )}
-        {/* <View>
-          <Text>
-            Seems like you haven't set the date correctly,set it and then you
-            can submit for verification
-          </Text>
-        </View> */}
     </View>
   );
 };

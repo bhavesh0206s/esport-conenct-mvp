@@ -2,10 +2,19 @@ import React from "react";
 import { View, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 import { Text, Card, Button } from "react-native-elements";
 import moment from 'moment';
+import { useState } from "react";
+import ReviewModal from "./reviewModal";
 
 const MyEventCard = ({ item , handleSubmit, imageUri, isEventOver}) => {
-  console.log(isEventOver)
+  const [openReviewModal, setOpenReviewModal] = useState(false);
+
+  const toggleOverlay = () => {
+    setOpenReviewModal(!openReviewModal)
+  };
+
   return (
+    <>
+      <ReviewModal openReviewModal={openReviewModal} toggleOverlay={toggleOverlay}/>
       <Card containerStyle={styles.container} >
         <Card.Title style={styles.mainTitle}>{item.title}</Card.Title>
           <ImageBackground 
@@ -18,7 +27,7 @@ const MyEventCard = ({ item , handleSubmit, imageUri, isEventOver}) => {
                 <View style={styles.rateView}>
                   <Text style={styles.eventFinishedText}>Event Finished</Text>
                   <Text style={styles.eventFinishedText}></Text>
-                  <Button title='Rate your Experience'/>
+                  <Button onPress={toggleOverlay} title='Rate your Experience'/>
                 </View>
               ): (
                 <TouchableOpacity
@@ -54,6 +63,7 @@ const MyEventCard = ({ item , handleSubmit, imageUri, isEventOver}) => {
             </View>
           </ImageBackground>
       </Card>
+    </>
   );
 };
 
@@ -61,7 +71,6 @@ const styles = StyleSheet.create({
   container: {
     margin: 0,
     padding: 8,
-    // marginBottom: 10
     borderWidth: 0
   },
   content :{
