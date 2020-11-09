@@ -41,7 +41,7 @@ const EventDetails = ({ route, navigation }) => {
     _id,
     user,
     hostedById,
-    reviews,
+    // reviews,
   } = eventdetails;
 
   const handleRegistration = () => {
@@ -118,11 +118,11 @@ const EventDetails = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    let sumOfRating = 0;
-    reviews.forEach((review) => {
-      sumOfRating += review.rating;
-    });
-    setRating(sumOfRating / reviews.length);
+    // let sumOfRating = 0;
+    // reviews.forEach((review) => {
+    //   sumOfRating += review.rating;
+    // });
+    // setRating(sumOfRating / reviews.length);
     navigation.setParams({
       title,
     });
@@ -147,9 +147,7 @@ const EventDetails = ({ route, navigation }) => {
 
   if (loading) {
     return (
-      <>
-        <Loading />
-      </>
+      <Loading />
     );
   } else {
     // console.log(eventreviews);

@@ -14,7 +14,7 @@ const MyEventCard = ({ item , handleSubmit, imageUri, isEventOver}) => {
 
   return (
     <>
-      <ReviewModal openReviewModal={openReviewModal} toggleOverlay={toggleOverlay}/>
+      <ReviewModal openReviewModal={openReviewModal} eventId={item._id} hostId={item.hostedById} toggleOverlay={toggleOverlay}/>
       <Card containerStyle={styles.container} >
         <Card.Title style={styles.mainTitle}>{item.title}</Card.Title>
           <ImageBackground 

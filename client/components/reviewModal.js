@@ -6,12 +6,18 @@ import Modal from 'react-native-modal';
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons'; 
 import { Formik } from "formik";
 import * as yup from "yup";
+import { postReview } from '../Redux/actions/event';
+import { useDispatch } from 'react-redux';
 
 const reviewSchema = yup.object({
   reviewText: yup.string(),
+  rating: yup.number(),
 });
 
-const ReviewModal = ({openReviewModal, toggleOverlay, modalHandler, reviewHandler, reviewPosted }) => {
+const ReviewModal = ({openReviewModal, toggleOverlay, hostId, eventId }) => {
+
+  const dispatch = useDispatch();
+  const [rating, setRating] = useState(3);
 
   return (
     <Modal
@@ -25,21 +31,24 @@ const ReviewModal = ({openReviewModal, toggleOverlay, modalHandler, reviewHandle
       onBackdropPress={toggleOverlay}
     >
       <View style={styles.content}>
-        <View style={styles.ratingView}>
-          <AirbnbRating 
-            // starStyle={}
-          />
-        </View>
         <Formik
           validationSchema={reviewSchema}
-          initialValues={{ reviewText: ''}}
+          initialValues={{ reviewText: '',rating: ''}}
           onSubmit={(values) => {
-            // reviewHandler(values.reviewText);
-            // modalHandler();
+            values.rating = rating;
+            dispatch(postReview({values, hostId, eventId}));
+            toggleOverlay();
           }}
         >
           {(formikprops) => (
             <View>
+              <View style={styles.ratingView}>
+                <AirbnbRating 
+                  onFinishRating={(r) => setRating(r)}
+                  reviewColor='#4ecca3'
+                  selectedColor='#4ecca3'
+                />
+              </View>
               <View style={styles.commonStyleView}>
                 <Input
                   multiline
@@ -54,25 +63,25 @@ const ReviewModal = ({openReviewModal, toggleOverlay, modalHandler, reviewHandle
                   }
                 />
               </View>
-            <View style={styles.btnContainer}>
-              <View style={styles.btnView}>
-                <Button 
-                  titleStyle={{color: '#fff'}}  
-                  buttonStyle={styles.btnCancel}
-                  title='CANCEL'
-                  icon={<MaterialCommunityIcons name="cancel" size={24} color='#fff' />}
-                  onPress={toggleOverlay}   
-                />
+              <View style={styles.btnContainer}>
+                <View style={styles.btnView}>
+                  <Button 
+                    titleStyle={{color: '#fff'}}  
+                    buttonStyle={styles.btnCancel}
+                    title='CANCEL'
+                    icon={<MaterialCommunityIcons name="cancel" size={24} color='#fff' />}
+                    onPress={toggleOverlay}   
+                  />
+                </View>
+                <View style={styles.btnView}>
+                  <Button 
+                    buttonStyle={styles.btnOk} 
+                    icon={<AntDesign name="checkcircleo" size={24} color="#fff" />}
+                    title='SAVE'
+                    onPress={formikprops.handleSubmit}
+                  />
+                </View>
               </View>
-              <View style={styles.btnView}>
-                <Button 
-                  buttonStyle={styles.btnOk} 
-                  icon={<AntDesign name="checkcircleo" size={24} color="#fff" />}
-                  title='SAVE'
-                  onPress={formikprops.handleSubmit}
-                />
-              </View>
-            </View>
             </View>
           )}
         </Formik>

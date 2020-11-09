@@ -79,35 +79,6 @@ const eventSchema = new Schema({
     },
   ],
   contact: Number,
-  reviews: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "Host",
-      },
-      name: {
-        type: String,
-        required: true,
-      },
-      email: {
-        type: String,
-        required: true,
-        unique: true,
-      },
-      username: {
-        type: String,
-        default: "",
-      },
-      rating: {
-        type: Number,
-        default: 0,
-      },
-      text: {
-        type: String,
-        default: "",
-      },
-    },
-  ],
   date: {
     type: Date,
     default: Date.now,

@@ -24,6 +24,26 @@ const hostProfileSchema = new Schema({
     unique: true,
     default: "",
   },
+  reviews: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      username: {
+        type: String,
+        default: "",
+      },
+      rating: {
+        type: Number,
+        default: 0,
+      },
+      reviewText: {
+        type: String,
+        default: "",
+      },
+    },
+  ],
   myhostedevents: [
     {
       user: {
@@ -92,30 +112,6 @@ const hostProfileSchema = new Schema({
         },
       ],
       contact: Number,
-      reviews: [
-        {
-          user: {
-            type: Schema.Types.ObjectId,
-            ref: "Host",
-          },
-          name: {
-            type: String,
-            required: true,
-          },
-          username: {
-            type: String,
-            default: "",
-          },
-          rating: {
-            type: Number,
-            default: 0,
-          },
-          text: {
-            type: String,
-            default: "",
-          },
-        },
-      ],
       date: {
         type: Date,
         default: Date.now,

@@ -34,7 +34,6 @@ const MyEventDetails = ({ item, navigation, deleteEvent}) => {
     if(currentDate.getTime() > eventDate.getTime()){
       setIsEventOver(true)
     }
-
   }
 
   useEffect(() => {

@@ -222,8 +222,6 @@ module.exports = (app) => {
       const event = await Event.findById(_id);
 
       if (teamsize === 1) {
-        //deleting from event
-
         
         if(event.registeredplayerinfo !== null){
           let playersInfo = event.registeredplayerinfo;
@@ -266,25 +264,24 @@ module.exports = (app) => {
             }
           }
         }
-
-        Event.deleteOne({ _id: _id }, (err) => {
-          if (err) return handleError(err);
-        });
-
-        const host = await HostProfile.findOne({ user: req.user.id });
-        if (host.myhostedevents !== null) {
-          let myHostedEvent = host.myhostedevents;
-
-          myHostedEvent = myHostedEvent.filter(
-            (event) => event._id.toString() !== _id
-          );
-
-          host.myhostedevents = myHostedEvent;
-          await host.save();
-        }
-
-        res.json(host);
       }
+      console.log('3 herrer')
+      Event.deleteOne({ _id: _id }, (err) => {
+        if (err) return console.log(err)
+      });
+
+      const host = await HostProfile.findOne({ user: req.user.id });
+      if (host.myhostedevents !== null) {
+        let myHostedEvent = host.myhostedevents;
+
+        myHostedEvent = myHostedEvent.filter(
+          (event) => event._id.toString() !== _id
+        );
+
+        host.myhostedevents = myHostedEvent;
+        await host.save();
+      }
+      res.json(host);
     } catch (err) {
       console.error(err.message);
       return res.status(404).json({ errors: [{ msg: err.message }] });
@@ -396,42 +393,56 @@ module.exports = (app) => {
     }
   });
 
-  app.post("/api/event/postreview/:eventId", verify, async (req, res) => {
-    const { reviewInfo, hostedById } = req.body;
+  app.post("/api/event/post-review/:eventId", verify, async (req, res) => {
+    const { reviewInfo, hostId } = req.body;
     try {
+      console.log(reviewInfo, hostId);
       let editreview = false;
+      let user = await User.findById(req.user.id)
       let event = await Event.findOne({ _id: req.params.eventId });
-      let hostProfile = await HostProfile.findOne({ user: hostedById });
+      let hostProfile = await HostProfile.findOne({ user: hostId });
+      const reviewDetails = {};
+      reviewDetails.name = user.name;
+      reviewDetails.username = user.username
+      reviewDetails.rating = reviewInfo.rating;
+      reviewDetails.reviewText = reviewInfo.reviewText;
+      // if (
+      //   event.reviews.filter(
+      //     (review) => review.username === reviewInfo.username
+      //   ).length > 0
+      // ) {
+      //   event.reviews.forEach((review) => {
+      //     if (review.username === reviewInfo.username) {
+      //       review = reviewInfo;
+      //     }
+      //   });
+      //   editreview = true;
+      // } else {
+      //   event.reviews.push(reviewInfo);
+      // }
+      // await event.save();
 
-      if (
-        event.reviews.filter(
-          (review) => review.username === reviewInfo.username
-        ).length > 0
-      ) {
-        event.reviews.forEach((review) => {
-          if (review.username === reviewInfo.username) {
-            review = reviewInfo;
-          }
-        });
-        editreview = true;
-      } else {
-        event.reviews.push(reviewInfo);
-      }
-      await event.save();
-
-      let arr = hostProfile.myhostedevents;
-      for (i = 0; i < arr.length; i++) {
-        if (arr[i]._id.toString() == req.params.eventId) {
-          if (editreview) {
-            arr[i].reviews = event.reviews;
-          }
-          arr[i].reviews.push(reviewInfo);
+      let reviews = hostProfile.reviews;
+      for(let review of reviews){
+        if(review.username !== reviewDetails.username){
+          reviews.push(reviewDetails)
         }
       }
+      // reviews.forEach(review => {
+        
+      // });
+      // for (i = 0; i < arr.length; i++) {
+      //   if (arr[i]._id.toString() == req.params.eventId) {
+      //     if (editreview) {
+      //       arr[i].reviews = event.reviews;
+      //     }
+      //     arr[i].reviews.push(reviewInfo);
+      //   }
+      // }
 
       await hostProfile.save();
 
-      res.status(200).json(hostProfile.myhostedevents);
+      res.status(200).json(hostProfile.reviews);
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");

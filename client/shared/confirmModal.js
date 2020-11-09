@@ -27,10 +27,10 @@ const ConfirmModal = ({text, handleOk, modalOpen, setModalOpen}) => {;
         <View style={styles.btnContainer}>
           <View style={styles.btnView}>
             <Button 
-              titleStyle={{color: 'grey'}}  
+              titleStyle={{color: '#fff'}}  
               buttonStyle={styles.btnCancel}
               title='CANCEL'
-              icon={<MaterialCommunityIcons name="cancel" size={24} color='grey' />}
+              icon={<MaterialCommunityIcons name="cancel" size={24} color='#fff' />}
               onPress={toggleOverlay}   
             />
           </View>

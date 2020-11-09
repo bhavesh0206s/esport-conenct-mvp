@@ -187,7 +187,6 @@ export const deleteHostedEvent = (eventDetails, username) => async (
         },
       }
     );
-
     dispatch(getHostCurrentProfile());
     dispatch(loading(false));
     dispatch(setAlert("Event Deleted Successfully!!"));
@@ -204,7 +203,8 @@ export const deleteHostedEvent = (eventDetails, username) => async (
 };
 
 // Post Review
-export const PostReview = (formData) => async (dispatch) => {
+export const postReview = (formData) => async (dispatch) => {
+
   try {
     const config = {
       headers: {
@@ -213,25 +213,25 @@ export const PostReview = (formData) => async (dispatch) => {
     };
 
     // console.log(formData.eventdetails._id);
-
     const body = JSON.stringify({
-      reviewInfo: formData.reviewInfo,
-      hostedById: formData.eventdetails.hostedById,
+      reviewInfo: formData.values,
+      hostId: formData.hostId,
     });
 
+
     await axios.post(
-      `http://${ipAddress}/api/event/postreview/${formData.eventdetails._id}`,
+      `http://${ipAddress}/api/event/post-review/${formData.eventId}`,
       body,
       config
     );
 
-    dispatch({
-      type: POSTREVIEW_SUCCESS,
-      payload: {
-        eventDetails: formData.eventdetails,
-        postReviewInfo: formData.reviewInfo,
-      },
-    });
+    // dispatch({
+    //   type: POSTREVIEW_SUCCESS,
+    //   payload: {
+    //     eventDetails: formData.eventdetails,
+    //     postReviewInfo: formData.reviewInfo,
+    //   },
+    // });
   } catch (err) {
     console.log(`error from PostReview : ${err.message}`);
   }
