@@ -9,6 +9,7 @@ import searchEventReducer from './searchEventReducer';
 import detailsReducer from './detailsReducer';
 import userEventReducer from './userEventReducer';
 import notificationReducer from './notificationReducer';
+import reviewReducer from './reviewReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -21,4 +22,5 @@ export default combineReducers({
   details: detailsReducer,
   userEventInfo: userEventReducer,
   notification: notificationReducer,
+  review: reviewReducer,
 });

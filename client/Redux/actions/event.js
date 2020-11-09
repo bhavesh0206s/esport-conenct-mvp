@@ -202,37 +202,3 @@ export const deleteHostedEvent = (eventDetails, username) => async (
   }
 };
 
-// Post Review
-export const postReview = (formData) => async (dispatch) => {
-
-  try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    // console.log(formData.eventdetails._id);
-    const body = JSON.stringify({
-      reviewInfo: formData.values,
-      hostId: formData.hostId,
-    });
-
-
-    await axios.post(
-      `http://${ipAddress}/api/event/post-review/${formData.eventId}`,
-      body,
-      config
-    );
-
-    // dispatch({
-    //   type: POSTREVIEW_SUCCESS,
-    //   payload: {
-    //     eventDetails: formData.eventdetails,
-    //     postReviewInfo: formData.reviewInfo,
-    //   },
-    // });
-  } catch (err) {
-    console.log(`error from PostReview : ${err.message}`);
-  }
-};

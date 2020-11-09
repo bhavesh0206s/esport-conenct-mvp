@@ -29,7 +29,7 @@ const UserName = ({route}) => {
           }}
           validationSchema={userNameSchema}
           onSubmit={(values) => {
-            dispatch(username(values.userName, values.bio, email, cocTag));
+            dispatch(username(values.userName.replace(/\s/g,''), values.bio, email, cocTag));
           }}
         >
           {(formikprops) => (

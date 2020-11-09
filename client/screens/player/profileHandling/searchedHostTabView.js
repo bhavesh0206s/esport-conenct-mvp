@@ -6,6 +6,7 @@ import AchivementCard from '../../../components/achivementCard';
 import EventHostedCard from '../../../components/eventHostedCard';
 import { useNavigation } from '@react-navigation/native';
 import { Text } from 'react-native-elements';
+import ReviewCard from '../../../components/reviewCard';
 
 
 const renderTabBar = (props) => (
@@ -17,7 +18,10 @@ const renderTabBar = (props) => (
 );
 
 const SearchedHostTabView = () => {
-  const profileInfo = useSelector((state) => state.profile.particularUser);
+  const {profileInfo, hostReviews} = useSelector((state) => ({
+    profileInfo: state.profile.particularUser,
+    hostReviews: state.review
+  }));
   const hostEvents = profileInfo.myhostedevents;
   const navigation = useNavigation();
 
@@ -29,7 +33,17 @@ const SearchedHostTabView = () => {
 
   const reviews = () => (
     <View>
-      <Text style={{fontSize: 20, textAlign: 'center'}}>No reviews</Text>
+      {/* <Rating  
+        imageSize={30} 
+        readonly 
+        tintColor='#393e46s'
+        startingValue={averageRating}
+      /> */}
+      <FlatList
+        data={hostReviews}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <ReviewCard item={item} />}
+      />
     </View>
   );
 

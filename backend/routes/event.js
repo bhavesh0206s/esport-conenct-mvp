@@ -265,7 +265,7 @@ module.exports = (app) => {
           }
         }
       }
-      console.log('3 herrer')
+
       Event.deleteOne({ _id: _id }, (err) => {
         if (err) return console.log(err)
       });
@@ -393,58 +393,53 @@ module.exports = (app) => {
     }
   });
 
+  app.post("/api/event/get-review/:hostId", verify, async(req, res) => {
+    try{
+      const host = await HostProfile.findOne({user: req.params.hostId});
+      res.json(host.reviews);
+    }catch(err){
+      console.log('error form getReview: ',err.message)
+    }
+  }) 
+
   app.post("/api/event/post-review/:eventId", verify, async (req, res) => {
     const { reviewInfo, hostId } = req.body;
     try {
-      console.log(reviewInfo, hostId);
       let editreview = false;
       let user = await User.findById(req.user.id)
-      let event = await Event.findOne({ _id: req.params.eventId });
+      // let event = await Event.findOne({ _id: req.params.eventId });
       let hostProfile = await HostProfile.findOne({ user: hostId });
       const reviewDetails = {};
       reviewDetails.name = user.name;
       reviewDetails.username = user.username
       reviewDetails.rating = reviewInfo.rating;
       reviewDetails.reviewText = reviewInfo.reviewText;
-      // if (
-      //   event.reviews.filter(
-      //     (review) => review.username === reviewInfo.username
-      //   ).length > 0
-      // ) {
-      //   event.reviews.forEach((review) => {
-      //     if (review.username === reviewInfo.username) {
-      //       review = reviewInfo;
-      //     }
-      //   });
-      //   editreview = true;
-      // } else {
-      //   event.reviews.push(reviewInfo);
-      // }
-      // await event.save();
+      reviewDetails.game = reviewInfo.game;
+      reviewDetails.tournamentName = reviewInfo.tournamentName;
 
       let reviews = hostProfile.reviews;
+      let foundReview = false
       for(let review of reviews){
-        if(review.username !== reviewDetails.username){
-          reviews.push(reviewDetails)
+        if((review.tournamentName === reviewDetails.tournamentName) && 
+          (review.username === reviewDetails.username))
+        {
+          foundReview = true;
+          break
         }
       }
-      // reviews.forEach(review => {
-        
-      // });
-      // for (i = 0; i < arr.length; i++) {
-      //   if (arr[i]._id.toString() == req.params.eventId) {
-      //     if (editreview) {
-      //       arr[i].reviews = event.reviews;
-      //     }
-      //     arr[i].reviews.push(reviewInfo);
-      //   }
-      // }
-
-      await hostProfile.save();
-
-      res.status(200).json(hostProfile.reviews);
+      if(!foundReview){
+        reviews.push(reviewDetails)
+        await hostProfile.save();
+        return res.status(200).json({
+          success: { msg: "Thank You for Reviewing!" },
+        });
+      }else{
+        return res.status(200).json({
+          success: { msg: "You have already Reviewed!" },
+        });
+      }
     } catch (err) {
-      console.error(err.message);
+      console.error('error form postReview: ',err.message);
       res.status(500).send("Server Error");
     }
   });

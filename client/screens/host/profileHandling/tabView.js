@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import AchivementCard from '../../../components/achivementCard';
-import EventHostedCard from '../../../components//evnetHostedCard';
-import { useNavigation } from '@react-navigation/native';
+import ReviewCard from '../../../components/reviewCard';
+import { Rating } from 'react-native-elements';
 
 const achivementData = [
   {
@@ -29,51 +28,34 @@ const renderTabBar = (props) => (
   />
 );
 
-const ProfileTabView = () => {
-  const profileInfo = useSelector((state) => state.profile);
-  const myEvents = profileInfo.userProfile.myhostedevents;
-  const loading = profileInfo.loading;
-  const navigation = useNavigation();
-
+const HostProfileTabView = ({hostReviews, averageRating}) => {
+  
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'first', title: 'Achivements' },
-    { key: 'second', title: 'Hosted Events' },
+    { key: 'first', title: 'Reviews' },
   ]);
 
-  const achivements = () => (
+  const reviews = () => (
     <View>
+      <Rating  
+        imageSize={30} 
+        readonly 
+        tintColor='#393e46s'
+        startingValue={averageRating}
+      />
       <FlatList
-        data={achivementData}
+        data={hostReviews}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <AchivementCard title={item.title} />}
+        renderItem={({ item }) => <ReviewCard item={item} />}
       />
     </View>
   );
 
-  const hostedEvents = () => {
-    return (
-      <View>
-        {myEvents !== null || myEvents ? (
-          <FlatList
-            data={myEvents}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (
-              <EventHostedCard
-                navigation={navigation}
-                item={item}
-                type='ProfileEventHostedCard'
-              />
-            )}
-          />
-        ) : null}
-      </View>
-    );
-  };
   const renderScene = SceneMap({
-    first: achivements,
-    second: hostedEvents,
+    first: reviews,
   });
+
+  
 
   return (
     <TabView
@@ -86,4 +68,4 @@ const ProfileTabView = () => {
   );
 };
 
-export default ProfileTabView;
+export default HostProfileTabView;

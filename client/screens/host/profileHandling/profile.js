@@ -1,14 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../shared/loading";
 import HostProfileDetails from "../../../components/hostProfileDetails";
+import { getReviews } from "../../../Redux/actions/review";
+import HostProfileTabView from "./tabView";
 
 const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { userProfileInfo, loading } = useSelector((state) => ({
+  const { userProfileInfo, loading, hostReviews } = useSelector((state) => ({
     userProfileInfo: state.profile.userProfile,
     loading: state.loading,
+    hostReviews: state.review
   }));
+
+  const [averageRating, setAverageRating] = useState(0);
   const { bio, name, myevents, username } = userProfileInfo;
 
   const handleEdit = () => {
@@ -16,9 +21,13 @@ const Profile = ({ navigation }) => {
   };
 
   useEffect(() => {
+    dispatch(getReviews(userProfileInfo.user))
+    let avgRating = hostReviews.reduce((acc, item) => (acc + item.rating), 0)
+    setAverageRating(avgRating/hostReviews.length);
     navigation.setParams({ title: "Profile" });
   }, []);
 
+  
   if (loading) {
     return <Loading />;
   } else {
@@ -32,6 +41,7 @@ const Profile = ({ navigation }) => {
           username={username}
           handleEdit={handleEdit}
         />
+        <HostProfileTabView hostReviews={hostReviews} averageRating={averageRating}/>
       </>
     );
   }

@@ -34,7 +34,7 @@ const GoogleUsername = ({ route }) => {
           onSubmit={(values) => {
             dispatch(
               username(
-                values.userName.trim(),
+                values.userName.replace(/\s/g,'').toLowerCase(),
                 values.bio,
                 emailGoogle,
                 fromHost

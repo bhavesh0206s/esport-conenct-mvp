@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons'; 
 import { Formik } from "formik";
 import * as yup from "yup";
-import { postReview } from '../Redux/actions/event';
+import { postReview } from '../Redux/actions/review';
 import { useDispatch } from 'react-redux';
 
 const reviewSchema = yup.object({
@@ -14,79 +14,83 @@ const reviewSchema = yup.object({
   rating: yup.number(),
 });
 
-const ReviewModal = ({openReviewModal, toggleOverlay, hostId, eventId }) => {
+const ReviewModal = ({openReviewModal, toggleOverlay, hostId, eventId, game, tournamentName}) => {
 
   const dispatch = useDispatch();
   const [rating, setRating] = useState(3);
 
   return (
-    <Modal
-      animationIn="bounceIn"
-      backdropOpacity={0.8}
-      onSwipeComplete={toggleOverlay}
-      swipeDirection={['up', 'left', 'right', 'down']}
-      isVisible={openReviewModal}
-      onBackButtonPress={toggleOverlay}
-      style={styles.overLay}
-      onBackdropPress={toggleOverlay}
-    >
-      <View style={styles.content}>
-        <Formik
-          validationSchema={reviewSchema}
-          initialValues={{ reviewText: '',rating: ''}}
-          onSubmit={(values) => {
-            values.rating = rating;
-            dispatch(postReview({values, hostId, eventId}));
-            toggleOverlay();
-          }}
-        >
-          {(formikprops) => (
-            <View>
-              <View style={styles.ratingView}>
-                <AirbnbRating 
-                  onFinishRating={(r) => setRating(r)}
-                  reviewColor='#4ecca3'
-                  selectedColor='#4ecca3'
-                />
-              </View>
-              <View style={styles.commonStyleView}>
-                <Input
-                  multiline
-                  label="Review"
-                  placeholder={formikprops.values.reviewText ? formikprops.values.reviewText : "Enter your review here"}
-                  onChangeText={formikprops.handleChange("reviewText")}
-                  value={formikprops.values.reviewText}
-                  onBlur={formikprops.handleBlur("reviewText")}
-                  errorMessage={
-                    formikprops.touched.reviewText &&
-                    formikprops.errors.reviewText
-                  }
-                />
-              </View>
-              <View style={styles.btnContainer}>
-                <View style={styles.btnView}>
-                  <Button 
-                    titleStyle={{color: '#fff'}}  
-                    buttonStyle={styles.btnCancel}
-                    title='CANCEL'
-                    icon={<MaterialCommunityIcons name="cancel" size={24} color='#fff' />}
-                    onPress={toggleOverlay}   
+    <>
+      <Modal
+        animationIn="bounceIn"
+        backdropOpacity={0.8}
+        onSwipeComplete={toggleOverlay}
+        swipeDirection={['up', 'left', 'right', 'down']}
+        isVisible={openReviewModal}
+        onBackButtonPress={toggleOverlay}
+        style={styles.overLay}
+        onBackdropPress={toggleOverlay}
+      >
+        <View style={styles.content}>
+          <Formik
+            validationSchema={reviewSchema}
+            initialValues={{ reviewText: '',rating: ''}}
+            onSubmit={(values) => {
+              values.rating = rating;
+              values.game = game;
+              values.tournamentName = tournamentName;
+              dispatch(postReview({values, hostId}));
+              toggleOverlay();
+            }}
+          >
+            {(formikprops) => (
+              <View>
+                <View style={styles.ratingView}>
+                  <AirbnbRating 
+                    onFinishRating={(r) => setRating(r)}
+                    reviewColor='#4ecca3'
+                    selectedColor='#4ecca3'
                   />
                 </View>
-                <View style={styles.btnView}>
-                  <Button 
-                    buttonStyle={styles.btnOk} 
-                    icon={<AntDesign name="checkcircleo" size={24} color="#fff" />}
-                    title='SAVE'
-                    onPress={formikprops.handleSubmit}
+                <View style={styles.commonStyleView}>
+                  <Input
+                    multiline
+                    label="Review"
+                    placeholder={formikprops.values.reviewText ? formikprops.values.reviewText : "Enter your review here"}
+                    onChangeText={formikprops.handleChange("reviewText")}
+                    value={formikprops.values.reviewText}
+                    onBlur={formikprops.handleBlur("reviewText")}
+                    errorMessage={
+                      formikprops.touched.reviewText &&
+                      formikprops.errors.reviewText
+                    }
                   />
                 </View>
+                <View style={styles.btnContainer}>
+                  <View style={styles.btnView}>
+                    <Button 
+                      titleStyle={{color: '#fff'}}  
+                      buttonStyle={styles.btnCancel}
+                      title='CANCEL'
+                      icon={<MaterialCommunityIcons name="cancel" size={24} color='#fff' />}
+                      onPress={toggleOverlay}   
+                    />
+                  </View>
+                  <View style={styles.btnView}>
+                    <Button 
+                      buttonStyle={styles.btnOk} 
+                      icon={<AntDesign name="checkcircleo" size={24} color="#fff" />}
+                      title='SAVE'
+                      onPress={formikprops.handleSubmit}
+                    />
+                  </View>
+                </View>
               </View>
-            </View>
-          )}
-        </Formik>
-      </View>
-    </Modal>
+            )}
+          </Formik>
+        </View>
+      </Modal>
+    </>
   );
 };
 

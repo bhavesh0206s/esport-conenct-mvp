@@ -34,6 +34,12 @@ const hostProfileSchema = new Schema({
         type: String,
         default: "",
       },
+      game: {
+        type: String,
+      },
+      tournamentName: {
+        type: String,
+      },
       rating: {
         type: Number,
         default: 0,
