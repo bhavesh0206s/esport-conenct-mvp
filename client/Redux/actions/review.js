@@ -5,19 +5,18 @@ import {
 import axios from "axios";
 import { ipAddress } from "../ipaddress";
 import { setAlert } from "./alert";
-
+import { loading } from './loading'
 export const getReviews = (hostId) => async (dispatch) =>{
   try {
-
     const res = await axios.post(
       `http://${ipAddress}/api/event/get-review/${hostId}`,
-    );
-    console.log(res.data)
-
-    dispatch({
-      type: GET_REVIEW_SUCCESS,
-      payload: res.data
-    });
+      );
+      console.log(res.data)
+      
+      dispatch({
+        type: GET_REVIEW_SUCCESS,
+        payload: res.data
+      });
   } catch (err) {
     console.log(`error from getReview : ${err.message}`);
   }

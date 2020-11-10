@@ -1,4 +1,4 @@
-import {GET_REVIEW_SUCCESS, LOADING} from '../actions/types';
+import { GET_REVIEW_SUCCESS } from '../actions/types';
 
 const initialState = [];
 

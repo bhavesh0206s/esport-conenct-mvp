@@ -11,23 +11,24 @@ import Loading from "../../../shared/loading";
 import { CLEARPARTICULARUSER } from "../../../Redux/actions/types";
 import ConfirmModal from "../../../shared/confirmModal";
 import EventDetailsCard from "../../../components/eventDetailsCard";
+import { getReviews } from "../../../Redux/actions/review";
 
 const EventDetails = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const { userProfile, hostProfile, loading } = useSelector((state) => ({
+  const { userProfile, hostProfile, reviews, loading } = useSelector((state) => ({
     userProfile: state.profile.userProfile,
     hostProfile: state.profile.particularUser,
+    reviews: state.reviews,
     loading: state.loading,
   }));
   const [eventId] = useState(userProfile.myevents.map((item) => item._id));
+  
   const { eventdetails, imageUri, viewingProfile, showhostBy } = route.params;
   const [eventTime, setEventTime] = useState(
     moment(eventdetails.time).format("dddd, MMMM Do YYYY, h:mm:ss a")
   );
 
   const [modalOpen, setModalOpen] = useState(false);
-
-  const [rating, setRating] = useState(0);
 
   const {
     title,
@@ -41,7 +42,6 @@ const EventDetails = ({ route, navigation }) => {
     _id,
     user,
     hostedById,
-    // reviews,
   } = eventdetails;
 
   const handleRegistration = () => {
@@ -82,14 +82,6 @@ const EventDetails = ({ route, navigation }) => {
     }
   };
 
-  const handleOnPressPostReview = () => {
-    navigation.navigate("Reviews", {
-      navigation,
-      eventdetails,
-      userProfile,
-    });
-  };
-
   const showHostProfile = () => {
     dispatch({ type: CLEARPARTICULARUSER });
     dispatch(getHostProfileById(hostedById, navigation));
@@ -117,16 +109,26 @@ const EventDetails = ({ route, navigation }) => {
     );
   };
 
+  const renderAvgRating = (styles) =>(
+    <>
+      <Text style={styles.title}>Host Rating: </Text>
+      <View style={{flexDirection: 'row'}}>
+        <Icon
+          name='grade'
+          size={25}
+          color='#4ecca3'
+        />
+        <Text style={{paddingLeft: 5 ,...styles.field}}>{reviews.reduce((a, b) => (a + b.rating), 0) / reviews.length} / 5</Text>
+      </View>
+    </>
+  )
+  
   useEffect(() => {
-    // let sumOfRating = 0;
-    // reviews.forEach((review) => {
-    //   sumOfRating += review.rating;
-    // });
-    // setRating(sumOfRating / reviews.length);
+    dispatch(getHostProfileById(hostedById, navigation, false));
+    dispatch(getReviews(hostedById))
     navigation.setParams({
       title,
     });
-    dispatch(getHostProfileById(hostedById, navigation, false));
   }, []);
 
   const props = {
@@ -142,7 +144,6 @@ const EventDetails = ({ route, navigation }) => {
     eventTime,
     isHost: true,
     btnTitle: "REGISTRATION",
-    rating,
   };
 
   if (loading) {
@@ -150,7 +151,6 @@ const EventDetails = ({ route, navigation }) => {
       <Loading />
     );
   } else {
-    // console.log(eventreviews);
     return (
       <ScrollView>
         <ConfirmModal
@@ -161,9 +161,9 @@ const EventDetails = ({ route, navigation }) => {
         />
         <EventDetailsCard
           {...props}
+          renderAvgRating={renderAvgRating}
           handleOnPress={handleSubmit}
           renderHostDetails={renderHostDetails}
-          handleOnPressPostReview={handleOnPressPostReview}
         />
       </ScrollView>
     );

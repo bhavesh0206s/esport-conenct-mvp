@@ -10,7 +10,7 @@ const Profile = ({ navigation }) => {
   const { userProfileInfo, loading, hostReviews } = useSelector((state) => ({
     userProfileInfo: state.profile.userProfile,
     loading: state.loading,
-    hostReviews: state.review
+    hostReviews: state.reviews
   }));
 
   const [averageRating, setAverageRating] = useState(0);
@@ -22,8 +22,6 @@ const Profile = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(getReviews(userProfileInfo.user))
-    let avgRating = hostReviews.reduce((acc, item) => (acc + item.rating), 0)
-    setAverageRating(avgRating/hostReviews.length);
     navigation.setParams({ title: "Profile" });
   }, []);
 

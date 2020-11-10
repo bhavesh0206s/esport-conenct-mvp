@@ -22,5 +22,5 @@ export default combineReducers({
   details: detailsReducer,
   userEventInfo: userEventReducer,
   notification: notificationReducer,
-  review: reviewReducer,
+  reviews: reviewReducer,
 });

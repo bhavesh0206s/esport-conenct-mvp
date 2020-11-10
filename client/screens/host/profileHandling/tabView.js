@@ -3,7 +3,7 @@ import { View, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import ReviewCard from '../../../components/reviewCard';
-import { Rating } from 'react-native-elements';
+import { Icon, Rating, Text } from 'react-native-elements';
 
 const achivementData = [
   {
@@ -37,12 +37,17 @@ const HostProfileTabView = ({hostReviews, averageRating}) => {
 
   const reviews = () => (
     <View>
-      <Rating  
-        imageSize={30} 
-        readonly 
-        tintColor='#393e46s'
-        startingValue={averageRating}
-      />
+      <View style={{flexDirection: 'row', justifyContent: 'center', padding: 5}}>
+        <Text style={{fontSize: 20, color: "#95bdb5"}}>Average Rating : </Text>
+        <Icon
+          name='grade'
+          size={25}
+          color='#4ecca3'
+        />
+        <Text style={{paddingLeft: 5, fontSize: 20}}>
+          {hostReviews.reduce((a, b) => (a + b.rating), 0) / hostReviews.length} / 5
+        </Text>
+      </View>
       <FlatList
         data={hostReviews}
         keyExtractor={(item) => item.id}
