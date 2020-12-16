@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { signInAsync, signInHostAsync } from '../../Redux/actions/googleAuth';
 import { SocialIcon } from 'react-native-elements';
-import { loading } from '../../Redux/actions/loading';
 
 const GoogleSignin = ({ title, fromHost, navigation, googleBtnStyle }) => {
   

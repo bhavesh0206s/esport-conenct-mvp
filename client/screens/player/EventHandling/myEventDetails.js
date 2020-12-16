@@ -59,27 +59,29 @@ const MyEventDetails = ({ item, navigation, deleteEvent}) => {
         modalOpen={modalOpen} 
         handleOk={handleSubmit}
       />
-      <MyEventCard 
-        item={item}
-        isEventOver={isEventOver}
-        handleSubmit={showDetails}
-        imageUri={imageUri}
-      />
-      <View style={styles.mainBtnContainer}>
-        <View style={styles.buttonContainer}>
-          <Button
-            buttonStyle={styles.btnStyle}
-            onPress={showDetails}
-            title="TEAM INFO"
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            buttonStyle={styles.btnStyleDelete}
-            icon={<MaterialCommunityIcons name="cancel" size={15} color='#fff' />}
-            onPress={() => setModalOpen(true)}
-            title="EXIT"
-          />
+      <View style={styles.cardView}>
+        <MyEventCard 
+          item={item}
+          isEventOver={isEventOver}
+          handleSubmit={showDetails}
+          imageUri={imageUri}
+        />
+        <View style={styles.mainBtnContainer}>
+          <View style={styles.buttonContainer}>
+            <Button
+              buttonStyle={styles.btnStyle}
+              onPress={showDetails}
+              title="TEAM INFO"
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              buttonStyle={styles.btnStyleDelete}
+              icon={<MaterialCommunityIcons name="cancel" size={15} color='#fff' />}
+              onPress={() => setModalOpen(true)}
+              title="EXIT"
+            />
+          </View>
         </View>
       </View>
     </>
@@ -92,17 +94,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 5,
+  },
+  cardView: {
+    padding: 10,
+    margin: 10,
+    marginBottom: 5,
+    borderRadius: 12,
+    backgroundColor: '#232931',
+    elevation: 4,
+    shadowColor: '#4ecca3',
   },
   buttonContainer: {
     flex: 1,
   },
   btnStyleDelete:{
-    backgroundColor: '#d9534f',
+    backgroundColor: 'transparent',
     borderRadius: 0,
   },
   btnStyle:{
     borderRadius: 0,
-    // marginBottom: 20,
   },
 })
 

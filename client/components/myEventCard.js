@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
   container: {
     margin: 0,
     padding: 8,
-    borderWidth: 0
+    borderWidth: 0,
+    borderRadius: 12,
   },
   content :{
     flexDirection: "row", 
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 5
   },
   btnStyleDelete:{
-    backgroundColor: '#d9534f',
+    backgroundColor: 'transparent',
     borderRadius: 0,
     marginBottom: 20,
     borderBottomLeftRadius: 5,

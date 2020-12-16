@@ -38,16 +38,16 @@ const EventCard = ({ item, handleSubmit, imageUri }) => {
             </View>
           </View>
         </View>
+        <View>
+          <Button
+            icon={<Icon name="description" color="#ffffff" />}
+            buttonStyle={styles.btnStyle}
+            containerStyle={styles.btnContainer}
+            onPress={handleSubmit}
+            title="DETAILS"
+          />
+        </View>
       </Card>
-      <View>
-        <Button
-          icon={<Icon name="description" color="#ffffff" />}
-          buttonStyle={styles.btnStyle}
-          containerStyle={styles.btnContainer}
-          onPress={handleSubmit}
-          title="DETAILS"
-        />
-      </View>
     </>
   );
 };
@@ -55,9 +55,14 @@ const EventCard = ({ item, handleSubmit, imageUri }) => {
 const styles = StyleSheet.create({
   container: {
     margin: 0,
-    borderColor: '#393e46'
-    // padding: 8,
-    // marginBottom: 10
+    borderColor: '#393e46',
+    padding: 10,
+    margin: 10,
+    marginBottom: 5,
+    borderRadius: 12,
+    backgroundColor: '#232931',
+    elevation: 4,
+    shadowColor: '#4ecca3',
   },
   content: {
     flexDirection: 'row',
@@ -73,9 +78,9 @@ const styles = StyleSheet.create({
   },
   btnStyle: {
     borderRadius: 0,
-    marginBottom: 20,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    marginTop: 10,
+    // marginBottom: 20,
+    borderRadius: 5,
   },
   fieldView: {
     borderBottomWidth: 1,
