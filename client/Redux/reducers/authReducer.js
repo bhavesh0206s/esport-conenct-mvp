@@ -10,7 +10,7 @@ import {
   CREATE_USERNAME,
   USER_LOADED_NO_USERNAME,
   // ACCOUNT_DELETED,
-} from '../actions/types';
+} from "../actions/types";
 
 const initialState = {
   token: null,
@@ -30,31 +30,31 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case LOGIN_SUCCESS:
-      console.log('LOGIN/REGISTER-SUCCESSFULL');
+      localStorage.setItem("token", payload.token);
       return {
         ...state,
+        ...payload,
         isAuthenticated: true,
         loading: false,
-        isUserNameVerified: true,
       };
     case GOOGLE_LOGIN:
       return {
         email: payload[0],
-        isAuthenticated: payload[1] === 'signin' ? true :  false,
+        isAuthenticated: payload[1] === "signin" ? true : false,
         loading: false,
-        isUserNameVerified:payload[1] === 'signin' ? true :  false,
+        isUserNameVerified: payload[1] === "signin" ? true : false,
         fromHost: payload[2],
       };
-    case CREATE_USERNAME:{
-      console.log('CREATE_USERNAME-SUCCESSFULL')
-      return{
+    case CREATE_USERNAME: {
+      console.log("CREATE_USERNAME-SUCCESSFULL");
+      return {
         isAuthenticated: true,
         loading: false,
         isUserNameVerified: true,
-      }
+      };
     }
     case USER_LOADED:
-      console.log('USERLOADING-SUCCESSFULL');
+      console.log("USERLOADING-SUCCESSFULL");
       return {
         ...state,
         isAuthenticated: true,
@@ -64,28 +64,28 @@ export default (state = initialState, action) => {
         isUserNameVerified: true,
       };
     case USER_LOADED_NO_USERNAME:
-      console.log('USER_LOADED_NO_USERNAME-SUCCESSFULL');
+      console.log("USER_LOADED_NO_USERNAME-SUCCESSFULL");
       return {
         ...state,
         fromHost: payload.fromHost,
       };
     case LOGIN_FAIL:
     case REGISTER_FAIL:
-      console.log('LOGIN/REGISTER-SUCCESSFULL');
+      console.log("LOGIN/REGISTER-SUCCESSFULL");
       return {
         payload,
         isAuthenticated: false,
         loading: false,
       };
     case AUTH_ERROR:
-      console.log('AUTHERROR-SUCCESSFULL');
+      console.log("AUTHERROR-SUCCESSFULL");
       return {
         isAuthenticated: false,
         loading: false,
         isUserNameVerified: false,
       };
     case LOGOUT:
-      console.log('LOUGOUT-SUCCESSFULL');
+      console.log("LOUGOUT-SUCCESSFULL");
       return {
         token: null,
         isAuthenticated: false,
